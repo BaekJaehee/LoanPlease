@@ -1,14 +1,18 @@
 import useStore from "../../Store/GameStore.jsx"
 import GameStart from "./GameStart.jsx";
 import GameEnd from "./GameEnd.jsx";
+import ManualModal from "../Modal/ManualModal.jsx";
 
 function Game() {
-
   function formatNumber(num) {
     return String(num).padStart(2, '0');
   }
-
-  const { time, score, timerActive, isGameEnd, isFinance, activateFinance, deactivateFinance, isCustomer, callCustomer, endCustomer, products, selectedProduct, selectProduct } = useStore();
+  
+  const { showModal, setShowModal, time, score, timerActive, isGameEnd, isFinance, activateFinance, deactivateFinance, isCustomer, callCustomer, endCustomer, products, selectedProduct, selectProduct } = useStore();
+  
+  const closeModal = () => {
+    setShowModal(false); // 모달을 닫는 함수를 사용하여 showModal 상태를 변경함
+  };
 
   return (
     <>
@@ -16,6 +20,7 @@ function Game() {
       <div className="flex items-center min-h-screen w-full overflow-auto">
         {/* 고정 크기의 웹게임 화면, 크기 고정 */}
         <div className="m-auto w-[1500px] min-w-[1500px] max-w-[1500px] h-[694px] min-h-[680px] max-h-[680px] border-cusColor3 border-[10px] font-cusFont1">
+          {showModal && <ManualModal closeModal={closeModal} />}
           {!timerActive && !isGameEnd && <GameStart />}
           {isGameEnd && <GameEnd />}
           <div className="h-[70%] flex">
