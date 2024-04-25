@@ -7,7 +7,7 @@ function Temp() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get("http://loanpleasebe:8081/test");
+        const response = await axios.get("http://loanpleasebe:8080/test");
         setData(response.data);
       } catch (error) {
         console.error('API 요청 중 오류 발생:', error);
