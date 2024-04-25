@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import musicon from "./assets/bgm_on.png";
 import musicoff from "./assets/bgm_off.png";
 import { LoginStore, MainStore } from "../Store";
@@ -38,7 +39,7 @@ const profileimagestyle = {
   backgroundColor: "#D9D9D9",
 };
 
-function Menubar() {
+function Menubar(props) {
   const isLogin = LoginStore((state) => state.isLogin);
   const isBgm = MainStore((state) => state.isBgm);
   const setIsBgm = MainStore((state) => state.setIsBgm);
@@ -48,12 +49,12 @@ function Menubar() {
       <img width={70} height={70} src="/loanplease.png" />
       <div style={menutitlestyle}>론플리즈</div>
       <div style={profilestyle}>
-        <div style={profileimagestyle}>{isLogin ? "00" : ""}</div>
+        <img style={profileimagestyle} src={isLogin ? props.data.image : ""} />
         <div style={{ fontFamily: "Orbit", color: "white", fontSize: "40px" }}>
-          {isLogin ? `닉네임` : ""}
+          {isLogin ? props.data.nickname : ""}
         </div>
         <div style={{ fontFamily: "Orbit", color: "white", fontSize: "24px" }}>
-          {isLogin ? `순위` : ""}
+          {isLogin ? `${props.data.rank}위` : ""}
         </div>
       </div>
       <div

@@ -4,6 +4,8 @@ import background from "./assets/main_final.jpg";
 import dialog from "./assets/dialog_frame.png";
 import { MainStore } from "../Store";
 import { useState } from "react";
+import Rankingpage from "./Rankingpage";
+import Mypage from "./Mypage";
 
 const mainstyle = {
   width: "100%",
@@ -21,6 +23,14 @@ const backgroundstyle = {
   minwidth: "260px",
   top: "100px",
   height: "calc(100vh - 100px)",
+};
+
+const rankingpanelstyle = {
+  zIndex: "2",
+  position: "absolute",
+  top: "20%",
+  left: "3%",
+  opacity: "1",
 };
 
 const dialogstyle = {
@@ -59,6 +69,8 @@ const maleNPC = {
 };
 
 function Main() {
+  const rankingpopup = MainStore((state) => state.rankingpopup);
+  const mypagepopup = MainStore((state) => state.mypagepopup);
   const dialogs = MainStore((state) => state.dialogs);
 
   const makedialog = () => {
@@ -89,7 +101,13 @@ function Main() {
 
   return (
     <div style={mainstyle}>
-      <Menubar />
+      <Menubar
+        data={{ image: "/loanplease.png", nickname: "ssafy", rank: 6 }}
+      />
+      <div style={rankingpanelstyle}>
+        {rankingpopup ? <Rankingpage /> : <div></div>}
+      </div>
+      <div>{mypagepopup ? <Mypage /> : <div></div>}</div>
       <img style={backgroundstyle} src={background} />
       <div style={femaleNPC} onClick={NPCClick}></div>
       <div style={maleNPC} onClick={NPCClick}></div>
