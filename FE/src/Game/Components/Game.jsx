@@ -12,7 +12,21 @@ function Game() {
     return String(num).padStart(2, '0');
   }
 
-  const { time, score, timerActive, isGameEnd, isFinance, activateFinance, deactivateFinance, isCustomer, callCustomer, endCustomer, products, selectedProduct, selectProduct, isGamePause, setGamePause } = useStore();
+  const { time,
+     score,
+     timerActive,
+     isGameEnd,
+     isFinance,
+     activateFinance,
+     deactivateFinance,
+     isCustomer,
+     callCustomer,
+     endCustomer,
+     products,
+     selectedProduct,
+     selectProduct,
+     isGamePause,
+     setGamePause } = useStore();
 
   return (
     <>
