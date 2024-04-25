@@ -1,7 +1,17 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import useStore from "../../Store/GameStore.jsx"
 
+import Exit from "../Assets/exit.png"
+
+
 function GameStart() {
+
+  const navigate = useNavigate()
+
+  const handleGoHome = () => {
+    navigate('/');
+  };
 
   const { startTimer } = useStore();
   const [count, setCount] = useState(null);
@@ -33,9 +43,14 @@ function GameStart() {
           <p className="text-[80px] text-white">{count}</p>
         </div>
       ) : (
-        <button onClick={handleStartClick} className="mt-4 bg-blue-500 text-white rounded-lg p-4 hover:bg-blue-700 text-4xl">
-          게임 시작하기
-        </button>
+        <>
+          <button className='absolute top-7 right-3 w-[60px] h-[60px]' onClick={handleGoHome}>
+            <img src={Exit} alt="" />
+          </button>
+          <button onClick={handleStartClick} className="mt-4 bg-blue-500 text-white rounded-lg p-4 hover:bg-blue-700 text-4xl">
+            게임 시작하기
+          </button>
+        </>
       )}
     </div>
   );

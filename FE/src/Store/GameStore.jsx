@@ -1,4 +1,4 @@
-import create from 'zustand';
+import { create } from 'zustand';
 
 const useStore = create(set => ({
   // 시작 시 모달
@@ -86,6 +86,10 @@ const useStore = create(set => ({
     }
     return {}
   }), 
+
+  // 게임 중도 퇴장 창 온오프
+  isGamePause: false,
+  setGamePause: () => set(state => ({ isGamePause: !state.isGamePause })),
 
 }));
 
