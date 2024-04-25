@@ -84,6 +84,10 @@ const useStore = create(set => ({
     return {}
   }), 
 
+  // 게임 중도 퇴장 창 온오프
+  isGamePause: false,
+  setGamePause: () => set(state => ({ isGamePause: !state.isGamePause })),
+
 }));
 
 export default useStore;

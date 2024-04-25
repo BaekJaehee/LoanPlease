@@ -1,6 +1,10 @@
 import useStore from "../../Store/GameStore.jsx"
 import GameStart from "./GameStart.jsx";
 import GameEnd from "./GameEnd.jsx";
+import GamePause from "./GamePause.jsx"
+
+import SampleBackground from "../Assets/sample_background.png"
+import ExitGame from "../Assets/exit_game.png"
 
 function Game() {
 
@@ -8,7 +12,7 @@ function Game() {
     return String(num).padStart(2, '0');
   }
 
-  const { time, score, timerActive, isGameEnd, isFinance, activateFinance, deactivateFinance, isCustomer, callCustomer, endCustomer, products, selectedProduct, selectProduct } = useStore();
+  const { time, score, timerActive, isGameEnd, isFinance, activateFinance, deactivateFinance, isCustomer, callCustomer, endCustomer, products, selectedProduct, selectProduct, isGamePause, setGamePause } = useStore();
 
   return (
     <>
@@ -18,23 +22,28 @@ function Game() {
         <div className="m-auto w-[1500px] min-w-[1500px] max-w-[1500px] h-[694px] min-h-[680px] max-h-[680px] border-cusColor3 border-[10px] font-cusFont1">
           {!timerActive && !isGameEnd && <GameStart />}
           {isGameEnd && <GameEnd />}
+          {isGamePause && <GamePause />}
           <div className="h-[70%] flex">
             <div className="h-full w-[57.5%] border-[5px] border-black">
-              <h1>게임 페이지입니다.</h1>
+              <img src={SampleBackground} alt="" className="w-full h-full"/>
             </div>
 
             <div className="h-full w-[42.5%]">
 
               <div className="flex h-[15%] border-[5px] border-cusColor2 items-center bg-cusColor4 text-cusColor2">
 
-                <div className="flex w-[52%] h-full px-[30px] items-center justify-between border-r-[5px] border-cusColor2">
+                <div className="flex w-[35%] h-full px-[30px] items-center justify-between border-r-[5px] border-cusColor2 text-center">
                   <p>TIME</p>
                   <p>{Math.floor(time / 60)}:{formatNumber(time % 60)}</p>
                 </div>
 
-                <div className="flex w-[48%] h-full items-center px-[30px] justify-between">
+                <div className="flex w-[55%] h-full items-center px-[30px] justify-between border-r-[5px] border-cusColor2">
                   <p>SCORE</p>
                   <p>{score}</p>
+                </div>
+
+                <div className="flex w-[10%] h-full items-center justify-center">
+                  <img src={ExitGame} alt="" className="w-[90%] h-[90%]" onClick={setGamePause}/>
                 </div>
 
               </div>
@@ -113,11 +122,18 @@ function Game() {
                     </div>
                   </div>
 
-                  <div className="h-[50%] w-full flex justify-center items-center">
+                  {selectedProduct ? 
+                  (<div className="h-[50%] w-full flex justify-center items-center">
                     <div className="w-[90%] h-[90%] bg-cusColor5 text-cusColor4 flex justify-center items-center border-[5px] border-black rounded-lg text-xl" onClick={endCustomer}>
                       <p>추천하기</p>
                     </div>
+                  </div>) : 
+                  (<div className="h-[50%] w-full flex justify-center items-center">
+                  <div className="w-[90%] h-[90%] bg-gray-300 text-gray-400 flex justify-center items-center border-[5px] border-black rounded-lg text-xl">
+                    <p>추천하기</p>
                   </div>
+                </div>)
+                  }
 
                 </div>
               </div>)}
