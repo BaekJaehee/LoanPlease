@@ -4,6 +4,10 @@ import GameItem from "./GameItem";
 import LoanItem from "./LoanItem";
 import ShopModal from "../Modal/ShopModal";
 import coin from "../Assets/coin.jpg";
+import won from "../Assets/coin_won.png";
+
+// 구매여부 0, 1로 구분 -> 구매 확정 시 1로 변환
+// 여러번 살 수 있는 아이템?
 
 function Shop() {
   const { setCurrentComponent, currentComponent, isModalOpen, openModal, closeModal } = useStore();
@@ -43,7 +47,7 @@ function Shop() {
           <div className="p-4 absolute bottom-2">
             {/* 클릭하면 메인 페이지로 */}
             <Link to="/">
-              <button className="block w-[215px] py-2 text-white border-2 border-b-4 bg-blue-800 hover:bg-blue-900 rounded-lg self-end text-lg border-black">
+              <button className="block w-[215px] py-2 text-white border-2 border-b-4 bg-blue-800 hover:bg-blue-900 rounded-lg self-end text-lg border-black focus:ring-4 shadow-lg transform active:scale-y-75 transition-transform">
                 돌아가기
               </button>
             </Link>
@@ -53,8 +57,9 @@ function Shop() {
         <div className="flex-1 z-10">
           {/* 잔액 */}
           <div className="border-b-0 p-4 flex justify-end items-center">
-            <div className="border-2 rounded-lg bg-white text-right font-cusFont1 text-lg mx-6 pl-4 pr-4 py-2 w-[180px] border-black">
-              1000
+            <div className="border-2 rounded-lg bg-white text-right font-cusFont1 text-xl mx-6 pl-2 pr-4 py-2 w-[180px] border-black flex items-center justify-between">
+              <img src={won} alt="아이콘" className="w-7 h-7" />
+              <span>1000</span>
             </div>
           </div>
           {/* 아이템 */}
