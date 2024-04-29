@@ -1,31 +1,47 @@
 /* eslint-disable react/jsx-key */
 import Userdata from "./Userdata.jsx";
 
-const searchpagestyle = {
-  width: "100%",
-  height: "220px",
-  display: "flex",
-  justifyContent: "space-between",
-  flexDirection: "column",
-  margin: "10px 0px",
-};
+const searchpagestyleClass = `
+flex flex-col justify-between 
+w-full h-[220px] my-2.5
+`;
 
-const searchlinestyle = {
-  width: "100%",
-  height: "10%",
-  outline: "none",
-  fontSize: "20px",
-  fontFamily: "Orbit",
-  borderBottom: "2px solid",
-  marginBottom: "10px",
-};
+const searchlinestyleClass = `
+w-full h-[10%] 
+text-xl text-cusFont2 
+outline-none border-b-2 mb-2.5 
+`;
 
-const searchresultarea = {
-  width: "100%",
-  height: "200px",
-  overflowX: "hidden",
-  overflowY: "auto",
-};
+const searchresultareaClass = `
+w-full h-[200px] 
+overflow-x-hidden overflow-y-auto 
+`;
+
+// const searchpagestyle = {
+//   width: "100%",
+//   height: "220px",
+//   display: "flex",
+//   justifyContent: "space-between",
+//   flexDirection: "column",
+//   margin: "10px 0px",
+// };
+
+// const searchlinestyle = {
+//   width: "100%",
+//   height: "10%",
+//   outline: "none",
+//   fontSize: "20px",
+//   fontFamily: "Orbit",
+//   borderBottom: "2px solid",
+//   marginBottom: "10px",
+// };
+
+// const searchresultarea = {
+//   width: "100%",
+//   height: "200px",
+//   overflowX: "hidden",
+//   overflowY: "auto",
+// };
 
 const resultdummydata = [
   {
@@ -62,9 +78,12 @@ const resultdummydata = [
 
 function SearchPage() {
   return (
-    <div style={searchpagestyle}>
-      <input style={searchlinestyle} />
-      <div style={searchresultarea}>
+    // <div style={searchpagestyle}>
+    <div className={searchpagestyleClass}>
+      {/* <input style={searchlinestyle} /> */}
+      <input className={searchlinestyleClass} />
+      {/* <div style={searchresultarea}> */}
+      <div className={searchresultareaClass}>
         {resultdummydata.map((value) => {
           return <Userdata data={value} />;
         })}
