@@ -74,6 +74,386 @@ const resultdummydata = [
     nickname: "5467ujydsghfdsfgdsggfsdbfhrte",
     isFollow: false,
   },
+  {
+    image: "",
+    nickname: "dsafsgh",
+    isFollow: true,
+  },
+  {
+    image: "",
+    nickname: "5467ujydsghfdsfgdsggfsdbfhrte",
+    isFollow: false,
+  },
+  {
+    image: "",
+    nickname: "dsafsgh",
+    isFollow: true,
+  },
+  {
+    image: "",
+    nickname: "5467ujydsghfdsfgdsggfsdbfhrte",
+    isFollow: false,
+  },
+  {
+    image: "",
+    nickname: "dsafsgh",
+    isFollow: true,
+  },
+  {
+    image: "",
+    nickname: "5467ujydsghfdsfgdsggfsdbfhrte",
+    isFollow: false,
+  },
+  {
+    image: "",
+    nickname: "dsafsgh",
+    isFollow: true,
+  },
+  {
+    image: "",
+    nickname: "5467ujydsghfdsfgdsggfsdbfhrte",
+    isFollow: false,
+  },
+  {
+    image: "",
+    nickname: "dsafsgh",
+    isFollow: true,
+  },
+  {
+    image: "",
+    nickname: "5467ujydsghfdsfgdsggfsdbfhrte",
+    isFollow: false,
+  },
+  {
+    image: "",
+    nickname: "dsafsgh",
+    isFollow: true,
+  },
+  {
+    image: "",
+    nickname: "5467ujydsghfdsfgdsggfsdbfhrte",
+    isFollow: false,
+  },
+  {
+    image: "",
+    nickname: "dsafsgh",
+    isFollow: true,
+  },
+  {
+    image: "",
+    nickname: "5467ujydsghfdsfgdsggfsdbfhrte",
+    isFollow: false,
+  },
+  {
+    image: "",
+    nickname: "dsafsgh",
+    isFollow: true,
+  },
+  {
+    image: "",
+    nickname: "5467ujydsghfdsfgdsggfsdbfhrte",
+    isFollow: false,
+  },
+  {
+    image: "",
+    nickname: "dsafsgh",
+    isFollow: true,
+  },
+  {
+    image: "",
+    nickname: "5467ujydsghfdsfgdsggfsdbfhrte",
+    isFollow: false,
+  },
+  {
+    image: "",
+    nickname: "dsafsgh",
+    isFollow: true,
+  },
+  {
+    image: "",
+    nickname: "5467ujydsghfdsfgdsggfsdbfhrte",
+    isFollow: false,
+  },
+  {
+    image: "",
+    nickname: "dsafsgh",
+    isFollow: true,
+  },
+  {
+    image: "",
+    nickname: "5467ujydsghfdsfgdsggfsdbfhrte",
+    isFollow: false,
+  },
+  {
+    image: "",
+    nickname: "dsafsgh",
+    isFollow: true,
+  },
+  {
+    image: "",
+    nickname: "5467ujydsghfdsfgdsggfsdbfhrte",
+    isFollow: false,
+  },
+  {
+    image: "",
+    nickname: "dsafsgh",
+    isFollow: true,
+  },
+  {
+    image: "",
+    nickname: "5467ujydsghfdsfgdsggfsdbfhrte",
+    isFollow: false,
+  },
+  {
+    image: "",
+    nickname: "dsafsgh",
+    isFollow: true,
+  },
+  {
+    image: "",
+    nickname: "5467ujydsghfdsfgdsggfsdbfhrte",
+    isFollow: false,
+  },
+  {
+    image: "",
+    nickname: "dsafsgh",
+    isFollow: true,
+  },
+  {
+    image: "",
+    nickname: "5467ujydsghfdsfgdsggfsdbfhrte",
+    isFollow: false,
+  },
+  {
+    image: "",
+    nickname: "dsafsgh",
+    isFollow: true,
+  },
+  {
+    image: "",
+    nickname: "5467ujydsghfdsfgdsggfsdbfhrte",
+    isFollow: false,
+  },
+  {
+    image: "",
+    nickname: "dsafsgh",
+    isFollow: true,
+  },
+  {
+    image: "",
+    nickname: "5467ujydsghfdsfgdsggfsdbfhrte",
+    isFollow: false,
+  },
+  {
+    image: "",
+    nickname: "dsafsgh",
+    isFollow: true,
+  },
+  {
+    image: "",
+    nickname: "5467ujydsghfdsfgdsggfsdbfhrte",
+    isFollow: false,
+  },
+  {
+    image: "",
+    nickname: "dsafsgh",
+    isFollow: true,
+  },
+  {
+    image: "",
+    nickname: "5467ujydsghfdsfgdsggfsdbfhrte",
+    isFollow: false,
+  },
+  {
+    image: "",
+    nickname: "dsafsgh",
+    isFollow: true,
+  },
+  {
+    image: "",
+    nickname: "5467ujydsghfdsfgdsggfsdbfhrte",
+    isFollow: false,
+  },
+  {
+    image: "",
+    nickname: "dsafsgh",
+    isFollow: true,
+  },
+  {
+    image: "",
+    nickname: "5467ujydsghfdsfgdsggfsdbfhrte",
+    isFollow: false,
+  },
+  {
+    image: "",
+    nickname: "dsafsgh",
+    isFollow: true,
+  },
+  {
+    image: "",
+    nickname: "5467ujydsghfdsfgdsggfsdbfhrte",
+    isFollow: false,
+  },
+  {
+    image: "",
+    nickname: "dsafsgh",
+    isFollow: true,
+  },
+  {
+    image: "",
+    nickname: "5467ujydsghfdsfgdsggfsdbfhrte",
+    isFollow: false,
+  },
+  {
+    image: "",
+    nickname: "dsafsgh",
+    isFollow: true,
+  },
+  {
+    image: "",
+    nickname: "5467ujydsghfdsfgdsggfsdbfhrte",
+    isFollow: false,
+  },
+  {
+    image: "",
+    nickname: "dsafsgh",
+    isFollow: true,
+  },
+  {
+    image: "",
+    nickname: "5467ujydsghfdsfgdsggfsdbfhrte",
+    isFollow: false,
+  },
+  {
+    image: "",
+    nickname: "dsafsgh",
+    isFollow: true,
+  },
+  {
+    image: "",
+    nickname: "5467ujydsghfdsfgdsggfsdbfhrte",
+    isFollow: false,
+  },
+  {
+    image: "",
+    nickname: "dsafsgh",
+    isFollow: true,
+  },
+  {
+    image: "",
+    nickname: "5467ujydsghfdsfgdsggfsdbfhrte",
+    isFollow: false,
+  },
+  {
+    image: "",
+    nickname: "dsafsgh",
+    isFollow: true,
+  },
+  {
+    image: "",
+    nickname: "5467ujydsghfdsfgdsggfsdbfhrte",
+    isFollow: false,
+  },
+  {
+    image: "",
+    nickname: "dsafsgh",
+    isFollow: true,
+  },
+  {
+    image: "",
+    nickname: "5467ujydsghfdsfgdsggfsdbfhrte",
+    isFollow: false,
+  },
+  {
+    image: "",
+    nickname: "dsafsgh",
+    isFollow: true,
+  },
+  {
+    image: "",
+    nickname: "5467ujydsghfdsfgdsggfsdbfhrte",
+    isFollow: false,
+  },
+  {
+    image: "",
+    nickname: "dsafsgh",
+    isFollow: true,
+  },
+  {
+    image: "",
+    nickname: "5467ujydsghfdsfgdsggfsdbfhrte",
+    isFollow: false,
+  },
+  {
+    image: "",
+    nickname: "dsafsgh",
+    isFollow: true,
+  },
+  {
+    image: "",
+    nickname: "5467ujydsghfdsfgdsggfsdbfhrte",
+    isFollow: false,
+  },
+  {
+    image: "",
+    nickname: "dsafsgh",
+    isFollow: true,
+  },
+  {
+    image: "",
+    nickname: "5467ujydsghfdsfgdsggfsdbfhrte",
+    isFollow: false,
+  },
+  {
+    image: "",
+    nickname: "dsafsgh",
+    isFollow: true,
+  },
+  {
+    image: "",
+    nickname: "5467ujydsghfdsfgdsggfsdbfhrte",
+    isFollow: false,
+  },
+  {
+    image: "",
+    nickname: "dsafsgh",
+    isFollow: true,
+  },
+  {
+    image: "",
+    nickname: "5467ujydsghfdsfgdsggfsdbfhrte",
+    isFollow: false,
+  },
+  {
+    image: "",
+    nickname: "dsafsgh",
+    isFollow: true,
+  },
+  {
+    image: "",
+    nickname: "5467ujydsghfdsfgdsggfsdbfhrte",
+    isFollow: false,
+  },
+  {
+    image: "",
+    nickname: "dsafsgh",
+    isFollow: true,
+  },
+  {
+    image: "",
+    nickname: "5467ujydsghfdsfgdsggfsdbfhrte",
+    isFollow: false,
+  },
+  {
+    image: "",
+    nickname: "dsafsgh",
+    isFollow: true,
+  },
+  {
+    image: "",
+    nickname: "5467ujydsghfdsfgdsggfsdbfhrte",
+    isFollow: false,
+  },
 ];
 
 function SearchPage() {
