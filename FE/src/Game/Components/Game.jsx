@@ -11,7 +11,7 @@ function Game() {
   function formatNumber(num) {
     return String(num).padStart(2, '0');
   }
-    
+
   const closeModal = () => {
     setShowModal(false); // 모달을 닫는 함수를 사용하여 showModal 상태를 변경함
   };
@@ -19,20 +19,20 @@ function Game() {
   const { showModal,
     setShowModal,
     time,
-     score,
-     timerActive,
-     isGameEnd,
-     isFinance,
-     activateFinance,
-     deactivateFinance,
-     isCustomer,
-     callCustomer,
-     endCustomer,
-     products,
-     selectedProduct,
-     selectProduct,
-     isGamePause,
-     setGamePause } = useStore();
+    score,
+    timerActive,
+    isGameEnd,
+    isFinance,
+    activateFinance,
+    deactivateFinance,
+    isCustomer,
+    callCustomer,
+    endCustomer,
+    products,
+    selectedProduct,
+    selectProduct,
+    isGamePause,
+    setGamePause } = useStore();
 
   return (
     <>
@@ -46,7 +46,7 @@ function Game() {
           {isGamePause && <GamePause />}
           <div className="h-[70%] flex">
             <div className="h-full w-[57.5%] border-[5px] border-black">
-              <img src={SampleBackground} alt="" className="w-full h-full"/>
+              <img src={SampleBackground} alt="" className="w-full h-full" />
             </div>
 
             <div className="h-full w-[42.5%]">
@@ -64,7 +64,7 @@ function Game() {
                 </div>
 
                 <div className="flex w-[10%] h-full items-center justify-center">
-                  <img src={ExitGame} alt="" className="w-[90%] h-[90%]" onClick={setGamePause}/>
+                  <img src={ExitGame} alt="" className="w-[90%] h-[90%]" onClick={setGamePause} />
                 </div>
 
               </div>
@@ -143,17 +143,17 @@ function Game() {
                     </div>
                   </div>
 
-                  {selectedProduct ? 
-                  (<div className="h-[50%] w-full flex justify-center items-center">
-                    <div className="w-[90%] h-[90%] bg-cusColor5 text-cusColor4 flex justify-center items-center border-[5px] border-black rounded-lg text-xl" onClick={endCustomer}>
-                      <p>추천하기</p>
-                    </div>
-                  </div>) : 
-                  (<div className="h-[50%] w-full flex justify-center items-center">
-                  <div className="w-[90%] h-[90%] bg-gray-300 text-gray-400 flex justify-center items-center border-[5px] border-black rounded-lg text-xl">
-                    <p>추천하기</p>
-                  </div>
-                </div>)
+                  {selectedProduct ?
+                    (<div className="h-[50%] w-full flex justify-center items-center">
+                      <div className="w-[90%] h-[90%] bg-cusColor5 text-cusColor4 flex justify-center items-center border-[5px] border-black rounded-lg text-xl" onClick={endCustomer}>
+                        <p>추천하기</p>
+                      </div>
+                    </div>) :
+                    (<div className="h-[50%] w-full flex justify-center items-center">
+                      <div className="w-[90%] h-[90%] bg-gray-300 text-gray-400 flex justify-center items-center border-[5px] border-black rounded-lg text-xl">
+                        <p>추천하기</p>
+                      </div>
+                    </div>)
                   }
 
                 </div>
