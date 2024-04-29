@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import useStore from "../../Store/ShopStore";
 import GameItem from "./GameItem";
 import LoanItem from "./LoanItem";
+import SlotSetting from "./SlotSetting";
 import ShopModal from "../Modal/ShopModal";
 import coin from "../Assets/coin.jpg";
 import won from "../Assets/coin_won.png";
@@ -15,8 +16,10 @@ function Shop() {
   let currentPage;
   if (currentComponent === "gameItem") {
     currentPage = <GameItem openModal={openModal} />;
-  } else {
+  } else if (currentComponent == "loanItem") {
     currentPage = <LoanItem openModal={openModal} />;
+  } else {
+    currentPage = <SlotSetting />;
   }
 
   return (
@@ -42,6 +45,13 @@ function Shop() {
               onClick={() => setCurrentComponent("loanItem")}
             >
               대출상품
+            </button>
+            {/* 대출상품 슬롯 세팅 */}
+            <button
+              className="block w-[215px] mb-4 py-2 bg-orange-400 hover:bg-orange-600 rounded-lg border-2 border-b-4 text-lg border-black focus:ring-4 shadow-lg transform active:scale-y-75 transition-transform"
+              onClick={() => setCurrentComponent("slotSetting")}
+            >
+              슬롯세팅
             </button>
           </div>
           <div className="p-4 absolute bottom-2">
