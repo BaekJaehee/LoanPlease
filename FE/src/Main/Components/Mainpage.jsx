@@ -1,7 +1,6 @@
 import Buttonbar from "./Buttonbar";
 import Menubar from "./Menubar";
 import background from "./assets/main_final.jpg";
-// import dialog from "./assets/dialog_frame.png";
 import { MainStore } from "../Store";
 import { useState } from "react";
 import Rankingpage from "./Rankingpage";
@@ -29,11 +28,11 @@ flex justify-center z-[2]
 
 const dialogstyleClass = `
 flex justify-center absolute 
-w-[340px] h-[250px] z-[2] 
+w-[340px] h-[250px] z-[5] 
 top-[38%] left-[38%] p-[30px] 
-bg-[url('./assets/dialog_frame.png')] 
+bg-npcLeft bg-cover 
 scale-0 translate-y-[30%] 
-text-cusFont1 text-2xl whitespace-pre-wrap 
+font-cusFont1 text-2xl whitespace-pre-wrap 
 `;
 
 const femaleNPCClass = `
@@ -126,14 +125,29 @@ function Main() {
   const NPCClick = () => {
     setText(makedialog());
     const start = setTimeout(() => {
-      setTextStyle({
-        ...textStyle,
-        transform: "scale(0.5) translateY(0%)",
-        transition: "all 0.2s",
-      });
+      // setTextStyle({
+      //   ...textStyle,
+      //   transform: "scale(0.5) translateY(0%)",
+      //   transition: "all 0.2s",
+      // });
+      setTextStyle(
+        textStyle.replace(
+          "scale-0 translate-y-[30%]",
+          "scale-50 translate-y-[0%]",
+        ),
+      );
+      if (!textStyle.includes(" transition-all duration-200")) {
+        setTextStyle(textStyle + " transition-all duration-200");
+      }
     }, 200);
     const end = setTimeout(() => {
-      setTextStyle({ ...textStyle, transform: "scale(0) translateY(30%)" });
+      // setTextStyle({ ...textStyle, transform: "scale(0) translateY(30%)" });
+      setTextStyle(
+        textStyle.replace(
+          "scale-50 translate-y-[0%]",
+          "scale-0 translate-y-[30%]",
+        ),
+      );
     }, 2200);
     return () => {
       clearTimeout(start);
@@ -164,9 +178,25 @@ function Main() {
         src={background}
       />
       {/* <div style={femaleNPC} onClick={NPCClick}></div> */}
-      <div className={femaleNPCClass} onClick={NPCClick}></div>
+      <div
+        className={femaleNPCClass}
+        onClick={() => {
+          if (!textStyle.includes("bg-npcLeft")) {
+            setTextStyle(textStyle.replace("bg-npcRight", "bg-npcLeft"));
+          }
+          NPCClick();
+        }}
+      ></div>
       {/* <div style={maleNPC} onClick={NPCClick}></div> */}
-      <div className={maleNPCClass} onClick={NPCClick}></div>
+      <div
+        className={maleNPCClass}
+        onClick={() => {
+          if (!textStyle.includes("bg-npcRight")) {
+            setTextStyle(textStyle.replace("bg-npcLeft", "bg-npcRight"));
+          }
+          NPCClick();
+        }}
+      ></div>
       {/* <div style={textStyle}>{text}</div> */}
       {/* <div style={textStyle}>{text}</div> */}
       <div className={textStyle}>{text}</div>
