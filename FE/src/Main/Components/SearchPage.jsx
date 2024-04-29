@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-key */
-import Userdata from "./Userdata.jsx";
+import { PageQuery } from "./InfiniteQuery.jsx";
 
 const searchpagestyleClass = `
 flex flex-col justify-between 
@@ -43,39 +43,6 @@ overflow-x-hidden overflow-y-auto
 //   overflowY: "auto",
 // };
 
-const resultdummydata = [
-  {
-    image: "",
-    nickname: "23456",
-    isFollow: false,
-  },
-  {
-    image: "",
-    nickname: "dsafsgh",
-    isFollow: true,
-  },
-  {
-    image: "",
-    nickname: "5467ujydsghfdsfgdsggfsdbfhrte",
-    isFollow: false,
-  },
-  {
-    image: "",
-    nickname: "5467ujydsghfdsfgdsggfsdbfhrte",
-    isFollow: false,
-  },
-  {
-    image: "",
-    nickname: "5467ujydsghfdsfgdsggfsdbfhrte",
-    isFollow: false,
-  },
-  {
-    image: "",
-    nickname: "5467ujydsghfdsfgdsggfsdbfhrte",
-    isFollow: false,
-  },
-];
-
 function SearchPage() {
   return (
     // <div style={searchpagestyle}>
@@ -83,11 +50,7 @@ function SearchPage() {
       {/* <input style={searchlinestyle} /> */}
       <input className={searchlinestyleClass} />
       {/* <div style={searchresultarea}> */}
-      <div className={searchresultareaClass}>
-        {resultdummydata.map((value) => {
-          return <Userdata data={value} />;
-        })}
-      </div>
+      <div className={searchresultareaClass}>{PageQuery()}</div>
     </div>
   );
 }
