@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import useStore from "../../Store/GameStore.jsx"
 
 import Exit from "../Assets/exit.png"
+import Help from "../Assets/help.png"
 
 
 function GameStart() {
@@ -13,7 +14,7 @@ function GameStart() {
     navigate('/');
   };
 
-  const { startTimer } = useStore();
+  const { startTimer, showModal, setShowModal } = useStore();
   const [count, setCount] = useState(null);
 
   useEffect(() => {
@@ -44,6 +45,9 @@ function GameStart() {
         </div>
       ) : (
         <>
+          <button className='absolute top-[14px] right-[100px] w-[78px] h-[60px]' onClick={setShowModal}>
+            <img src={Help} alt="" />
+          </button>
           <button className='absolute top-7 right-3 w-[60px] h-[60px]' onClick={handleGoHome}>
             <img src={Exit} alt="" />
           </button>

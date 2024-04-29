@@ -2,8 +2,8 @@ import { create } from 'zustand';
 
 const useStore = create(set => ({
   // 시작 시 모달
-  showModal: true,
-  setShowModal: (show) => set({ showModal: show }),
+  showModal: false,
+  setShowModal: () => set(state => ({ showModal: !state.showModal })),
 
   // 시간 및 스코어
   time: 180,
