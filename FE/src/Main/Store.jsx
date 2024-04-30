@@ -41,5 +41,5 @@ export const RankingStore = create((set) => ({
 
 export const MypageStore = create((set) => ({
   editmode: false,
-  setEditingmode: (value) => set({ editmode: value }),
+  setEditmode: (value) => set({ editmode: value }),
 }));

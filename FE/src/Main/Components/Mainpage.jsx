@@ -114,6 +114,7 @@ function Main() {
   const setRankingpopup = MainStore((state) => state.setRankingpopup);
   const mypagepopup = MainStore((state) => state.mypagepopup);
   const setMypagepopup = MainStore((state) => state.setMypagepopup);
+  const setIsBgm = MainStore((state) => state.setIsBgm);
   const dialogs = MainStore((state) => state.dialogs);
 
   const makedialog = () => {
@@ -167,6 +168,7 @@ function Main() {
   useEffect(() => {
     setRankingpopup(false);
     setMypagepopup(false);
+    setIsBgm(true);
   }, []);
 
   return (

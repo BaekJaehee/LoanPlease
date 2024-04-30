@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { LoginStore } from "../Store";
 import loginbutton from "./assets/loginbutton.png";
 import background from "./assets/splash_final.jpg";
@@ -50,6 +50,11 @@ const titlestyleClass = `
 font-cusFont1 text-cusColor1 text-[80px]
 `;
 
+const startButtonClass = `
+absolute z-[20] cursor-pointer 
+font-cusFont1 text-[40px] text-cusColor5 opacity-100
+`;
+
 function Login() {
   const setIsLogin = LoginStore((state) => state.setIsLogin);
   // const [bgstyle, setBgStyle] = useState(mainstyle);
@@ -57,9 +62,12 @@ function Login() {
   // const [panelstyle, setPanelStyle] = useState(mainarea);
   const [panelstyle, setPanelStyle] = useState(mainareaClass);
 
+  const [startButton, setStartButton] = useState(startButtonClass);
   const [audio, setAudio] = useState(<div></div>);
 
-  useEffect(() => {
+  const init = () => {
+    setStartButton(startButton.replace("opacity-100", "opacity-0"));
+
     setAudio(
       <iframe
         id="bgm"
@@ -68,9 +76,7 @@ function Login() {
         style={{ display: "none" }}
       ></iframe>,
     );
-  }, []);
 
-  useEffect(() => {
     const bgtimer = setTimeout(() => {
       // setBgStyle({ ...bgstyle, filter: "blur(2px)", transition: "all 10s" });
       setBgStyle(
@@ -89,7 +95,7 @@ function Login() {
       clearTimeout(bgtimer);
       clearTimeout(paneltimer);
     };
-  }, []);
+  };
 
   return (
     // <div
@@ -103,6 +109,9 @@ function Login() {
     // >
     <div className={loginstyleClass}>
       {audio}
+      <div onClick={init} className={startButton}>
+        Press To Start
+      </div>
       {/* <iframe
         src="audioes/intro_bgm.mp3"
         allow="autoplay"

@@ -1,7 +1,7 @@
 import rankingbutton from "./assets/rankingbutton.png";
 import startbutton from "./assets/startbutton.png";
 import mypagebutton from "./assets/mypagebutton.png";
-import { MainStore, RankingStore } from "../Store";
+import { MainStore, MypageStore, RankingStore } from "../Store";
 import { useNavigate } from "react-router-dom";
 
 // const buttonareastyle = {
@@ -30,6 +30,7 @@ function Buttonbar() {
   const mypagepopup = MainStore((state) => state.mypagepopup);
   const setMypagepopup = MainStore((state) => state.setMypagepopup);
   const setSearchmode = RankingStore((state) => state.setSearchmode);
+  const setEditmode = MypageStore((state) => state.setEditmode);
 
   const makeClickSound = () => {
     const audio = new Audio("audioes/pop_sound.mp3");
@@ -49,6 +50,7 @@ function Buttonbar() {
           setRankingpopup(!rankingpopup);
           setMypagepopup(false);
           setSearchmode(false);
+          setEditmode(false);
         }}
         src={rankingbutton}
       />
@@ -73,6 +75,7 @@ function Buttonbar() {
           setMypagepopup(!mypagepopup);
           setRankingpopup(false);
           setSearchmode(false);
+          setEditmode(false);
         }}
         src={mypagebutton}
       />
