@@ -57,12 +57,25 @@ function Login() {
   // const [panelstyle, setPanelStyle] = useState(mainarea);
   const [panelstyle, setPanelStyle] = useState(mainareaClass);
 
+  const [audio, setAudio] = useState(<div></div>);
+
+  useEffect(() => {
+    setAudio(
+      <iframe
+        id="bgm"
+        src="audioes/intro_bgm.mp3"
+        allow="autoplay"
+        style={{ display: "none" }}
+      ></iframe>,
+    );
+  }, []);
+
   useEffect(() => {
     const bgtimer = setTimeout(() => {
       // setBgStyle({ ...bgstyle, filter: "blur(2px)", transition: "all 10s" });
       setBgStyle(
         bgstyle.replace("blur-none", "blur-[2px]") +
-          " transition-all duration-[10000ms]",
+          " transition-all duration-[5000ms]",
       );
     }, 1500);
     const paneltimer = setTimeout(() => {
@@ -71,7 +84,7 @@ function Login() {
         panelstyle.replace("opacity-0", "opacity-100") +
           " transition-all duration-[3000ms]",
       );
-    }, 2000);
+    }, 5000);
     return () => {
       clearTimeout(bgtimer);
       clearTimeout(paneltimer);
@@ -89,6 +102,13 @@ function Login() {
     //   }}
     // >
     <div className={loginstyleClass}>
+      {audio}
+      {/* <iframe
+        src="audioes/intro_bgm.mp3"
+        allow="autoplay"
+        id="audio"
+        style={{ display: "none" }}
+      /> */}
       {/* <img style={bgstyle} src={background} /> */}
       <img className={bgstyle} src={background} />
       {/* <div style={panelstyle}> */}

@@ -38,3 +38,8 @@ export const RankingStore = create((set) => ({
   searchmode: false,
   setSearchmode: (value) => set({ searchmode: value }),
 }));
+
+export const MypageStore = create((set) => ({
+  editmode: false,
+  setEditingmode: (value) => set({ editmode: value }),
+}));

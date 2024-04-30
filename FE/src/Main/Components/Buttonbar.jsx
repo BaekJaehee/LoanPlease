@@ -2,6 +2,7 @@ import rankingbutton from "./assets/rankingbutton.png";
 import startbutton from "./assets/startbutton.png";
 import mypagebutton from "./assets/mypagebutton.png";
 import { MainStore, RankingStore } from "../Store";
+import { useNavigate } from "react-router-dom";
 
 // const buttonareastyle = {
 //   width: "100%",
@@ -22,11 +23,18 @@ z-[1] w-[30%] max-w-[300px] h-[90px] cursor-pointer
 `;
 
 function Buttonbar() {
+  const navigate = useNavigate();
+
   const rankingpopup = MainStore((state) => state.rankingpopup);
   const setRankingpopup = MainStore((state) => state.setRankingpopup);
   const mypagepopup = MainStore((state) => state.mypagepopup);
   const setMypagepopup = MainStore((state) => state.setMypagepopup);
   const setSearchmode = RankingStore((state) => state.setSearchmode);
+
+  const makeClickSound = () => {
+    const audio = new Audio("audioes/pop_sound.mp3");
+    audio.play();
+  };
 
   return (
     // <div style={buttonareastyle}>
@@ -37,6 +45,7 @@ function Buttonbar() {
         // style={{ maxWidth: "300px", cursor: "pointer" }}
         className={buttonstyleClass}
         onClick={() => {
+          makeClickSound();
           setRankingpopup(!rankingpopup);
           setMypagepopup(false);
           setSearchmode(false);
@@ -48,7 +57,10 @@ function Buttonbar() {
         // height={120}
         // style={{ maxWidth: "300px", cursor: "pointer" }}
         className={buttonstyleClass.replace("h-[90px]", "h-[120px]")}
-        onClick={() => {}}
+        onClick={() => {
+          makeClickSound();
+          navigate("/game");
+        }}
         src={startbutton}
       />
       <img
@@ -57,6 +69,7 @@ function Buttonbar() {
         // style={{ maxWidth: "300px", cursor: "pointer" }}
         className={buttonstyleClass}
         onClick={() => {
+          makeClickSound();
           setMypagepopup(!mypagepopup);
           setRankingpopup(false);
           setSearchmode(false);
