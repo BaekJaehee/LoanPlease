@@ -11,13 +11,20 @@ import won from "../Assets/coin_won.png";
 // 여러번 살 수 있는 아이템?
 
 function Shop() {
-  const { setCurrentComponent, currentComponent, isModalOpen, openModal, closeModal } = useStore();
+  const { setCurrentComponent, currentComponent, isModalOpen, openModal, closeModal, gameItems, loanItems } = useStore();
 
   let currentPage;
   if (currentComponent === "gameItem") {
     currentPage = <GameItem openModal={openModal} />;
+    // currentPage = gameItems.map((item, index) => (
+    //   <GameItem key={index} item={item} openModal={openModal} />
+    // ));
+    
   } else if (currentComponent == "loanItem") {
     currentPage = <LoanItem openModal={openModal} />;
+    // currentPage = loanItems.map((item, index) => (
+    //   <LoanItem key={index} item={item} openModal={openModal} />
+    // ));
   } else {
     currentPage = <SlotSetting />;
   }
