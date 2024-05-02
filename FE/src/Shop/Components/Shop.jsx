@@ -4,6 +4,7 @@ import GameItem from "./GameItem";
 import LoanItem from "./LoanItem";
 import SlotSetting from "./SlotSetting";
 import ShopModal from "../Modal/ShopModal";
+import ItemModal from "../Modal/ItemModal";
 import coin from "../Assets/coin.jpg";
 import won from "../Assets/coin_won.png";
 
@@ -11,27 +12,28 @@ import won from "../Assets/coin_won.png";
 // 여러번 살 수 있는 아이템?
 
 function Shop() {
-  const { setCurrentComponent, currentComponent, isModalOpen, openModal, closeModal, gameItems, loanItems } = useStore();
+  const { setCurrentComponent, currentComponent, isShopModalOpen, openShopModal, closeShopModal, isItemModalOpen, openItemModal, closeItemModal, gameItems, loanItems, product } = useStore();
 
   let currentPage;
   if (currentComponent === "gameItem") {
-    currentPage = <GameItem openModal={openModal} />;
+    currentPage = <GameItem openShopModal={openShopModal} />;
     // currentPage = gameItems.map((item, index) => (
     //   <GameItem key={index} item={item} openModal={openModal} />
     // ));
     
   } else if (currentComponent == "loanItem") {
-    currentPage = <LoanItem openModal={openModal} />;
+    currentPage = <LoanItem openShopModal={openShopModal} />;
     // currentPage = loanItems.map((item, index) => (
     //   <LoanItem key={index} item={item} openModal={openModal} />
     // ));
   } else {
-    currentPage = <SlotSetting />;
+    currentPage = <SlotSetting openItemModal={openItemModal} />;
   }
 
   return (
     <>
-      {isModalOpen && <ShopModal closeModal={closeModal} />}
+      {isShopModalOpen && <ShopModal closeShopModal={closeShopModal} />}
+      {isItemModalOpen && <ItemModal closeItemModal={closeItemModal} />}
       <div className="bg-cusColor3 min-h-screen w-full flex">
         <img src={coin} alt="배경" className="absolute w-full h-full object-cover opacity-50 z-0" />
         {/* 사이드바 */}

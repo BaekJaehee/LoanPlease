@@ -2,14 +2,14 @@ import { useRef } from "react";
 import { PropTypes } from "prop-types"; 
 import useStore from "../../Store/ShopStore";
 
-function ShopModal({ closeModal, item }) {
+function ShopModal({ closeShopModal, item }) {
   const { isPurchasing, setIsPurchasing, nextSlot, setIsPurchased } = useStore();
   const modalRef = useRef();
 
   // 모달 바깥을 클릭하면 모달이 닫히도록
   const handleOutsideClick = (e) => {
     if (modalRef.current && !modalRef.current.contains(e.target)) {
-      closeModal();
+      closeShopModal();
     }
   };
 
@@ -24,7 +24,7 @@ function ShopModal({ closeModal, item }) {
             <div className="flex justify-center mt-4">
               <button 
                 className="mx-2 px-4 py-2 bg-red-300 hover:bg-red-500 rounded-md border-2 border-b-4 border-black focus:ring-4 shadow-lg transform active:scale-y-75 transition-transform" 
-                onClick={() => { closeModal(); nextSlot(); }}
+                onClick={() => { closeShopModal(); nextSlot(); }}
                 // onClick={closeModal}
               >
                 닫기
@@ -49,7 +49,7 @@ function ShopModal({ closeModal, item }) {
               </button>
               <button 
                 className="mx-2 px-4 py-2 bg-red-300 hover:bg-red-500 rounded-md border-2 border-b-4 border-black focus:ring-4 shadow-lg transform active:scale-y-75 transition-transform" 
-                onClick={closeModal}
+                onClick={closeShopModal}
               >
                 취소
               </button>
@@ -62,7 +62,7 @@ function ShopModal({ closeModal, item }) {
 }
 
 ShopModal.propTypes = {
-  closeModal: PropTypes.func.isRequired,
+  closeShopModal: PropTypes.func.isRequired,
   item: PropTypes.object.isRequired,
 };
 

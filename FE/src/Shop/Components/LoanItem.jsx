@@ -1,7 +1,7 @@
 import { PropTypes } from "prop-types"; 
 import useStore from "../../Store/ShopStore";
 
-function LoanItem({ openModal }) {
+function LoanItem({ openShopModal }) {
   const { loanItems } = useStore();
 
   return (
@@ -15,7 +15,7 @@ function LoanItem({ openModal }) {
           </div>
           <button 
             className={`font-cusFont1 my-2 ${item.purchased === 1 ? 'bg-gray-300 border-gray-500' : 'bg-orange-400 hover:bg-orange-600 border-black'} border-2 border-b-4 rounded-lg px-3 py-2  text-xl w-[130px]`}
-            onClick={() => openModal()}
+            onClick={() => openShopModal()}
             disabled={item.purchased == 1}
           >
             {/* 가격 */}
@@ -28,7 +28,7 @@ function LoanItem({ openModal }) {
 }
 
 LoanItem.propTypes = {
-  openModal: PropTypes.func.isRequired,
+  openShopModal: PropTypes.func.isRequired,
 };
 
 export default LoanItem;

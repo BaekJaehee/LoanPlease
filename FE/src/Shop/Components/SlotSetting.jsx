@@ -1,160 +1,127 @@
+import { PropTypes } from "prop-types"; 
+import { useEffect } from "react";
 import useStore from "../../Store/ShopStore";
 
 // 슬롯에 중복으로 못넣게 하기
-// clear 왜간헐적으로 앞으로 안당겨지는지
 
-function SlotSetting() {
-  const { selected1, selected2, selected3, selected4, selected5, setSelected1, setSelected2, setSelected3, setSelected4, setSelected5 } = useStore();
+function SlotSetting({ openItemModal }) {
+  const { products, userSlotNum, currentPage, setCurrentPage, savedSlot, setSavedSlot, selected1, selected2, selected3, selected4, selected5, setSelected1, setSelected2, setSelected3, setSelected4, setSelected5 } = useStore();
+
+  const selectedSlots = [selected1, selected2, selected3, selected4, selected5];
+  const setSelectedSlots = [setSelected1, setSelected2, setSelected3, setSelected4, setSelected5];
+
+  const itemsPerPage = 6; // 페이지당 보여줄 아이템 수(임의)
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = products.slice(indexOfFirstItem, indexOfLastItem);
+  
+  useEffect(() => {
+    setCurrentPage(1); // 페이지가 변경될 때마다 첫 페이지로 초기화
+  }, [products, setCurrentPage]);
 
   const setting = (item) => {
-    if (!selected1.name) {
-      setSelected1(item);
-    } else if (!selected2.name) {
-      setSelected2(item);
-    } else if (!selected3.name) {
-      setSelected3(item);
-    } else if (!selected4.name) {
-      setSelected4(item);
-    } else if (!selected5.name) {
-      setSelected5(item)
+    // 선택된 슬롯을 찾아 상태를 업데이트
+    for (let i = 0; i < userSlotNum; i++) {
+      if (!selectedSlots[i].name) {
+        setSelectedSlots[i](item);
+        savedSlot.push(item);
+        break;
+      }
     }
+  };
+  
+  const clear = (selected, clearFunction) => {
+    // 선택된 슬롯의 인덱스를 찾기
+    const selectedIndex = selectedSlots.findIndex(slot => slot === selected);
+    // 현재 클릭한 슬롯을 비움
+    clearFunction({ name: null, description: null });
+    savedSlot.splice(selectedIndex, 1)[0];
+    // 앞쪽 슬롯들을 앞으로 당겨오기
+    for (let i = selectedIndex; i < userSlotNum - 1; i++) {
+      setSelectedSlots[i](selectedSlots[i + 1]);
+    }
+    // 마지막 슬롯을 비움
+    setSelectedSlots[userSlotNum - 1]({ name: null, description: null });
   };
 
-  const clear = (selected, clearFunction) => {
-    clearFunction({ name: null, description: null });
-    // 클릭한 상태의 위치를 확인하여 해당 상태를 업데이트
-    if (selected === selected1) {
-      setSelected1(selected2);
-      setSelected2(selected3);
-      setSelected3({ name: null, description: null });
-    } else if (selected === selected2) {
-      setSelected2(selected3);
-      setSelected3({ name: null, description: null });
-    } else if (selected === selected3) {
-      setSelected3({ name: null, description: null });
-    } else if (selected === selected4) {
-      setSelected4({ name: null, description: null});
-    } else if (selected === selected5) {
-      setSelected5({ name: null, description: null });
-    }
-  };
+  const reset = () => {
+    // 화면에서 지우기
+    setSelected1({ name: null, description: null });
+    setSelected2({ name: null, description: null });
+    setSelected3({ name: null, description: null });
+    setSelected4({ name: null, description: null });
+    setSelected5({ name: null, description: null });
+    // 배열 비우기
+    setSavedSlot([]);
+  }
+
+  console.log(savedSlot); // 왜 콘솔에 두번씩 나오는지 모르겠음 -> useEffect쓰면되는데 어차피 나중에 지울거라 그대로 두기
 
   return (
     <div>
-      {/* map써서 표시하기 */}
-      {/* 1-1 */}
+      {/* 페이지네이션 */}
+      <div className="flex justify-center my-2">
+        <button onClick={() => setCurrentPage(currentPage - 1)} disabled={currentPage === 1} className="mx-2 px-4 py-2 bg-red-300 hover:bg-red-500 rounded-md border-2 border-b-4 border-black focus:ring-4 shadow-lg transform active:scale-y-75 transition-transform">이전 페이지</button>
+        <button onClick={() => setCurrentPage(currentPage + 1)} disabled={currentItems.length < itemsPerPage} className="mx-2 px-4 py-2 bg-red-300 hover:bg-red-500 rounded-md border-2 border-b-4 border-black focus:ring-4 shadow-lg transform active:scale-y-75 transition-transform">다음 페이지</button>
+      </div>
+      {/* 사용자가 가지고 있는 아이템(products) */}
       <div className="flex justify-evenly">
-        <div
-          className="flex-grow-1 w-[200px] h-[250px] border-2 px-6 py-4 rounded-lg border-black bg-white mb-6 hover:cursor-pointer"
-          onClick={() => setting({ name: '사용자가 가지고있는 아이템 이름', description: '설명1' })}
-        >
-          <p className="font-cusFont1 text-2xl py-4 my-2">사용자가 가지고있는 아이템 이름</p>
-          <div className="h-[80px] font-cusFont2 text-xl py-3 my-2">
-            <p className="">설명1</p>
+        {/* {products.map((item, index) => ( */}
+        {currentItems.map((item, index) => (
+          <div 
+          key={index} 
+          className="font-cusFont1 flex-grow-1 w-[200px] h-[250px] border-2 px-6 py-4 rounded-lg border-black bg-white mb-6"
+          // onClick={() => setting({ name: item.name, description: item.description })}
+          >
+            <p className="text-2xl py-4 my-2">{item.name}</p>
+            <div className="h-[80px] text-xl py-3 my-2">
+              {/* <p>{item.description}</p> */}
+              <button 
+                className="mx-2 px-4 py-2 bg-yellow-300 hover:bg-yellow-500 rounded-md border-2 border-b-4 border-black focus:ring-4 shadow-lg transform active:scale-y-75 transition-transform"
+                onClick={() => openItemModal()}
+              >
+                상세보기
+              </button>
+              <button 
+                className="mx-2 px-4 py-2 bg-blue-300 hover:bg-blue-500 rounded-md border-2 border-b-4 border-black focus:ring-4 shadow-lg transform active:scale-y-75 transition-transform"
+                onClick={() => setting({ name: item.name })}
+              >
+                선택하기
+              </button>
+            </div>
           </div>
-        </div>
-        {/* 1-2 */}
-        <div
-          className="flex-grow-1 w-[200px] h-[250px] border-2 px-6 py-4 rounded-lg border-black bg-white mb-6"
-          onClick={() => setting({ name: '아이템2', description: '설명2' })}
-        >
-          <p className="font-cusFont1 text-2xl py-4 my-2">아이템2</p>
-          <div className="h-[80px] font-cusFont2 text-xl py-3 my-2">
-            <p className="">설명2</p>
-          </div>
-        </div>
-        {/* 1-3 */}
-        <div
-          className="flex-grow-1 w-[200px] h-[250px]  border-2 px-6 py-4 rounded-lg border-black bg-white mb-6"
-          onClick={() => setting({ name: '아이템3', description: '설명3' })}
-        >
-          <p className="font-cusFont1 text-2xl py-4 my-2">아이템3</p>
-          <div className="h-[80px] font-cusFont2 text-xl py-3 my-2">
-            <p className="">설명3</p>
-          </div>
-        </div>
-        {/* 1-4 */}
-        <div
-          className="flex-grow-1 w-[200px] h-[250px]  border-2 px-6 py-4 rounded-lg border-black bg-white mb-6"
-          onClick={() => setting({ name: '아이템4', description: '설명4' })}
-        >
-          <p className="font-cusFont1 text-2xl py-4 my-2">아이템4</p>
-          <div className="h-[80px] font-cusFont2 text-xl py-3 my-2">
-            <p className="">설명4</p>
-          </div>
-        </div>
-        {/* 1-5 */}
-        <div
-          className="flex-grow-1 w-[200px] h-[250px]  border-2 px-6 py-4 rounded-lg border-black bg-white mb-6"
-          onClick={() => setting({ name: '아이템5', description: '설명5' })}
-        >
-          <p className="font-cusFont1 text-2xl py-4 my-2">아이템5</p>
-          <div className="h-[80px] font-cusFont2 text-xl py-3 my-2">
-            <p className="">설명5</p>
-          </div>
-        </div>
+        ))}
       </div>
       <hr />
-      {/* 소지 슬롯개수만큼 */}
-      {/* 2-1 */}
+      {/* 소지 슬롯개수(userSlot)만큼 */}
       <div className="flex justify-evenly">
-        <div
-          className="flex-grow-1 w-[200px] h-[250px]  border-2 px-6 py-4 rounded-lg border-black bg-white"
-          onClick={() => clear(selected1, setSelected1)}
-        >
-          {/* 여기에 클릭해서 넣은거 표시되어야함 */}
-          <p className="font-cusFont1 text-2xl py-4 my-2">{selected1.name}</p>
-          <div className="h-[80px] font-cusFont2 text-xl py-3 my-2">
-            <p className="">{selected1.description}</p>
-          </div>
-        </div>
-        {/* 2-2 */}
-        <div
-          className="flex-grow-1 w-[200px] h-[250px] border-2 px-6 py-4 rounded-lg border-black bg-white"
-          onClick={() => clear(selected2, setSelected2)}
-        >
-          {/* 여기에 클릭해서 넣은거 표시되어야함 */}
-          <p className="font-cusFont1 text-2xl py-4 my-2">{selected2.name}</p>
-          <div className="h-[80px] font-cusFont2 text-xl py-3 my-2">
-            <p className="">{selected2.description}</p>
-          </div>
-        </div>
-        {/* 2-3 */}
-        <div
-          className="flex-grow-1 w-[200px] h-[250px] border-2 px-6 py-4 rounded-lg border-black bg-white"
-          onClick={() => clear(selected3, setSelected3)}
-        >
-          {/* 여기에 클릭해서 넣은거 표시되어야함 */}
-          <p className="font-cusFont1 text-2xl py-4 my-2">{selected3.name}</p>
-          <div className="h-[80px] font-cusFont2 text-xl py-3 my-2">
-            <p className="">{selected3.description}</p>
-          </div>
-        </div>
-        {/* 2-4 */}
-        <div
-          className="flex-grow-1 w-[200px] h-[250px] border-2 px-6 py-4 rounded-lg border-black bg-white"
-          onClick={() => clear(selected4, setSelected4)}
-        >
-          {/* 여기에 클릭해서 넣은거 표시되어야함 */}
-          <p className="font-cusFont1 text-2xl py-4 my-2">{selected4.name}</p>
-          <div className="h-[80px] font-cusFont2 text-xl py-3 my-2">
-            <p className="">{selected4.description}</p>
-          </div>
-        </div>
-        {/* 2-5 */}
-        <div
-          className="flex-grow-1 w-[200px] h-[250px] border-2 px-6 py-4 rounded-lg border-black bg-white"
-          onClick={() => clear(selected5, setSelected5)}
-        >
-          {/* 여기에 클릭해서 넣은거 표시되어야함 */}
-          <p className="font-cusFont1 text-2xl py-4 my-2">{selected5.name}</p>
-          <div className="h-[80px] font-cusFont2 text-xl py-3 my-2">
-            <p className="">{selected5.description}</p>
-          </div>
-        </div>
+      {[...Array(userSlotNum)].map((_, index) => {
+          const selectedSlot = selectedSlots[index];
+          const setSelectedSlot = setSelectedSlots[index];
+          return (
+            <div
+              key={index}
+              className="flex-grow-1 w-[200px] h-[200px]  border-2 px-6 py-4 rounded-lg border-black bg-white hover:cursor-pointer"
+              onClick={() => clear(selectedSlot, setSelectedSlot)}
+            >
+              {/* 여기에 클릭해서 넣은거 표시되어야함 */}
+              <p className="font-cusFont1 text-2xl py-4 my-2">{selectedSlot.name}</p>
+              <div className="h-[80px] font-cusFont2 text-xl py-3 my-2">
+                <p className="">{selectedSlot.description}</p>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+      <div className="flex justify-center my-2">
+        <button onClick={reset} className="font-cusFont1 mx-2 px-4 py-2 bg-red-300 hover:bg-red-500 rounded-md border-2 border-b-4 border-black focus:ring-4 shadow-lg transform active:scale-y-75 transition-transform">초기화</button>
       </div>
     </div>
   );
+}
+
+SlotSetting.propTypes = {
+  openItemModal: PropTypes.func.isRequired,
 }
 
 export default SlotSetting;

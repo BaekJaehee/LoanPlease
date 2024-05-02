@@ -3,11 +3,11 @@ import useStore from "../../Store/ShopStore";
 
 // function GameItem({ openModal }) {
 function GameItem({ item }) {
-  const { gameItems, selectedItem, setSelectedItem, openModal } = useStore();
+  const { gameItems, selectedItem, setSelectedItem, openShopModal } = useStore();
 
   const handleModalOpen = () => {
     setSelectedItem(item);
-    openModal();
+    openShopModal();
   }
 
   return (

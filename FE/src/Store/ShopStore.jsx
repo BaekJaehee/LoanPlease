@@ -50,9 +50,14 @@ const useStore = create((set) => ({
   ],
 
   // 구매 확인 모달
-  isModalOpen: false,
-  openModal: () => set({ isModalOpen: true }),
-  closeModal: () => set({ isModalOpen: false, isPurchased: false }),
+  isShopModalOpen: false,
+  openShopModal: () => set({ isShopModalOpen: true }),
+  closeShopModal: () => set({ isShopModalOpen: false, isPurchased: false }),
+
+  // 아이템 상세 모달
+  isItemModalOpen: false,
+  openItemModal: () => set({ isItemModalOpen: true }),
+  closeItemModal: () => set({ isItemModalOpen: false }),
 
   // 구매확정 모달로 전환
   isPurchasing: false,
@@ -88,6 +93,29 @@ const useStore = create((set) => ({
   setSelected3: (item) => set({ selected3: {name: item.name, description: item.description} }),
   setSelected4: (item) => set({ selected4: {name: item.name, description: item.description} }),
   setSelected5: (item) => set({ selected5: {name: item.name, description: item.description} }),
+
+  // 유저의 보유 슬롯 수(기본3 최대5)
+  userSlotNum: 4,
+  // 유저가 가지고 있는 아이템(isSet: 세팅여부)
+  products: [
+    {name: '상품1', description: '설명1', isSet: 0},
+    {name: '상품2', description: '설명2', isSet: 0},
+    {name: '상품3', description: '설명3', isSet: 0},
+    {name: '상품4', description: '설명4', isSet: 0},
+    {name: '상품5', description: '설명5', isSet: 0},
+    {name: '상품6', description: '설명6', isSet: 0},
+    {name: '상품7', description: '설명7', isSet: 0},
+    {name: '상품8', description: '설명8', isSet: 0},
+    {name: '상품9', description: '설명9', isSet: 0},
+    {name: '상품10', description: '설명10', isSet: 0},
+  ],
+  // 세팅된 슬롯:
+  savedSlot: [],
+  setSavedSlot: (item) => set({ savedSlot: item }),
+  
+  // 페이지네이션
+  currentPage: 0,
+  setCurrentPage: (page) => set({ currentPage: page }),
 }));
 
 export default useStore;
