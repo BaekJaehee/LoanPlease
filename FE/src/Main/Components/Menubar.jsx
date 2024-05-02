@@ -65,6 +65,11 @@ function Menubar(props) {
   const isBgm = MainStore((state) => state.isBgm);
   const setIsBgm = MainStore((state) => state.setIsBgm);
 
+  const makeClickSound = () => {
+    const audio = new Audio("audioes/pop_sound.mp3");
+    audio.play();
+  };
+
   return (
     // <div style={menubarstyle}>
     <div className={menubarstyleClass}>
@@ -91,10 +96,18 @@ function Menubar(props) {
         // style={{ margin: "10px", cursor: "pointer" }}
         className="m-2.5 cursor-pointer"
         onClick={() => {
+          makeClickSound();
           setIsBgm(!isBgm);
         }}
       >
         {isBgm ? <img src={musicon} /> : <img src={musicoff} />}
+        {isBgm ? (
+          <audio
+            src="audioes/intro_main_bgm.mp3"
+            autoPlay={true}
+            loop={true}
+          ></audio>
+        ) : null}
       </div>
     </div>
   );

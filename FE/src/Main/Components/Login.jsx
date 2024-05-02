@@ -1,7 +1,8 @@
-import { useEffect, useState } from "react";
-import { LoginStore } from "../Store";
+import { useState } from "react";
 import loginbutton from "./assets/loginbutton.png";
 import background from "./assets/splash_final.jpg";
+import { LoginStore } from "../Store";
+import { Cookies } from "react-cookie";
 
 // const mainarea = {
 //   display: "flex",
@@ -50,19 +51,39 @@ const titlestyleClass = `
 font-cusFont1 text-cusColor1 text-[80px]
 `;
 
+const startButtonClass = `
+absolute z-[20] cursor-pointer 
+font-cusFont1 text-[40px] text-cusColor5 opacity-100
+`;
+
 function Login() {
-  const setIsLogin = LoginStore((state) => state.setIsLogin);
   // const [bgstyle, setBgStyle] = useState(mainstyle);
   const [bgstyle, setBgStyle] = useState(mainstyleClass);
   // const [panelstyle, setPanelStyle] = useState(mainarea);
   const [panelstyle, setPanelStyle] = useState(mainareaClass);
 
-  useEffect(() => {
+  const [startButton, setStartButton] = useState(startButtonClass);
+  const [audio, setAudio] = useState(<div></div>);
+
+  const setIsLogin = LoginStore((state) => state.setIsLogin);
+
+  const init = () => {
+    setStartButton(startButton.replace("opacity-100", "opacity-0"));
+
+    setAudio(
+      <iframe
+        id="bgm"
+        src="audioes/intro_bgm.mp3"
+        allow="autoplay"
+        style={{ display: "none" }}
+      ></iframe>,
+    );
+
     const bgtimer = setTimeout(() => {
       // setBgStyle({ ...bgstyle, filter: "blur(2px)", transition: "all 10s" });
       setBgStyle(
         bgstyle.replace("blur-none", "blur-[2px]") +
-          " transition-all duration-[10000ms]",
+          " transition-all duration-[5000ms]",
       );
     }, 1500);
     const paneltimer = setTimeout(() => {
@@ -71,12 +92,12 @@ function Login() {
         panelstyle.replace("opacity-0", "opacity-100") +
           " transition-all duration-[3000ms]",
       );
-    }, 2000);
+    }, 5000);
     return () => {
       clearTimeout(bgtimer);
       clearTimeout(paneltimer);
     };
-  }, []);
+  };
 
   return (
     // <div
@@ -89,6 +110,16 @@ function Login() {
     //   }}
     // >
     <div className={loginstyleClass}>
+      {audio}
+      <div onClick={init} className={startButton}>
+        Press To Start
+      </div>
+      {/* <iframe
+        src="audioes/intro_bgm.mp3"
+        allow="autoplay"
+        id="audio"
+        style={{ display: "none" }}
+      /> */}
       {/* <img style={bgstyle} src={background} /> */}
       <img className={bgstyle} src={background} />
       {/* <div style={panelstyle}> */}
@@ -99,7 +130,16 @@ function Login() {
         <img width={200} src="/loanplease.png" />
         <img
           onClick={() => {
-            setIsLogin(true);
+            // setIsLogin(true);
+            // 구글 로그인 후 쿠키에 토큰 값 저장
+            const url =
+              "http://k10d105.p.ssafy.io:8082/oauth2/authorization/google";
+            location.href = url;
+            const cookie = new Cookies();
+            const token = cookie.get("Authorization");
+            if (token) {
+              setIsLogin(true);
+            }
           }}
           width={300}
           // style={{ cursor: "pointer" }}
