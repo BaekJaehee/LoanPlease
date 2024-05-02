@@ -109,6 +109,11 @@ const useStore = create((set) => ({
     {name: '상품9', description: '설명9', isSet: 0},
     {name: '상품10', description: '설명10', isSet: 0},
   ],
+
+  // 모달에 뜰 설명
+  selectedProduct: '',
+  setSelectedProduct: (description) => set({ selectedProduct: description }),
+
   // 세팅된 슬롯:
   savedSlot: [],
   setSavedSlot: (item) => set({ savedSlot: item }),

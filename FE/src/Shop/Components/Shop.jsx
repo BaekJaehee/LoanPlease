@@ -12,7 +12,7 @@ import won from "../Assets/coin_won.png";
 // 여러번 살 수 있는 아이템?
 
 function Shop() {
-  const { setCurrentComponent, currentComponent, isShopModalOpen, openShopModal, closeShopModal, isItemModalOpen, openItemModal, closeItemModal, gameItems, loanItems, product } = useStore();
+  const { setCurrentComponent, currentComponent, isShopModalOpen, openShopModal, closeShopModal, isItemModalOpen, openItemModal, closeItemModal, selectedItem, selectedProduct } = useStore();
 
   let currentPage;
   if (currentComponent === "gameItem") {
@@ -32,8 +32,8 @@ function Shop() {
 
   return (
     <>
-      {isShopModalOpen && <ShopModal closeShopModal={closeShopModal} />}
-      {isItemModalOpen && <ItemModal closeItemModal={closeItemModal} />}
+      {isShopModalOpen && <ShopModal closeShopModal={closeShopModal} selectedItem={selectedItem} />}
+      {isItemModalOpen && <ItemModal closeItemModal={closeItemModal}  selectedProduct={selectedProduct} />}
       <div className="bg-cusColor3 min-h-screen w-full flex">
         <img src={coin} alt="배경" className="absolute w-full h-full object-cover opacity-50 z-0" />
         {/* 사이드바 */}
