@@ -1,3 +1,5 @@
+import { LoginStore } from "../Store";
+
 const mycreditstyleClass = `
 flex justify-around items-center 
 w-full h-[35%] 
@@ -65,6 +67,8 @@ flex flex-col justify-center items-center h-full
 // };
 
 function Mycredit() {
+  const setIsLogin = LoginStore((state) => state.setIsLogin);
+
   return (
     // <div style={mycreditstyle}>
     <div className={mycreditstyleClass}>
@@ -114,7 +118,9 @@ function Mycredit() {
       {/* <div style={buttonarea}> */}
       <div className={buttonareaClass}>
         <div
-          onClick={() => {}}
+          onClick={() => {
+            setIsLogin(false);
+          }}
           // style={{
           //   fontFamily: "비트비트체v2",
           //   fontSize: "16px",
@@ -126,7 +132,9 @@ function Mycredit() {
           Logout
         </div>
         <div
-          onClick={() => {}}
+          onClick={() => {
+            setIsLogin(false);
+          }}
           // style={{
           //   fontFamily: "Orbit",
           //   fontSize: "12px",

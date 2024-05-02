@@ -415,6 +415,7 @@ export const resultdummydata = [
   },
 ];
 
+// 더미 데이터에서 6개씩 조회하는 함수
 function getData(page) {
   const result = [];
   for (var i = 6 * page; i < 6 * page + 6; i++) {
@@ -469,24 +470,12 @@ export const PageQuery = () => {
             {group && group?.map((unit) => <Userdata key={i} data={unit} />)}
           </Fragment>
         ))}
-      <div>
+      <div className="flex justify-center font-cusFont1">
         <button onClick={fetchNextPage} disabled={!hasNextPage}>
-          More Results
+          {hasNextPage ? "친구 소환하기" : "모든 친구를 소환했어요!"}
         </button>
+        {isFetching && !isFetchingNextPage ? "소환 중입니다..." : null}
       </div>
-      <div>{isFetching && !isFetchingNextPage ? "Fetching data..." : null}</div>
     </div>
   );
-
-  //   //스크롤 이벤트 시 결과 확장 조회하기
-  //   return (
-  //     <div>
-  //       {data &&
-  //         data.pages?.map((group, i) => (
-  //           <Fragment key={i}>
-  //             {group && group?.map((unit) => <Userdata key={i} data={unit} />)}
-  //           </Fragment>
-  //         ))}
-  //     </div>
-  //   );
 };

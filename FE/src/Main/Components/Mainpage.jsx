@@ -1,10 +1,11 @@
 import Buttonbar from "./Buttonbar";
 import Menubar from "./Menubar";
 import background from "./assets/main_final.jpg";
-import { MainStore } from "../Store";
-import { useState } from "react";
+import { LoginStore, MainStore } from "../Store";
+import { useEffect, useState } from "react";
 import Rankingpage from "./Rankingpage";
 import Mypage from "./Mypage";
+import Signup from "./Signup";
 
 const mainstyleClass = `
 z-[1] w-full min-w-[260px] h-screen 
@@ -19,7 +20,7 @@ top-[100px] h-[calc(100vh_-_100px)]
 
 const rankingpanelstyleClass = `
 absolute z-[2] 
-top-[20%] left-[3%] opacity-100 
+top-[20%] left-[3%] 
 `;
 
 const mypagepanelstyleClass = `
@@ -27,12 +28,15 @@ flex justify-center z-[2]
 `;
 
 const dialogstyleClass = `
-flex justify-center absolute 
-w-[340px] h-[250px] z-[5] 
-top-[38%] left-[38%] p-[30px] 
-bg-npcLeft bg-cover 
+absolute w-[340px] h-[250px] z-[5] 
+top-[38%] left-[38%] 
 scale-0 translate-y-[30%] 
 font-cusFont1 text-2xl whitespace-pre-wrap 
+`;
+
+const dialogtextstyleClass = `
+flex justify-center 
+w-full h-full p-[30px]  
 `;
 
 const femaleNPCClass = `
@@ -111,6 +115,10 @@ function Main() {
   const setRankingpopup = MainStore((state) => state.setRankingpopup);
   const mypagepopup = MainStore((state) => state.mypagepopup);
   const setMypagepopup = MainStore((state) => state.setMypagepopup);
+  const ismember = LoginStore((state) => state.ismember);
+  const setIsMember = LoginStore((state) => state.setIsMember);
+  const mydata = LoginStore((state) => state.mydata);
+  const setIsBgm = MainStore((state) => state.setIsBgm);
   const dialogs = MainStore((state) => state.dialogs);
 
   const makedialog = () => {
@@ -121,25 +129,32 @@ function Main() {
   const [text, setText] = useState("");
   // const [textStyle, setTextStyle] = useState(dialogstyle);
   const [textStyle, setTextStyle] = useState(dialogstyleClass);
+  const [imgStyle, setImgStyle] = useState(
+    dialogtextstyleClass + " bg-npcLeft bg-cover",
+  );
+
+  const makeClickSound = () => {
+    const audio = new Audio("audioes/pop_sound_2.mp3");
+    audio.play();
+  };
 
   const NPCClick = () => {
+    makeClickSound();
     setText(makedialog());
-    const start = setTimeout(() => {
-      // setTextStyle({
-      //   ...textStyle,
-      //   transform: "scale(0.5) translateY(0%)",
-      //   transition: "all 0.2s",
-      // });
-      setTextStyle(
-        textStyle.replace(
-          "scale-0 translate-y-[30%]",
-          "scale-50 translate-y-[0%]",
-        ),
-      );
-      if (!textStyle.includes(" transition-all duration-200")) {
-        setTextStyle(textStyle + " transition-all duration-200");
-      }
-    }, 200);
+    // setTextStyle({
+    //   ...textStyle,
+    //   transform: "scale(0.5) translateY(0%)",
+    //   transition: "all 0.2s",
+    // });
+    setTextStyle(
+      textStyle.replace(
+        "scale-0 translate-y-[30%]",
+        "scale-50 translate-y-[0%]",
+      ),
+    );
+    if (!textStyle.includes(" transition-all duration-200")) {
+      setTextStyle(textStyle + " transition-all duration-200");
+    }
     const end = setTimeout(() => {
       // setTextStyle({ ...textStyle, transform: "scale(0) translateY(30%)" });
       setTextStyle(
@@ -148,21 +163,34 @@ function Main() {
           "scale-0 translate-y-[30%]",
         ),
       );
-    }, 2200);
+    }, 2000);
     return () => {
-      clearTimeout(start);
       clearTimeout(end);
     };
   };
 
+  useEffect(() => {
+    if (mydata.nick != "-") setIsMember(true);
+  }, []);
+
+  useEffect(() => {
+    setRankingpopup(false);
+    setMypagepopup(false);
+    setIsBgm(true);
+  }, []);
+
   return (
     // <div style={mainstyle}>
     <div className={mainstyleClass}>
+      {!ismember ? <Signup /> : null}
       <Menubar
-        data={{ image: "/loanplease.png", nickname: "ssafy", rank: 6 }}
+        data={{ image: mydata.image, nickname: mydata.nick, rank: "-" }}
       />
       {/* <div style={rankingpanelstyle}> */}
-      <div className={rankingpanelstyleClass}>
+      <div
+        // className={rankpopup}
+        className={rankingpanelstyleClass}
+      >
         {rankingpopup ? <Rankingpage /> : <div></div>}
       </div>
       <div className={mypagepanelstyleClass}>
@@ -181,9 +209,7 @@ function Main() {
       <div
         className={femaleNPCClass}
         onClick={() => {
-          if (!textStyle.includes("bg-npcLeft")) {
-            setTextStyle(textStyle.replace("bg-npcRight", "bg-npcLeft"));
-          }
+          setImgStyle(dialogtextstyleClass + " bg-npcLeft bg-cover");
           NPCClick();
         }}
       ></div>
@@ -191,15 +217,14 @@ function Main() {
       <div
         className={maleNPCClass}
         onClick={() => {
-          if (!textStyle.includes("bg-npcRight")) {
-            setTextStyle(textStyle.replace("bg-npcLeft", "bg-npcRight"));
-          }
+          setImgStyle(dialogtextstyleClass + " bg-npcRight bg-cover");
           NPCClick();
         }}
       ></div>
       {/* <div style={textStyle}>{text}</div> */}
-      {/* <div style={textStyle}>{text}</div> */}
-      <div className={textStyle}>{text}</div>
+      <div className={textStyle}>
+        <div className={imgStyle}>{text}</div>
+      </div>
       <Buttonbar />
     </div>
   );

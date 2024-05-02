@@ -1,9 +1,11 @@
+import { useState } from "react";
 import myavatar from "./assets/myavatar.png";
 import myicon from "./assets/myicon.png";
+import { MypageStore } from "../Store";
 
 const myprofilestyleClass = `
 flex justify-around items-center 
-w-full h-[35%] 
+w-full h-[40%] 
 `;
 
 const myavatarareaClass = `
@@ -25,7 +27,13 @@ w-[60%] h-full
 
 const linestyleClass = `
 flex flex-row justify-between items-baseline 
-w-[60%] my-2.5 
+w-[60%] h-[40%]
+`;
+
+const inputlinestyleClass = `
+w-full max-w-[100px] 
+text-xs font-cusFont2 
+outline-none border-b-2 border-black mx-2.5 
 `;
 
 // const myprofilestyle = {
@@ -79,29 +87,76 @@ w-[60%] my-2.5
 // };
 
 function Myprofile() {
+  const editmode = MypageStore((state) => state.editmode);
+  const setEditmode = MypageStore((state) => state.setEditmode);
+  const [img, setImg] = useState(`${myavatar}`);
+  const [nickname, setNickname] = useState("loan_please");
+
+  const changeImg = (e) => {
+    const file = e.target.files[0];
+    if (file === null) return;
+    const url = URL.createObjectURL(file);
+    if (url !== "") setImg(url);
+  };
+
   return (
     // <div style={myprofilestyle}>
     <div className={myprofilestyleClass}>
       {/* <div style={myavatararea}> */}
       <div className={myavatarareaClass}>
         <div>
-          <img width={60} src={myavatar} />
+          <img
+            className="max-h-[60px] max-w-[60px]"
+            width={60}
+            height={60}
+            src={img}
+          />
         </div>
         {/* <div style={avatarbuttonstyle}>아바타 바꾸기</div> */}
-        <div className={avatarbuttonstyleClass}>아바타 바꾸기</div>
+        {/* <div className={avatarbuttonstyleClass}>아바타 바꾸기</div> */}
+        <label className={avatarbuttonstyleClass} htmlFor="imagefile">
+          아바타 바꾸기
+        </label>
+        <input
+          type="file"
+          id="imagefile"
+          accept="image/*"
+          onChange={(e) => {
+            changeImg(e);
+            e.target.value = "";
+          }}
+          className="hidden"
+        />
       </div>
       {/* <div style={myinfoarea}> */}
       <div className={myinfoareaClass}>
         {/* <div style={linestyle}> */}
         <div className={linestyleClass}>
           {/* <div style={{ fontFamily: "비트비트체v2", fontSize: "16px" }}> */}
-          <div className="font-cusFont1 text-base">닉네임</div>
+          <div className="min-w-[50px] font-cusFont1 text-base">닉네임</div>
           {/* <div style={{ fontFamily: "Orbit", fontSize: "12px" }}> */}
-          <div className="font-cusFont2 text-xs">loan_please</div>
+          {editmode ? (
+            <input
+              className={inputlinestyleClass}
+              onChange={(e) => {
+                setNickname(e.target.value);
+              }}
+              value={nickname}
+            />
+          ) : (
+            <div className="max-w-[100px] truncate font-cusFont2 text-xs ">
+              {nickname}
+            </div>
+          )}
           {/* <div
             style={{ fontFamily: "Orbit", fontSize: "8px", cursor: "pointer" }}
           > */}
-          <div className="cursor-pointer font-cusFont2 text-[8px]">
+          <div
+            onClick={() => {
+              setEditmode(!editmode);
+            }}
+            className="cursor-pointer font-cusFont2 text-[8px]"
+          >
             변경하기
           </div>
         </div>

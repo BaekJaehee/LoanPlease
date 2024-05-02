@@ -156,9 +156,15 @@ function Rankingpage() {
   const setSearchmode = RankingStore((state) => state.setSearchmode);
   const index = RankingStore((state) => state.index);
   const setIndex = RankingStore((state) => state.setIndex);
+
   const switchmode = () => {
     setIndex(1 - index);
     setSearchmode(false);
+  };
+
+  const makeClickSound = () => {
+    const audio = new Audio("audioes/pop_sound_2.mp3");
+    audio.play();
   };
 
   return (
@@ -190,13 +196,23 @@ function Rankingpage() {
           className={buttonareaClass}
         >
           <div
-            onClick={index == 1 ? switchmode : () => {}}
+            onClick={() => {
+              if (index == 1) {
+                makeClickSound();
+                switchmode();
+              }
+            }}
             className={buttons[index]}
           >
             전체랭킹
           </div>
           <div
-            onClick={index == 0 ? switchmode : () => {}}
+            onClick={() => {
+              if (index == 0) {
+                makeClickSound();
+                switchmode();
+              }
+            }}
             className={buttons[1 - index]}
           >
             친구랭킹
