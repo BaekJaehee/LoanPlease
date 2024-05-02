@@ -132,11 +132,13 @@ function Login() {
           onClick={() => {
             // setIsLogin(true);
             // 구글 로그인 후 쿠키에 토큰 값 저장
-            const url = "https://loanplease.kr/oauth2/authorization/google";
+            let url = "https://loanplease.kr/oauth2/authorization/google";
             location.href = url;
             const cookie = new Cookies();
             const token = cookie.get("Authorization");
             if (token) {
+              url = "http://localhost:5173";
+              location.href = url;
               setIsLogin(true);
             }
           }}
