@@ -4,8 +4,8 @@ import GameEnd from "./GameEnd.jsx";
 import ManualModal from "../Modal/ManualModal.jsx";
 import GamePause from "./GamePause.jsx"
 
-import SampleBackground from "../Assets/sample_background.png"
 import ExitGame from "../Assets/exit_game.png"
+import SampleCustomer from "../Assets/sample_customer.png"
 
 function Game() {
   function formatNumber(num) {
@@ -27,26 +27,66 @@ function Game() {
     deactivateFinance,
     isCustomer,
     callCustomer,
-    endCustomer,
+    endCustomer1,
+    endCustomer2,
     products,
     selectedProduct,
     selectProduct,
     isGamePause,
-    setGamePause } = useStore();
+    setGamePause,
+    dialogue,
+    dialogueNum,
+    isButtonEnabled,
+    showScore,
+    changeScore
+  } = useStore();
 
   return (
     <>
       {/* 전체 화면 설정 */}
       <div className="flex items-center min-h-screen w-full overflow-auto">
         {/* 고정 크기의 웹게임 화면, 크기 고정 */}
-        <div className="m-auto w-[1500px] min-w-[1500px] max-w-[1500px] h-[694px] min-h-[680px] max-h-[680px] border-cusColor3 border-[10px] font-cusFont1">
+        <div className="m-auto w-[1500px] min-w-[1500px] max-w-[1500px] h-[694px] min-h-[680px] max-h-[680px] border-cusColor3 border-[10px] font-cusFont1 bg-cusColor1/25">
           {showModal && <ManualModal closeModal={closeModal} />}
-          {!timerActive && !isGameEnd && <GameStart />}
+          {/* {!timerActive && !isGameEnd && <GameStart />} */}
           {isGameEnd && <GameEnd />}
           {isGamePause && <GamePause />}
           <div className="h-[70%] flex">
-            <div className="h-full w-[57.5%] border-[5px] border-black">
-              <img src={SampleBackground} alt="" className="w-full h-full" />
+            <div className="h-full w-[57.5%] border-[5px] border-black bg-game bg-cover">
+              {isCustomer && (
+                <>
+                  {showScore && <div className="text-center absolute w-[150px] top-[33px] left-[95px] bg-white/40 p-2">
+                    <p className={`text-3xl  ${changeScore >= 0 ? `text-rose-600` : `text-blue-500`}`}>
+                      {changeScore > 0 && `+`}{changeScore}
+                    </p>
+                  </div>}
+                  <img src={SampleCustomer} alt="" className="absolute left-[70px] top-[54px] h-[300px]" />
+                  <div className="bg-speechBubble bg-contain bg-no-repeat absolute left-[270px] h-[250px] w-[300px]">
+                    <div className="absolute left-[17px] top-[50px] w-[218px] h-[120px] text-lg text-center">
+                      <p>{dialogue[dialogueNum]}</p>
+                    </div>
+                    <div className="absolute left-[307px] top-[0px] bg-white w-[100px] h-[100px] border-black border-[5px]">
+                      <p>아이템1</p>
+                    </div>
+                    <div className="absolute left-[407px] top-[0px] bg-white w-[100px] h-[100px] border-black border-[5px]">
+                      <p>아이템2</p>
+                    </div>
+                    <div className="absolute left-[507px] top-[0px] bg-white w-[100px] h-[100px] border-black border-[5px]">
+                      <p>아이템3</p>
+                    </div>
+                    <div className="absolute left-[300px] top-[227px] bg-white w-[100px] h-[100px] border-black border-[5px]">
+                      <p>준비물1</p>
+                    </div>
+                    <div className="absolute left-[400px] top-[227px] bg-white w-[100px] h-[100px] border-black border-[5px]">
+                      <p>준비물2</p>
+                    </div>
+                  </div>
+                </>
+
+              )}
+
+
+
             </div>
 
             <div className="h-full w-[42.5%]">
@@ -82,7 +122,7 @@ function Game() {
 
               </div>
 
-              <div className="flex h-[62.5%] border-x-[5px] border-b-[5px] mx-5 border-black rounded-b-lg">
+              <div className="flex h-[62.5%] border-x-[5px] border-b-[5px] mx-5 border-black rounded-b-lg bg-white">
                 <p className="font-cusFont2">정보가 들어갈 자리입니다.</p>
               </div>
 
@@ -138,16 +178,17 @@ function Game() {
                 <div className="w-[30%] h-[94%]">
 
                   <div className="h-[50%] w-full flex justify-center items-center">
-                    <div className="w-[90%] h-[90%] bg-red-500 text-white flex justify-center items-center border-[5px] border-black rounded-lg text-xl" onClick={endCustomer}>
+                    <button className="w-[90%] h-[90%] bg-red-500 text-white flex justify-center items-center border-[5px] border-black rounded-lg text-xl" onClick={endCustomer1} disabled={!isButtonEnabled}>
                       <p>돌려보내기</p>
-                    </div>
+                    </button>
                   </div>
 
                   {selectedProduct ?
                     (<div className="h-[50%] w-full flex justify-center items-center">
-                      <div className="w-[90%] h-[90%] bg-cusColor5 text-cusColor4 flex justify-center items-center border-[5px] border-black rounded-lg text-xl" onClick={endCustomer}>
+                      <button className="w-[90%] h-[90%] bg-cusColor5 text-cusColor4 flex justify-center items-center border-[5px] border-black rounded-lg text-xl" onClick={endCustomer2} disabled={!isButtonEnabled}
+                      >
                         <p>추천하기</p>
-                      </div>
+                      </button>
                     </div>) :
                     (<div className="h-[50%] w-full flex justify-center items-center">
                       <div className="w-[90%] h-[90%] bg-gray-300 text-gray-400 flex justify-center items-center border-[5px] border-black rounded-lg text-xl">
