@@ -132,8 +132,7 @@ function Login() {
           onClick={() => {
             // setIsLogin(true);
             // 구글 로그인 후 쿠키에 토큰 값 저장
-            const url =
-              "http://k10d105.p.ssafy.io:8082/oauth2/authorization/google";
+            const url = "https://loanplease.kr/oauth2/authorization/google";
             location.href = url;
             const cookie = new Cookies();
             const token = cookie.get("Authorization");
