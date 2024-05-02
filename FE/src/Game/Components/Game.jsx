@@ -48,7 +48,7 @@ function Game() {
         {/* 고정 크기의 웹게임 화면, 크기 고정 */}
         <div className="m-auto w-[1500px] min-w-[1500px] max-w-[1500px] h-[694px] min-h-[680px] max-h-[680px] border-cusColor3 border-[10px] font-cusFont1 bg-cusColor1/25">
           {showModal && <ManualModal closeModal={closeModal} />}
-          {/* {!timerActive && !isGameEnd && <GameStart />} */}
+          {!timerActive && !isGameEnd && <GameStart />}
           {isGameEnd && <GameEnd />}
           {isGamePause && <GamePause />}
           <div className="h-[70%] flex">
