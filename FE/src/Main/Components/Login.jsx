@@ -1,7 +1,8 @@
 import { useState } from "react";
-import { LoginStore } from "../Store";
 import loginbutton from "./assets/loginbutton.png";
 import background from "./assets/splash_final.jpg";
+import { LoginStore } from "../Store";
+import { Cookies } from "react-cookie";
 
 // const mainarea = {
 //   display: "flex",
@@ -56,7 +57,6 @@ font-cusFont1 text-[40px] text-cusColor5 opacity-100
 `;
 
 function Login() {
-  const setIsLogin = LoginStore((state) => state.setIsLogin);
   // const [bgstyle, setBgStyle] = useState(mainstyle);
   const [bgstyle, setBgStyle] = useState(mainstyleClass);
   // const [panelstyle, setPanelStyle] = useState(mainarea);
@@ -64,6 +64,8 @@ function Login() {
 
   const [startButton, setStartButton] = useState(startButtonClass);
   const [audio, setAudio] = useState(<div></div>);
+
+  const setIsLogin = LoginStore((state) => state.setIsLogin);
 
   const init = () => {
     setStartButton(startButton.replace("opacity-100", "opacity-0"));
@@ -128,7 +130,16 @@ function Login() {
         <img width={200} src="/loanplease.png" />
         <img
           onClick={() => {
-            setIsLogin(true);
+            // setIsLogin(true);
+            // 구글 로그인 후 쿠키에 토큰 값 저장
+            const url =
+              "http://k10d105.p.ssafy.io:8082/oauth2/authorization/google";
+            location.href = url;
+            const cookie = new Cookies();
+            const token = cookie.get("Authorization");
+            if (token) {
+              setIsLogin(true);
+            }
           }}
           width={300}
           // style={{ cursor: "pointer" }}

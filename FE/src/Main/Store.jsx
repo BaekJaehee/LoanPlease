@@ -1,8 +1,17 @@
 import { create } from "zustand";
 
 export const LoginStore = create((set) => ({
-  isLogin: false,
+  ismember: false,
+  setIsMember: (member) => set({ ismember: member }),
+  isLogin: true,
   setIsLogin: (login) => set({ isLogin: login }),
+  mydata: {
+    image: "/loanplease.png",
+    nick: "-",
+    address: "",
+    rank: "-",
+  },
+  setMyData: (data) => set({ mydata: data }),
 }));
 
 export const MainStore = create((set) => ({

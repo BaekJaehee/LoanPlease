@@ -1,6 +1,6 @@
-import rankingbutton from "./assets/rankingbutton.png";
-import startbutton from "./assets/startbutton.png";
-import mypagebutton from "./assets/mypagebutton.png";
+import rankicon from "./assets/rank.png";
+import starticon from "./assets/start.png";
+import mypageicon from "./assets/mypage.png";
 import { MainStore, MypageStore, RankingStore } from "../Store";
 import { useNavigate } from "react-router-dom";
 
@@ -13,13 +13,90 @@ import { useNavigate } from "react-router-dom";
 //   alignItems: "baseline",
 // };
 
+// const buttonareastyle = {
+//   display: "flex",
+//   flexDirection: "row",
+//   justifyContent: "space-around",
+//   alignItems: "end",
+//   width: "100%",
+//   padding: "24px",
+// };
+
+// const rankiconstyle = {
+//   zIndex: "2",
+//   display: "flex",
+//   justifyContent: "space-around",
+//   alignItems: "center",
+//   width: "30%",
+//   maxWidth: "300px",
+//   height: "90px",
+//   padding: "0px 20px",
+//   borderRadius: "60px",
+//   backgroundColor: "#186F65",
+//   fontFamily: "비트비트체v2",
+//   fontSize: "40px",
+//   color: "#ffffff",
+//   cursor: "pointer",
+// };
+
+// const starticonstyle = {
+//   zIndex: "2",
+//   display: "flex",
+//   justifyContent: "space-around",
+//   alignItems: "center",
+//   flexDirection: "column",
+//   width: "30%",
+//   maxWidth: "300px",
+//   height: "120px",
+//   borderRadius: "60px",
+//   border: "6px #795458 solid",
+//   backgroundColor: "#FFFAB7",
+//   fontFamily: "비트비트체v2",
+//   fontSize: "30px",
+//   color: "#795458",
+//   cursor: "pointer",
+// };
+
+// const mypageiconstyle = {
+//   zIndex: "2",
+//   display: "flex",
+//   justifyContent: "space-around",
+//   alignItems: "center",
+//   width: "30%",
+//   maxWidth: "300px",
+//   height: "90px",
+//   padding: "0px 20px",
+//   borderRadius: "60px",
+//   backgroundColor: "#5BBCFF",
+//   fontFamily: "비트비트체v2",
+//   fontSize: "40px",
+//   color: "#FFC94A",
+//   cursor: "pointer",
+// };
+
 const buttonareastyleClass = `
-flex flex-row justify-around items-baseline 
-w-full p-6 
+flex justify-around items-end w-full p-6
 `;
 
-const buttonstyleClass = `
-z-[1] w-[30%] max-w-[300px] h-[90px] cursor-pointer 
+const rankiconstyleClass = `
+z-[2] flex justify-around items-center 
+w-[30%] max-w-[300px] h-[90px] 
+px-5 rounded-[40px] bg-cusColor1 
+font-cusFont1 text-[40px] text-white cursor-pointer 
+`;
+
+const starticonstyleClass = `
+z-[2] flex flex-col justify-around items-center 
+w-[30%] max-w-[300px] h-[120px] 
+rounded-[40px] border-[6px] border-cusColor2 
+bg-cusColor4 font-cusFont1 text-[30px] text-cusColor2 cursor-pointer 
+`;
+
+const mypageiconstyleClass = `
+z-[2] flex justify-around items-center 
+w-[30%] max-w-[300px] h-[90px] px-5 
+rounded-[40px] bg-cusColor5 
+font-cusFont1 text-[40px] text-cusColor3 cursor-pointer 
 `;
 
 function Buttonbar() {
@@ -40,11 +117,7 @@ function Buttonbar() {
   return (
     // <div style={buttonareastyle}>
     <div className={buttonareastyleClass}>
-      <img
-        // width="30%"
-        // height={90}
-        // style={{ maxWidth: "300px", cursor: "pointer" }}
-        className={buttonstyleClass}
+      <div
         onClick={() => {
           makeClickSound();
           setRankingpopup(!rankingpopup);
@@ -52,24 +125,24 @@ function Buttonbar() {
           setSearchmode(false);
           setEditmode(false);
         }}
-        src={rankingbutton}
-      />
-      <img
-        // width="30%"
-        // height={120}
-        // style={{ maxWidth: "300px", cursor: "pointer" }}
-        className={buttonstyleClass.replace("h-[90px]", "h-[120px]")}
+        // style={rankiconstyle}
+        className={rankiconstyleClass}
+      >
+        <img width={60} src={rankicon} />
+        랭킹보기
+      </div>
+      <div
         onClick={() => {
           makeClickSound();
           navigate("/game");
         }}
-        src={startbutton}
-      />
-      <img
-        // width="30%"
-        // height={90}
-        // style={{ maxWidth: "300px", cursor: "pointer" }}
-        className={buttonstyleClass}
+        // style={starticonstyle}
+        className={starticonstyleClass}
+      >
+        <img width={40} src={starticon} />
+        게임 시작하기
+      </div>
+      <div
         onClick={() => {
           makeClickSound();
           setMypagepopup(!mypagepopup);
@@ -77,8 +150,12 @@ function Buttonbar() {
           setSearchmode(false);
           setEditmode(false);
         }}
-        src={mypagebutton}
-      />
+        // style={mypageiconstyle}
+        className={mypageiconstyleClass}
+      >
+        <img width={50} src={mypageicon} />
+        마이페이지
+      </div>
     </div>
   );
 }

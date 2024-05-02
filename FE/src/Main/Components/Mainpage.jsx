@@ -1,10 +1,11 @@
 import Buttonbar from "./Buttonbar";
 import Menubar from "./Menubar";
 import background from "./assets/main_final.jpg";
-import { MainStore } from "../Store";
+import { LoginStore, MainStore } from "../Store";
 import { useEffect, useState } from "react";
 import Rankingpage from "./Rankingpage";
 import Mypage from "./Mypage";
+import Signup from "./Signup";
 
 const mainstyleClass = `
 z-[1] w-full min-w-[260px] h-screen 
@@ -19,7 +20,7 @@ top-[100px] h-[calc(100vh_-_100px)]
 
 const rankingpanelstyleClass = `
 absolute z-[2] 
-top-[20%] left-[3%] opacity-100 
+top-[20%] left-[3%] 
 `;
 
 const mypagepanelstyleClass = `
@@ -114,6 +115,9 @@ function Main() {
   const setRankingpopup = MainStore((state) => state.setRankingpopup);
   const mypagepopup = MainStore((state) => state.mypagepopup);
   const setMypagepopup = MainStore((state) => state.setMypagepopup);
+  const ismember = LoginStore((state) => state.ismember);
+  const setIsMember = LoginStore((state) => state.setIsMember);
+  const mydata = LoginStore((state) => state.mydata);
   const setIsBgm = MainStore((state) => state.setIsBgm);
   const dialogs = MainStore((state) => state.dialogs);
 
@@ -166,6 +170,10 @@ function Main() {
   };
 
   useEffect(() => {
+    if (mydata.nick != "-") setIsMember(true);
+  }, []);
+
+  useEffect(() => {
     setRankingpopup(false);
     setMypagepopup(false);
     setIsBgm(true);
@@ -174,11 +182,15 @@ function Main() {
   return (
     // <div style={mainstyle}>
     <div className={mainstyleClass}>
+      {!ismember ? <Signup /> : null}
       <Menubar
-        data={{ image: "/loanplease.png", nickname: "ssafy", rank: 6 }}
+        data={{ image: mydata.image, nickname: mydata.nick, rank: "-" }}
       />
       {/* <div style={rankingpanelstyle}> */}
-      <div className={rankingpanelstyleClass}>
+      <div
+        // className={rankpopup}
+        className={rankingpanelstyleClass}
+      >
         {rankingpopup ? <Rankingpage /> : <div></div>}
       </div>
       <div className={mypagepanelstyleClass}>
