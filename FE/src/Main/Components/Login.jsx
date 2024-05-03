@@ -1,8 +1,7 @@
 import { useState } from "react";
 import loginbutton from "./assets/loginbutton.png";
 import background from "./assets/splash_final.jpg";
-import { LoginStore } from "../Store";
-import { Cookies } from "react-cookie";
+import { useNavigate } from "react-router-dom";
 
 // const mainarea = {
 //   display: "flex",
@@ -57,6 +56,8 @@ font-cusFont1 text-[40px] text-cusColor5 opacity-100
 `;
 
 function Login() {
+  const navigate = useNavigate();
+
   // const [bgstyle, setBgStyle] = useState(mainstyle);
   const [bgstyle, setBgStyle] = useState(mainstyleClass);
   // const [panelstyle, setPanelStyle] = useState(mainarea);
@@ -64,9 +65,6 @@ function Login() {
 
   const [startButton, setStartButton] = useState(startButtonClass);
   const [audio, setAudio] = useState(<div></div>);
-
-  const setIsLogin = LoginStore((state) => state.setIsLogin);
-
   const init = () => {
     setStartButton(startButton.replace("opacity-100", "opacity-0"));
 
@@ -131,16 +129,7 @@ function Login() {
         <img
           onClick={() => {
             // setIsLogin(true);
-            // 구글 로그인 후 쿠키에 토큰 값 저장
-            let url = "https://loanplease.kr/oauth2/authorization/google";
-            location.href = url;
-            const cookie = new Cookies();
-            const token = cookie.get("Authorization");
-            if (token) {
-              url = "http://localhost:5173";
-              location.href = url;
-              setIsLogin(true);
-            }
+            navigate("/login");
           }}
           width={300}
           // style={{ cursor: "pointer" }}
