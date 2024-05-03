@@ -2,7 +2,9 @@ import { Link } from "react-router-dom";
 import useStore from "../../Store/ShopStore";
 import GameItem from "./GameItem";
 import LoanItem from "./LoanItem";
+import SlotSetting from "./SlotSetting";
 import ShopModal from "../Modal/ShopModal";
+import ItemModal from "../Modal/ItemModal";
 import coin from "../Assets/coin.jpg";
 import won from "../Assets/coin_won.png";
 
@@ -10,18 +12,27 @@ import won from "../Assets/coin_won.png";
 // 여러번 살 수 있는 아이템?
 
 function Shop() {
-  const { setCurrentComponent, currentComponent, isModalOpen, openModal, closeModal } = useStore();
+  const { setCurrentComponent, currentComponent, isShopModalOpen, openShopModal, closeShopModal, isItemModalOpen, openItemModal, closeItemModal, selectedItem, selectedProduct } = useStore();
 
   let currentPage;
   if (currentComponent === "gameItem") {
-    currentPage = <GameItem openModal={openModal} />;
+    currentPage = <GameItem openShopModal={openShopModal} />;
+    // currentPage = gameItems.map((item, index) => (
+    //   <GameItem key={index} item={item} openModal={openModal} />
+    // ));
+  } else if (currentComponent == "loanItem") {
+    currentPage = <LoanItem openShopModal={openShopModal} />;
+    // currentPage = loanItems.map((item, index) => (
+    //   <LoanItem key={index} item={item} openModal={openModal} />
+    // ));
   } else {
-    currentPage = <LoanItem openModal={openModal} />;
+    currentPage = <SlotSetting openItemModal={openItemModal} />;
   }
 
   return (
     <>
-      {isModalOpen && <ShopModal closeModal={closeModal} />}
+      {isShopModalOpen && <ShopModal closeShopModal={closeShopModal} selectedItem={selectedItem} />}
+      {isItemModalOpen && <ItemModal closeItemModal={closeItemModal} selectedProduct={selectedProduct} />}
       <div className="bg-cusColor3 min-h-screen w-full flex">
         <img src={coin} alt="배경" className="absolute w-full h-full object-cover opacity-50 z-0" />
         {/* 사이드바 */}
@@ -31,6 +42,7 @@ function Shop() {
             {/* 게임진행 아이템 */}
             <button
               // className="block w-full mb-4 py-2 bg-orange-400 hover:bg-orange-600 rounded-lg mb-2 border-2"
+              // className="block w-[215px] mb-4 py-2 bg-orange-400 hover:bg-orange-600 rounded-lg mb-2 border-2 border-b-4 text-lg border-black focus:ring-4 shadow-lg transform active:scale-y-75 transition-transform"
               className="block w-[215px] mb-4 py-2 bg-orange-400 hover:bg-orange-600 rounded-lg mb-2 border-2 border-b-4 text-lg border-black focus:ring-4 shadow-lg transform active:scale-y-75 transition-transform"
               onClick={() => setCurrentComponent("gameItem")}
             >
@@ -38,10 +50,19 @@ function Shop() {
             </button>
             {/* 대출상품 아이템 */}
             <button
+              // className="block w-[215px] mb-4 py-2 bg-orange-400 hover:bg-orange-600 rounded-lg border-2 border-b-4 text-lg border-black focus:ring-4 shadow-lg transform active:scale-y-75 transition-transform"
               className="block w-[215px] mb-4 py-2 bg-orange-400 hover:bg-orange-600 rounded-lg border-2 border-b-4 text-lg border-black focus:ring-4 shadow-lg transform active:scale-y-75 transition-transform"
               onClick={() => setCurrentComponent("loanItem")}
             >
               대출상품
+            </button>
+            {/* 대출상품 슬롯 세팅 */}
+            <button
+              // className="block w-[215px] mb-4 py-2 bg-orange-400 hover:bg-orange-600 rounded-lg border-2 border-b-4 text-lg border-black focus:ring-4 shadow-lg transform active:scale-y-75 transition-transform"
+              className="block w-[215px] mb-4 py-2 bg-orange-400 hover:bg-orange-600 rounded-lg border-2 border-b-4 text-lg border-black focus:ring-4 shadow-lg transform active:scale-y-75 transition-transform"
+              onClick={() => setCurrentComponent("slotSetting")}
+            >
+              슬롯세팅
             </button>
           </div>
           <div className="p-4 absolute bottom-2">
