@@ -12,7 +12,7 @@ function GoogleLogin() {
     let url = "https://loanplease.kr/oauth2/authorization/google";
     location.href = url;
     const cookies = new Cookies();
-    if (cookies) {
+    if (cookies.get("Authorization")) {
       navigate("/");
       setIsLogin(true);
     }

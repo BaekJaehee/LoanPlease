@@ -10,7 +10,9 @@ function Home() {
 
   useEffect(() => {
     const cookies = new Cookies();
-    if (cookies) setIsLogin(true);
+    const string = cookies.get("Authorization");
+    console.log(string);
+    if (string) setIsLogin(true);
   }, []);
 
   return <>{isLogin ? <Main /> : <Login />}</>;
