@@ -34,6 +34,14 @@ const useStore = create(set => ({
   showScore: false,
   changeScore: 0,
 
+  isVipActive: true,
+  isShieldActive: true,
+  isTimeActive: true,
+
+  useVip: () => set(state => ({ isVipActive: false })),
+  useShield: () => set(state => ({ isShieldActive: false })),
+  useTime: () => set(state => ({ isTimeActive: false })),
+
   // 금융, 비금융 구분
   isFinance: true,
   activateFinance: () => set(state => ({ isFinance: true })),
