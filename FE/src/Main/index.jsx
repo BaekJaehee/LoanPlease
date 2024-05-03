@@ -9,9 +9,10 @@ function Home() {
   const setIsLogin = LoginStore((state) => state.setIsLogin);
 
   useEffect(() => {
-    const cookie = new Cookies();
-    const token = cookie.get("Authorization");
-    if (token) setIsLogin(true);
+    const cookies = new Cookies();
+    const string = cookies.get("Authorization");
+    console.log(string);
+    if (string) setIsLogin(true);
   }, []);
 
   return <>{isLogin ? <Main /> : <Login />}</>;
