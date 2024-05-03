@@ -13,6 +13,7 @@ function GoogleLogin() {
     location.href = url;
     const cookie = new Cookies();
     const token = cookie.get("Authorization");
+    console.log(token);
     if (token) {
       localStorage.setItem("token", token);
       navigate("/");
