@@ -10,10 +10,7 @@ function Home() {
 
   useEffect(() => {
     const cookies = new Cookies();
-    const string = cookies.get("Authorization");
-    console.log(string);
-    const token = localStorage.getItem("token");
-    if (token) setIsLogin(true);
+    if (cookies) setIsLogin(true);
   }, []);
 
   return <>{isLogin ? <Main /> : <Login />}</>;
