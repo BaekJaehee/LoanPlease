@@ -1,13 +1,26 @@
 import { create } from "zustand";
 
 export const LoginStore = create((set) => ({
+  ismember: false,
+  setIsMember: (member) => set({ ismember: member }),
   isLogin: false,
   setIsLogin: (login) => set({ isLogin: login }),
+  mydata: {
+    image: "/loanplease.png",
+    nick: "-",
+    address: "",
+    rank: "-",
+  },
+  setMyData: (data) => set({ mydata: data }),
 }));
 
 export const MainStore = create((set) => ({
   isBgm: true,
   setIsBgm: (bgm) => set({ isBgm: bgm }),
+  rankingpopup: false,
+  setRankingpopup: (value) => set({ rankingpopup: value }),
+  mypagepopup: false,
+  setMypagepopup: (value) => set({ mypagepopup: value }),
   dialogs: [
     "당신에게 딱 맞는 대출 상품을 찾아드립니다!",
     "잠깐! 대출에 필요한 서류는 모두 준비되었나요?",
@@ -26,4 +39,16 @@ export const MainStore = create((set) => ({
     "신용카드는 상환 능력만 받쳐준다면 적절히 이용하는 것이 신용점수에 이로워요",
     "신용점수가 낮으면 신용카드 발급이 안 될 수도 있어요!",
   ],
+}));
+
+export const RankingStore = create((set) => ({
+  index: 0,
+  setIndex: (value) => set({ index: value }),
+  searchmode: false,
+  setSearchmode: (value) => set({ searchmode: value }),
+}));
+
+export const MypageStore = create((set) => ({
+  editmode: false,
+  setEditmode: (value) => set({ editmode: value }),
 }));

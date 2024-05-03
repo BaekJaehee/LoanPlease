@@ -10,8 +10,10 @@
     "preview": "vite preview --host 0.0.0.0 --port 5173"
   },
   "dependencies": {
+    "@tanstack/react-query": "^5.32.0",
     "axios": "^1.6.8",
     "react": "^18.2.0",
+    "react-cookie": "^7.1.4",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.22.3",
     "zustand": "^4.5.2"
