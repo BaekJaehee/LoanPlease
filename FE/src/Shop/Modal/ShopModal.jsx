@@ -2,7 +2,7 @@ import { useRef } from "react";
 import { PropTypes } from "prop-types"; 
 import useStore from "../../Store/ShopStore";
 
-function ShopModal({ closeShopModal, item }) {
+function ShopModal({ closeShopModal, selectedItem }) {
   const { isPurchasing, setIsPurchasing, nextSlot, setIsPurchased } = useStore();
   const modalRef = useRef();
 
@@ -42,7 +42,8 @@ function ShopModal({ closeShopModal, item }) {
                 onClick={() => {
                   setIsPurchasing(true);
                   // 개별 아이템 purchased 1
-                  setIsPurchased(item.name, 1)
+                  setIsPurchased(selectedItem.name, 1)
+                  // 아이템 타입에 따른 api 요청
                 }}
               >
                 확인
@@ -63,7 +64,7 @@ function ShopModal({ closeShopModal, item }) {
 
 ShopModal.propTypes = {
   closeShopModal: PropTypes.func.isRequired,
-  item: PropTypes.object.isRequired,
+  selectedItem: PropTypes.object.isRequired,
 };
 
 export default ShopModal;

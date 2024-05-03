@@ -59,7 +59,7 @@ function SlotSetting({ openItemModal }) {
     setSavedSlot([]);
   }
 
-  console.log(savedSlot); // 왜 콘솔에 두번씩 나오는지 모르겠음 -> useEffect쓰면되는데 어차피 나중에 지울거라 그대로 두기
+  // console.log(savedSlot); // 왜 콘솔에 두번씩 나오는지 모르겠음 -> useEffect쓰면되는데 어차피 나중에 지울거라 그대로 두기
 
   return (
     <div>
@@ -75,7 +75,8 @@ function SlotSetting({ openItemModal }) {
         <button 
           className="mx-2 px-4 py-2 bg-emerald-300 hover:bg-emerald-500 rounded-md border-2 border-b-4 border-black focus:ring-4 shadow-lg transform active:scale-y-75 transition-transform"
           onClick={() => setCurrentPage(currentPage + 1)} 
-          disabled={currentItems.length < itemsPerPage} 
+          disabled={currentItems.length !== itemsPerPage || currentPage === Math.ceil(products.length / itemsPerPage)} 
+
         >
           다음 페이지
         </button>
@@ -111,14 +112,14 @@ function SlotSetting({ openItemModal }) {
         ))}
       </div>
       {/* 소지 슬롯개수(userSlot)만큼 */}
-      <div className="flex justify-evenly mb-24">
+      <div className="flex justify-evenly">
       {[...Array(userSlotNum)].map((_, index) => {
           const selectedSlot = selectedSlots[index];
           const setSelectedSlot = setSelectedSlots[index];
           return (
             <div
               key={index}
-              className="flex-grow-1 w-[200px] h-[100px]  border-2 px-6 py-4 rounded-lg border-black bg-white hover:cursor-pointer text-center"
+              className="mt-12 mb-12 flex-grow-1 w-[200px] h-[100px]  border-2 px-6 py-4 rounded-lg border-black bg-white hover:cursor-pointer text-center"
               onClick={() => clear(selectedSlot, setSelectedSlot)}
             >
               {/* 여기에 클릭해서 넣은거 표시되어야함 */}
@@ -130,8 +131,21 @@ function SlotSetting({ openItemModal }) {
           );
         })}
       </div>
-      <div className="flex justify-center my-2">
-        <button onClick={reset} className="font-cusFont1 mx-2 px-4 py-2 bg-red-300 hover:bg-red-500 rounded-md border-2 border-b-4 border-black focus:ring-4 shadow-lg transform active:scale-y-75 transition-transform">초기화</button>
+      <div className="flex justify-center">
+        {/* 슬롯 저장 */}
+        <button 
+          // onClick={reset} 
+          className="w-[100px] transform -translate-x-1/2 font-cusFont1 mx-2 px-4 py-2 bg-blue-300 hover:bg-blue-500 rounded-md border-2 border-b-4 border-black focus:ring-4 shadow-lg transform active:scale-y-75 transition-transform"
+        >
+          저장
+        </button>
+        {/* 슬롯 초기화 */}
+        <button 
+          onClick={reset} 
+          className="w-[100px] transform -translate-x-1/2 font-cusFont1 mx-2 px-4 py-2 bg-red-300 hover:bg-red-500 rounded-md border-2 border-b-4 border-black focus:ring-4 shadow-lg transform active:scale-y-75 transition-transform"
+        >
+          초기화
+        </button>
       </div>
     </div>
   );

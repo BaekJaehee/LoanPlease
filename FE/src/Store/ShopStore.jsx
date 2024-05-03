@@ -118,9 +118,13 @@ const useStore = create((set) => ({
   savedSlot: [],
   setSavedSlot: (item) => set({ savedSlot: item }),
   
-  // 페이지네이션
+  // 슬롯용 페이지네이션
   currentPage: 0,
   setCurrentPage: (page) => set({ currentPage: page }),
+
+  // 대출 아이템용 페이지네이션
+  currentPage2: 0,
+  setCurrentPage2: (page) => set({ currentPage2: page }),
 }));
 
 export default useStore;
