@@ -19,6 +19,8 @@ export default {
         unfollow: "url('./Main/Components/assets/unfollow.png')",
         npcLeft: "url('./Main/Components/assets/dialog_frame.png')",
         npcRight: "url('./Main/Components/assets/dialog_frame_reversed.png')",
+        game: "url('./Game/Assets/background.png')",
+        speechBubble: "url('./Game/Assets/speech_bubble.png')",
       },
     },
   },

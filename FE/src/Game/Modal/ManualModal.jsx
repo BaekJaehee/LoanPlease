@@ -1,5 +1,5 @@
 import { PropTypes } from "prop-types";
-import gaming from "../Assets/gaming.png";
+import gaming from "../Assets/gaming2.png";
 import close from "../Assets/close.png";
 
 function ManualModal({ closeModal }) {
