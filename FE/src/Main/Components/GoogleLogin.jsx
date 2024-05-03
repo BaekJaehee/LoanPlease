@@ -11,10 +11,8 @@ function GoogleLogin() {
     // 구글 로그인 후 쿠키에 토큰 값 저장
     let url = "https://loanplease.kr/oauth2/authorization/google";
     location.href = url;
-    const cookie = new Cookies();
-    const token = cookie.get("Authorization");
-    if (token) {
-      localStorage.setItem("token", token);
+    const cookies = new Cookies();
+    if (cookies) {
       navigate("/");
       setIsLogin(true);
     }
