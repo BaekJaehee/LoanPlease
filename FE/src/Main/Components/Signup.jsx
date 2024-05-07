@@ -72,7 +72,7 @@ font-cusFont2 mx-2.5
 const signupbuttonstyleClass = `
 flex justify-center items-center 
 w-1/2 h-[80px] mx-[25%] 
-bg-cusColor2 text-white text-2xl cursor-pointer 
+bg-cusColor2 font-cusFont1 text-white text-2xl cursor-pointer 
 `;
 
 function Signup() {
