@@ -9,13 +9,23 @@ const useStore = create((set) => ({
   currentComponent: 'gameItem',
   setCurrentComponent: (component) => set({ currentComponent: component }),
 
+  // 유저 슬롯 개수(임시)
+  userSlotNum: 5,
+  setUserSlotNum: (num) => set({ userSlotNum: num }), // 구매하면 슬롯 수 변경
+
+  // 슬롯
+  slots: [
+    {id: 1, name: '슬롯 추가1', icon: addSlot, description: '대출 상품 슬롯을 영구적으로 1칸 추가합니다.', price: '2000', purchased: 0},
+    {id: 2, name: '슬롯 추가2', icon: addSlot, description: '대출 상품 슬롯을 영구적으로 1칸 추가합니다.', price: '5000', purchased: 0},
+  ],
+
   // 게임 아이템(임시)
   gameItems: [
-    {id:1 ,name: '슬롯 추가1', icon: addSlot, description: '대출 상품 슬롯을 영구적으로 1칸 추가합니다.', price: '2000', purchased: 0},
-    {id:2 ,name: '슬롯 추가2', icon: addSlot, description: '대출 상품 슬롯을 영구적으로 1칸 추가합니다.', price: '5000', purchased: 0},
-    {id:3 ,name: '시간 추가', icon: timeExtension, description: '게임 시간을 1분 추가합니다(한 게임 당 1회 한정).', price: '1000', purchased: 0},
-    {id:4 ,name: 'VIP실 보내기', icon: vip, description: '상품 선택과 상관 없이 최고 점수를 받습니다(1회 한정).', price: '500', purchased: 0},
-    {id:5 ,name: '보호막', icon: shield, description: '미리 사용 시, 감점 당할 일이 있으면 1회에 한해 방어합니다.', price: '500', purchased: 0},
+    // {id:1 ,name: '슬롯 추가1', icon: addSlot, description: '대출 상품 슬롯을 영구적으로 1칸 추가합니다.', price: '2000', purchased: 0},
+    // {id:2 ,name: '슬롯 추가2', icon: addSlot, description: '대출 상품 슬롯을 영구적으로 1칸 추가합니다.', price: '5000', purchased: 0},
+    {id:1 ,name: '시간 추가', icon: timeExtension, description: '게임 시간을 1분 추가합니다(한 게임 당 1회 한정).', price: '1000', purchased: 0},
+    {id:2 ,name: 'VIP실 보내기', icon: vip, description: '상품 선택과 상관 없이 최고 점수를 받습니다(1회 한정).', price: '500', purchased: 0},
+    {id:3 ,name: '보호막', icon: shield, description: '미리 사용 시, 감점 당할 일이 있으면 1회에 한해 방어합니다.', price: '500', purchased: 0},
   ],
 
   // 구매 아이템 선택
@@ -94,8 +104,6 @@ const useStore = create((set) => ({
   setSelected4: (item) => set({ selected4: {name: item.name, description: item.description} }),
   setSelected5: (item) => set({ selected5: {name: item.name, description: item.description} }),
 
-  // 유저의 보유 슬롯 수(기본3 최대5)
-  userSlotNum: 4,
   // 유저가 가지고 있는 아이템(isSet: 세팅여부)
   products: [
     {name: '상품1', description: '설명1', isSet: 0},
