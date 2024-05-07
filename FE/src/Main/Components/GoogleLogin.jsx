@@ -9,6 +9,7 @@ function GoogleLogin() {
 
   useEffect(() => {
     // 구글 로그인 후 쿠키에 토큰 값 저장
+    // let url = "http:localhost:8080/auth2/authorization/google";
     let url = "https://loanplease.kr/oauth2/authorization/google";
     location.href = url;
     const cookies = new Cookies();
