@@ -14,7 +14,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/login" element={<GoogleLogin />} />
+          <Route path="/signup" element={<GoogleLogin />} />
           <Route path="/game" element={<Game />} />
           <Route path="/shop" element={<Shop />} />
         </Routes>

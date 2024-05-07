@@ -129,7 +129,7 @@ function Login() {
         <img
           onClick={() => {
             // setIsLogin(true);
-            navigate("/login");
+            navigate("/signup");
           }}
           width={300}
           // style={{ cursor: "pointer" }}

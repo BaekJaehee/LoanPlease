@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import image from "./assets/myavatar.png";
 import { LoginStore } from "../Store";
+import { nicknameCheck, signup } from "../../API/API";
 
 // const signupareastyle = {
 //   zIndex: "10",
@@ -93,6 +94,24 @@ function Signup() {
     if (file === null) return;
     const url = URL.createObjectURL(file);
     if (url !== "") setImg(url);
+  };
+
+  const checkNickname = async () => {
+    const result = await nicknameCheck(nickname);
+    return result;
+  };
+
+  const signupComplete = async () => {
+    if (!checkNickname(nickname)) alert("닉네임을 확인해주세요");
+    const data = JSON.stringify({
+      nickname: nickname,
+      profileImage: img,
+    });
+    const result = await signup(data);
+    if (result.data) {
+      setIsMember(true);
+      setMyData({ image: img, nick: nickname, address: email, rank: "-" });
+    }
   };
 
   return (

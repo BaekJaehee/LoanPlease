@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const isNewMember = async (email) => {
+export const isNewMember = async (email) => {
   const url = `/api/email/${email}`;
   return await axios
     .get(url)
@@ -13,7 +13,7 @@ const isNewMember = async (email) => {
     });
 };
 
-const nicknameCheck = async (nickname) => {
+export const nicknameCheck = async (nickname) => {
   const url = `/api/nickname/${nickname}`;
   return await axios
     .get(url)
@@ -26,7 +26,7 @@ const nicknameCheck = async (nickname) => {
     });
 };
 
-const signup = async (data) => {
+export const signup = async (data) => {
   const url = "/api/auth/info";
   return await axios
     .post(url, data)
@@ -38,7 +38,7 @@ const signup = async (data) => {
     });
 };
 
-const changeInfo = async (token, data) => {
+export const changeInfo = async (token, data) => {
   const url = "/api/auth/info";
   return await axios
     .put(url, data, {
@@ -55,7 +55,7 @@ const changeInfo = async (token, data) => {
     });
 };
 
-const exit = async (token, id) => {
+export const exit = async (token, id) => {
   const url = `/api/auth/${id}`;
   return await axios
     .delete(url, {
