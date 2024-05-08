@@ -2,6 +2,7 @@ import { useState } from "react";
 import loginbutton from "./assets/loginbutton.png";
 import background from "./assets/splash_final.jpg";
 import { LoginStore } from "../Store";
+import axios from "axios";
 
 // const mainarea = {
 //   display: "flex",
@@ -67,6 +68,12 @@ function Login() {
   const mydata = LoginStore((state) => state.mydata);
   const setMyData = LoginStore((state) => state.setMyData);
   const setIsLogin = LoginStore((state) => state.setIsLogin);
+
+  const test = async () => {
+    axios.interceptors.response.use((response) => {
+      console.log(response.data);
+    });
+  };
 
   const init = () => {
     setStartButton(startButton.replace("opacity-100", "opacity-0"));
@@ -135,6 +142,7 @@ function Login() {
             } else {
               let url = "https://loanplease.kr/oauth2/authorization/google";
               location.href = url;
+              test();
             }
           }}
           width={300}

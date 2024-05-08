@@ -92,6 +92,7 @@ function Signup() {
 
   const setIsLogin = LoginStore((state) => state.setIsLogin);
   const setIsMember = LoginStore((state) => state.setIsMember);
+  const mydata = LoginStore((state) => state.mydata);
   const setMyData = LoginStore((state) => state.setMyData);
 
   const navigate = useNavigate();

@@ -1,9 +1,8 @@
-import { useCallback, useEffect } from "react";
+import { useEffect } from "react";
 import { LoginStore } from "../Store";
 import { useNavigate } from "react-router-dom";
 import { isNewMember } from "../../API/API";
 import Signup from "./Signup";
-import axios from "axios";
 
 function GoogleLogin() {
   const ismember = LoginStore((state) => state.ismember);
@@ -15,16 +14,6 @@ function GoogleLogin() {
     const result = await isNewMember(email);
     console.log(result);
   };
-
-  const test = async () => {
-    axios.interceptors.response.use((response) => {
-      console.log(response.data);
-    });
-  };
-
-  useEffect(() => {
-    test();
-  }, []);
 
   useEffect(() => {
     if (ismember) {
