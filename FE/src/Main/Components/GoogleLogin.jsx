@@ -18,7 +18,7 @@ function GoogleLogin() {
 
   const test = async () => {
     axios.interceptors.response.use((response) => {
-      console.log(response);
+      console.log(response.data);
     });
   };
 
