@@ -11,7 +11,6 @@ function Home() {
   useEffect(() => {
     const cookies = new Cookies();
     const string = cookies.get("Authorization");
-    console.log(string);
     if (string) setIsLogin(true);
   }, []);
 
