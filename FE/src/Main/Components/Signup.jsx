@@ -136,10 +136,13 @@ function Signup() {
     const data = JSON.stringify({
       nickname: nickname,
       profileImage: img,
+      email: email,
     });
     const result = await signup(data);
     if (result.data) {
       setIsMember(true);
+      setIsLogin(true);
+      navigate("/");
       setMyData({ image: img, nick: nickname, address: email, rank: "-" });
     }
   };
@@ -243,11 +246,12 @@ function Signup() {
         </div>
       </div>
       <div
-        onClick={() => {
-          setIsMember(true);
-          setIsLogin(true);
-          setMyData({ image: img, nick: nickname, address: email, rank: "-" });
-          navigate("/");
+        onClick={async () => {
+          signupComplete();
+          // setIsMember(true);
+          // setIsLogin(true);
+          // navigate("/");
+          // setMyData({ image: img, nick: nickname, address: email, rank: "-" });
         }}
         // style={signupbuttonstyle}
         className={signupbuttonstyleClass}
