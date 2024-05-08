@@ -15,7 +15,6 @@ function GoogleLogin() {
   };
 
   useEffect(() => {
-    // 구글 로그인 후 쿠키에 토큰 값 저장
     if (ismember) {
       setIsLogin(true);
       navigate("/");

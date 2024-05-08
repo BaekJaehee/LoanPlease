@@ -1,6 +1,7 @@
 import { useState } from "react";
 import loginbutton from "./assets/loginbutton.png";
 import background from "./assets/splash_final.jpg";
+import { LoginStore } from "../Store";
 
 // const mainarea = {
 //   display: "flex",
@@ -62,6 +63,11 @@ function Login() {
 
   const [startButton, setStartButton] = useState(startButtonClass);
   const [audio, setAudio] = useState(<div></div>);
+
+  const mydata = LoginStore((state) => state.mydata);
+  const setMyData = LoginStore((state) => state.setMyData);
+  const setIsLogin = LoginStore((state) => state.setIsLogin);
+
   const init = () => {
     setStartButton(startButton.replace("opacity-100", "opacity-0"));
 
@@ -120,14 +126,16 @@ function Login() {
       {/* <div style={panelstyle}> */}
       <div className={panelstyle}>
         {/* <div style={titlestyle}>론플리즈</div> */}
-        {/* <div style={titlestyleClass}>론플리즈</div> */}
         <div className={titlestyleClass}>론플리즈</div>
         <img width={200} src="/loanplease.png" />
         <img
           onClick={() => {
-            // setIsLogin(true);
-            let url = "https://loanplease.kr/oauth2/authorization/google";
-            location.href = url;
+            if (mydata.nick != "-") {
+              setIsLogin(true);
+            } else {
+              let url = "https://loanplease.kr/oauth2/authorization/google";
+              location.href = url;
+            }
           }}
           width={300}
           // style={{ cursor: "pointer" }}

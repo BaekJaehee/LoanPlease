@@ -5,7 +5,6 @@ import { LoginStore, MainStore } from "../Store";
 import { useEffect, useState } from "react";
 import Rankingpage from "./Rankingpage";
 import Mypage from "./Mypage";
-import Signup from "./Signup";
 
 const mainstyleClass = `
 z-[1] w-full min-w-[260px] h-screen 
@@ -115,7 +114,6 @@ function Main() {
   const setRankingpopup = MainStore((state) => state.setRankingpopup);
   const mypagepopup = MainStore((state) => state.mypagepopup);
   const setMypagepopup = MainStore((state) => state.setMypagepopup);
-  const ismember = LoginStore((state) => state.ismember);
   const setIsMember = LoginStore((state) => state.setIsMember);
   const mydata = LoginStore((state) => state.mydata);
   const setIsBgm = MainStore((state) => state.setIsBgm);
@@ -182,7 +180,6 @@ function Main() {
   return (
     // <div style={mainstyle}>
     <div className={mainstyleClass}>
-      {!ismember ? <Signup /> : null}
       <Menubar
         data={{ image: mydata.image, nickname: mydata.nick, rank: "-" }}
       />
