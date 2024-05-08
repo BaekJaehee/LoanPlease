@@ -89,6 +89,9 @@ function Signup() {
   const [email, setEmail] = useState("");
 
   const [mainstyle, setMainStyle] = useState(signupareastyleClass);
+  const [check, setCheck] = useState(false);
+  const [valid, setValid] = useState(false);
+  const [comment, setComment] = useState("");
 
   const setIsLogin = LoginStore((state) => state.setIsLogin);
   const setIsMember = LoginStore((state) => state.setIsMember);
@@ -121,8 +124,13 @@ function Signup() {
   };
 
   const test = async () => {
+    setCheck(true);
+    if (nickname == "") setComment("닉네임을 입력해주세요");
     const result = await nicknameCheck(nickname);
-    console.log(result);
+    result ? setValid(true) : setValid(false);
+    result
+      ? setComment("사용 가능한 닉네임입니다")
+      : setComment("닉네임이 중복됩니다");
   };
 
   // 테스트용 입력 데이터
@@ -133,7 +141,7 @@ function Signup() {
 
   const signupComplete = async () => {
     if (nickname == "") alert("닉네임은 필수 입력값입니다");
-    if (!checkNickname(nickname)) alert("닉네임을 확인해주세요");
+    if (!valid) alert("닉네임을 확인해주세요");
     const data = JSON.stringify({
       nickname: nickname,
       profileImage: img,
@@ -234,6 +242,15 @@ function Signup() {
           >
             중복 확인
           </div>
+        </div>
+        <div
+          className={
+            check
+              ? "block w-[50%] " + (valid ? "text-green-600" : "text-red-600")
+              : "hidden"
+          }
+        >
+          {comment}
         </div>
         <div className="flex w-[80%] min-w-[300px]">
           {/* <span style={{ fontFamily: "비트비트체v2", fontSize: "24px" }}> */}
