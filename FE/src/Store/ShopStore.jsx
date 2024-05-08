@@ -21,12 +21,13 @@ const useStore = create((set) => ({
 
   // 게임 아이템(임시)
   gameItems: [
-    // {id:1 ,name: '슬롯 추가1', icon: addSlot, description: '대출 상품 슬롯을 영구적으로 1칸 추가합니다.', price: '2000', purchased: 0},
-    // {id:2 ,name: '슬롯 추가2', icon: addSlot, description: '대출 상품 슬롯을 영구적으로 1칸 추가합니다.', price: '5000', purchased: 0},
-    {id:1 ,name: '시간 추가', icon: timeExtension, description: '게임 시간을 1분 추가합니다(한 게임 당 1회 한정).', price: '1000', purchased: 0},
-    {id:2 ,name: 'VIP실 보내기', icon: vip, description: '상품 선택과 상관 없이 최고 점수를 받습니다(1회 한정).', price: '500', purchased: 0},
-    {id:3 ,name: '보호막', icon: shield, description: '미리 사용 시, 감점 당할 일이 있으면 1회에 한해 방어합니다.', price: '500', purchased: 0},
+    // {id:1, name: '슬롯 추가1', icon: addSlot, description: '대출 상품 슬롯을 영구적으로 1칸 추가합니다.', price: '2000', purchased: 0},
+    // {id:2, name: '슬롯 추가2', icon: addSlot, description: '대출 상품 슬롯을 영구적으로 1칸 추가합니다.', price: '5000', purchased: 0},
+    // {id:1, name: '시간 추가', icon: timeExtension, description: '게임 시간을 1분 추가합니다(한 게임 당 1회 한정).', price: '1000', purchased: 0},
+    // {id:2, name: 'VIP실 보내기', icon: vip, description: '상품 선택과 상관 없이 최고 점수를 받습니다(1회 한정).', price: '500', purchased: 0},
+    // {id:3, name: '보호막', icon: shield, description: '미리 사용 시, 감점 당할 일이 있으면 1회에 한해 방어합니다.', price: '500', purchased: 0},
   ],
+  setGameItems: (item) => set({ gameItems: item }),
 
   // 구매 아이템 선택
   selectedItem: null,
@@ -49,15 +50,16 @@ const useStore = create((set) => ({
 
   // 대출 아이템(임시)
   loanItems: [
-    {id:1 ,name:'A대출', description: '금리가 어쩌고 설명', price: '123', purchased: 0},
-    {id:2 ,name:'B대출', description: 'Lorem ipsum dolor sit amet,', price: '000', purchased: 0},
-    {id:3 ,name:'C대출', description: 'consectetur adipiscing elit,', price: '456', purchased: 0},
-    {id:4 ,name:'D대출', description: 'sed do eiusmod tempor incididunt ut', price: '789', purchased: 1},
-    {id:5 ,name:'E대출', description: 'labore et dolore magna aliqua', price: '555', purchased: 1},
-    {id:6 ,name:'F대출', description: '금리가 어쩌고 설명', price: '777', purchased: 0},
-    {id:7 ,name:'G대출', description: '금리가 어쩌고 설명', price: '666', purchased: 0},
-    {id:8 ,name:'H대출', description: '금리가 어쩌고 설명', price: '666', purchased: 0},
+    // {id:1 ,name:'A대출', description: '금리가 어쩌고 설명', price: '123', purchased: 0},
+    // {id:2 ,name:'B대출', description: 'Lorem ipsum dolor sit amet,', price: '000', purchased: 0},
+    // {id:3 ,name:'C대출', description: 'consectetur adipiscing elit,', price: '456', purchased: 0},
+    // {id:4 ,name:'D대출', description: 'sed do eiusmod tempor incididunt ut', price: '789', purchased: 1},
+    // {id:5 ,name:'E대출', description: 'labore et dolore magna aliqua', price: '555', purchased: 1},
+    // {id:6 ,name:'F대출', description: '금리가 어쩌고 설명', price: '777', purchased: 0},
+    // {id:7 ,name:'G대출', description: '금리가 어쩌고 설명', price: '666', purchased: 0},
+    // {id:8 ,name:'H대출', description: '금리가 어쩌고 설명', price: '666', purchased: 0},
   ],
+  setLoanItems: (item) => set({ loanItems: item }),
 
   // 구매 확인 모달
   isShopModalOpen: false,

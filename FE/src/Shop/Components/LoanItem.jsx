@@ -2,8 +2,9 @@ import { PropTypes } from "prop-types";
 import { useEffect } from "react";
 import useStore from "../../Store/ShopStore";
 
-function LoanItem({ openShopModal }) {
-  const { loanItems, currentPage2, setCurrentPage2 } = useStore();
+function LoanItem({ openShopModal, loanItems }) {
+  // const { loanItems, currentPage2, setCurrentPage2 } = useStore();
+  const { currentPage2, setCurrentPage2 } = useStore();
 
   // const itemsPerPage = 8; // 페이지당 보여줄 아이템 수(임의)
   const itemsPerPage = 4; // 페이지당 보여줄 아이템 수(임의)
@@ -13,7 +14,10 @@ function LoanItem({ openShopModal }) {
   
   useEffect(() => {
     setCurrentPage2(1); // 페이지가 변경될 때마다 첫 페이지로 초기화
-  }, [loanItems, setCurrentPage2]);
+  // }, [loanItems, setCurrentPage2]);
+  }, [setCurrentPage2]);
+
+  console.log(loanItems)
 
 
   return (
@@ -44,7 +48,9 @@ function LoanItem({ openShopModal }) {
           <div key={index} className={`relative flex-grow-1 w-[280px] h-[500px] border-2 ${item.purchased === 1 ? 'bg-stone-300' : 'bg-white'} px-6 py-4 rounded-lg border-black ${item.purchased == 1 && 'cursor not allowed text-gray-600'}`}>
             <p className="font-cusFont1 text-3xl py-4 my-2">{item.name}</p>
             <div className="h-[80px] font-cusFont2 text-xl py-3 my-2">
-              <p className="">{item.description}</p>
+              <p className="">{item.content}</p>
+              <p className="">{item.interest}</p>
+              <p className="">{item.period}</p>
             </div>
             <button 
               className={`absolute bottom-3 left-1/2 transform -translate-x-1/2 font-cusFont1 my-2 ${item.purchased === 1 ? 'bg-gray-300 border-gray-500' : 'bg-orange-400 hover:bg-orange-600 border-black'} border-2 border-b-4 rounded-lg px-3 py-2  text-xl w-[130px]`}
@@ -63,6 +69,7 @@ function LoanItem({ openShopModal }) {
 
 LoanItem.propTypes = {
   openShopModal: PropTypes.func.isRequired,
+  loanItems: PropTypes.array.isRequired,
 };
 
 export default LoanItem;

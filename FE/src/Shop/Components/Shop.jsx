@@ -1,5 +1,7 @@
 import { Link } from "react-router-dom";
+import { useEffect } from "react";
 import useStore from "../../Store/ShopStore";
+import { itemsList } from "../API/ShopAPI";
 import GameItem from "./GameItem";
 import LoanItem from "./LoanItem";
 import SlotSetting from "./SlotSetting";
@@ -12,19 +14,30 @@ import won from "../Assets/coin_won.png";
 // 여러번 살 수 있는 아이템?
 
 function Shop() {
-  const { setCurrentComponent, currentComponent, isShopModalOpen, openShopModal, closeShopModal, isItemModalOpen, openItemModal, closeItemModal, selectedItem, selectedProduct } = useStore();
+  const { setCurrentComponent, currentComponent, isShopModalOpen, openShopModal, closeShopModal, isItemModalOpen, openItemModal, closeItemModal, selectedItem, selectedProduct, gameItems, setGameItems, loanItems, setLoanItems } = useStore();
+  
+  useEffect(() => {
+    const fetchItems = async () => {
+      try {
+        // const token = localStorage.getItem("accessToken");  // 토큰 어떻게 할지는...
+        // const data = await itemsList(token); // itemsList 함수를 사용하여 데이터 호출
+        const data = await itemsList(); // itemsList 함수를 사용하여 데이터 호출
+        // 받은 데이터로 상점 아이템 설정
+        setGameItems(data.itemList);
+        setLoanItems(data.loanList);
+      } catch (error) {
+        console.log(error);
+      }
+    };
 
+    fetchItems();
+  }, []); // 빈 배열을 전달하여 컴포넌트가 처음 렌더링될 때만 실행되도록 설정
+  
   let currentPage;
   if (currentComponent === "gameItem") {
-    currentPage = <GameItem openShopModal={openShopModal} />;
-    // currentPage = gameItems.map((item, index) => (
-    //   <GameItem key={index} item={item} openModal={openModal} />
-    // ));
+    currentPage = <GameItem openShopModal={openShopModal} gameItems={gameItems} />;
   } else if (currentComponent == "loanItem") {
-    currentPage = <LoanItem openShopModal={openShopModal} />;
-    // currentPage = loanItems.map((item, index) => (
-    //   <LoanItem key={index} item={item} openModal={openModal} />
-    // ));
+    currentPage = <LoanItem openShopModal={openShopModal} loanItems={loanItems} />;
   } else {
     currentPage = <SlotSetting openItemModal={openItemModal} />;
   }
