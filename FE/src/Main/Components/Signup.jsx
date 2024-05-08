@@ -2,6 +2,8 @@
 import { useEffect, useState } from "react";
 import image from "./assets/myavatar.png";
 import { LoginStore } from "../Store";
+import { nicknameCheck, signup } from "../../API/API";
+import { useNavigate } from "react-router-dom";
 
 // const signupareastyle = {
 //   zIndex: "10",
@@ -72,7 +74,7 @@ font-cusFont2 mx-2.5
 const signupbuttonstyleClass = `
 flex justify-center items-center 
 w-1/2 h-[80px] mx-[25%] 
-bg-cusColor2 text-white text-2xl cursor-pointer 
+bg-cusColor2 font-cusFont1 text-white text-2xl cursor-pointer 
 `;
 
 function Signup() {
@@ -82,6 +84,8 @@ function Signup() {
 
   const setIsMember = LoginStore((state) => state.setIsMember);
   const setMyData = LoginStore((state) => state.setMyData);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     setNickname("loanplease");
@@ -93,6 +97,24 @@ function Signup() {
     if (file === null) return;
     const url = URL.createObjectURL(file);
     if (url !== "") setImg(url);
+  };
+
+  const checkNickname = async () => {
+    const result = await nicknameCheck(nickname);
+    return result;
+  };
+
+  const signupComplete = async () => {
+    if (!checkNickname(nickname)) alert("닉네임을 확인해주세요");
+    const data = JSON.stringify({
+      nickname: nickname,
+      profileImage: img,
+    });
+    const result = await signup(data);
+    if (result.data) {
+      setIsMember(true);
+      setMyData({ image: img, nick: nickname, address: email, rank: "-" });
+    }
   };
 
   return (
@@ -183,6 +205,7 @@ function Signup() {
         onClick={() => {
           setIsMember(true);
           setMyData({ image: img, nick: nickname, address: email, rank: "-" });
+          navigate("/");
         }}
         // style={signupbuttonstyle}
         className={signupbuttonstyleClass}
