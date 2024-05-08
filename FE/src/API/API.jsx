@@ -5,6 +5,22 @@ export const isNewMember = async (email) => {
   return await axios
     .get(url)
     .then((response) => {
+      console.log(response.data);
+      if (response.status == 200) return true;
+      else return false;
+    })
+    .catch((e) => {
+      console.log(e);
+    });
+};
+
+export const uploadimage = async (file) => {
+  const url = "/api/upload";
+  const form = new FormData();
+  form.append("image", file);
+  return await axios
+    .post(url, form)
+    .then((response) => {
       if (response.status == 200) return true;
       else return false;
     })
@@ -27,7 +43,7 @@ export const nicknameCheck = async (nickname) => {
 };
 
 export const signup = async (data) => {
-  const url = "/api/auth/register";
+  const url = "/api/register";
   return await axios
     .post(url, data)
     .then((response) => {

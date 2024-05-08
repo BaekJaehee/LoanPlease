@@ -129,7 +129,7 @@ function Login() {
         <div className={titlestyleClass}>론플리즈</div>
         <img width={200} src="/loanplease.png" />
         <img
-          onClick={() => {
+          onClick={async () => {
             if (mydata.nick != "-") {
               setIsLogin(true);
             } else {
