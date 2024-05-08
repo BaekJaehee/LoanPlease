@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import image from "./assets/myavatar.png";
 import { LoginStore } from "../Store";
 import { nicknameCheck, signup } from "../../API/API";
+import { useNavigate } from "react-router-dom";
 
 // const signupareastyle = {
 //   zIndex: "10",
@@ -83,6 +84,8 @@ function Signup() {
 
   const setIsMember = LoginStore((state) => state.setIsMember);
   const setMyData = LoginStore((state) => state.setMyData);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     setNickname("loanplease");
@@ -202,6 +205,7 @@ function Signup() {
         onClick={() => {
           setIsMember(true);
           setMyData({ image: img, nick: nickname, address: email, rank: "-" });
+          navigate("/");
         }}
         // style={signupbuttonstyle}
         className={signupbuttonstyleClass}
