@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export const isNewMember = async (email) => {
-  const url = `/api/email/${email}`;
+  const url = `/api/auth/email/${email}`;
   return await axios
     .get(url)
     .then((response) => {
@@ -14,7 +14,7 @@ export const isNewMember = async (email) => {
 };
 
 export const nicknameCheck = async (nickname) => {
-  const url = `/api/nickname/${nickname}`;
+  const url = `/api/auth/nickname/${nickname}`;
   return await axios
     .get(url)
     .then((response) => {
@@ -27,7 +27,7 @@ export const nicknameCheck = async (nickname) => {
 };
 
 export const signup = async (data) => {
-  const url = "/api/auth/info";
+  const url = "/api/auth/register";
   return await axios
     .post(url, data)
     .then((response) => {
@@ -39,7 +39,7 @@ export const signup = async (data) => {
 };
 
 export const changeInfo = async (token, data) => {
-  const url = "/api/auth/info";
+  const url = "/api/auth";
   return await axios
     .put(url, data, {
       headers: {

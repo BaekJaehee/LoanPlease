@@ -56,19 +56,25 @@ import { useNavigate } from "react-router-dom";
 
 const signupareastyleClass = `
 z-10 absolute flex flex-col justify-around items-start 
-bg-white w-[70%] h-[70%] mx-[15%] my-[10%] p-[60px] 
-drop-shadow-[0_0_9999px_rgb(0, 0, 0)] 
+bg-white w-[70%] h-full mx-[15%] p-[60px] 
+translate-x-[-120%]
 `;
 
 const contentareastyleClass = `
-flex flex-col justify-center items-center 
-w-[50%] h-[80%] translate-x-1/2 
+flex flex-col justify-around items-center 
+min-w-[150px] w-full h-[80%] my-5  
 `;
 
 const inputareastyleClass = `
-w-full max-w-[200px] 
+w-full max-w-[300px] 
 outline-none border-b-2 
 font-cusFont2 mx-2.5 
+`;
+
+const validstyleClass = `
+flex justify-center items-center 
+w-20 h-10 rounded-[20px] bg-cusColor1 
+text-white font-cusFont1 text-xs cursor-pointer
 `;
 
 const signupbuttonstyleClass = `
@@ -82,6 +88,8 @@ function Signup() {
   const [nickname, setNickname] = useState("");
   const [email, setEmail] = useState("");
 
+  const [mainstyle, setMainStyle] = useState(signupareastyleClass);
+
   const setIsLogin = LoginStore((state) => state.setIsLogin);
   const setIsMember = LoginStore((state) => state.setIsMember);
   const setMyData = LoginStore((state) => state.setMyData);
@@ -89,8 +97,14 @@ function Signup() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    setNickname("loanplease");
-    setEmail("ssafy@gmail.com");
+    setTimeout(() => {
+      setMainStyle(
+        mainstyle.replace(
+          "translate-x-[-120%]",
+          "translate-x-0 transition-all duration-[1000ms]",
+        ),
+      );
+    }, 1000);
   }, []);
 
   const changeImg = (e) => {
@@ -105,37 +119,54 @@ function Signup() {
     return result;
   };
 
+  const test = async () => {
+    const result = await nicknameCheck(nickname);
+    console.log(result);
+  };
+
+  // 테스트용 입력 데이터
+  useEffect(() => {
+    setNickname("loanplease");
+    setEmail("ssafy@gmail.com");
+  }, []);
+
   const signupComplete = async () => {
+    if (nickname == "") alert("닉네임은 필수 입력값입니다");
     if (!checkNickname(nickname)) alert("닉네임을 확인해주세요");
     const data = JSON.stringify({
       nickname: nickname,
       profileImage: img,
+      email: email,
     });
     const result = await signup(data);
     if (result.data) {
       setIsMember(true);
+      setIsLogin(true);
+      navigate("/");
       setMyData({ image: img, nick: nickname, address: email, rank: "-" });
     }
   };
 
   return (
     // <div style={signupareastyle}>
-    <div className={signupareastyleClass}>
+    <div className={mainstyle}>
       <div>
         <p
-          style={{
-            fontFamily: "비트비트체v2",
-            fontSize: "36px",
-            color: "#FFC94A",
-          }}
+          // style={{
+          //   fontFamily: "비트비트체v2",
+          //   fontSize: "36px",
+          //   color: "#FFC94A",
+          // }}
+          className="ml-10 font-cusFont1 text-[36px] text-cusColor3"
         >
           은행원이 된 것을 환영합니다!
         </p>
         <p
-          style={{
-            fontFamily: "비트비트체v2",
-            fontSize: "20px",
-          }}
+          // style={{
+          //   fontFamily: "비트비트체v2",
+          //   fontSize: "20px",
+          // }}
+          className="ml-10 font-cusFont1 text-[20px]"
         >
           게임에서 사용할 계정 정보를 확인해주세요
         </p>
@@ -183,7 +214,7 @@ function Signup() {
             />
           </div>
         </div>
-        <div>
+        <div className="flex w-[80%] min-w-[500px]">
           {/* <span style={{ fontFamily: "비트비트체v2", fontSize: "24px" }}> */}
           <span className="font-cusFont1 text-2xl">닉네임 :</span>
           <input
@@ -194,20 +225,33 @@ function Signup() {
               setNickname(e.target.value);
             }}
           />
+          <div
+            onClick={async () => {
+              test();
+            }}
+            className={validstyleClass}
+          >
+            중복 확인
+          </div>
         </div>
-        <div>
+        <div className="flex w-[80%] min-w-[300px]">
           {/* <span style={{ fontFamily: "비트비트체v2", fontSize: "24px" }}> */}
           <span className="font-cusFont1 text-2xl">이메일 :</span>
           {/* <input style={inputareastyle} value={email} /> */}
-          <input className={inputareastyleClass} value={email} />
+          <input
+            className={inputareastyleClass}
+            value={email}
+            disabled={true}
+          />
         </div>
       </div>
       <div
-        onClick={() => {
-          setIsMember(true);
-          setIsLogin(true);
-          setMyData({ image: img, nick: nickname, address: email, rank: "-" });
-          navigate("/");
+        onClick={async () => {
+          signupComplete();
+          // setIsMember(true);
+          // setIsLogin(true);
+          // navigate("/");
+          // setMyData({ image: img, nick: nickname, address: email, rank: "-" });
         }}
         // style={signupbuttonstyle}
         className={signupbuttonstyleClass}
