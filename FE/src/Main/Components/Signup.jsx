@@ -82,6 +82,7 @@ function Signup() {
   const [nickname, setNickname] = useState("");
   const [email, setEmail] = useState("");
 
+  const setIsLogin = LoginStore((state) => state.setIsLogin);
   const setIsMember = LoginStore((state) => state.setIsMember);
   const setMyData = LoginStore((state) => state.setMyData);
 
@@ -204,6 +205,7 @@ function Signup() {
       <div
         onClick={() => {
           setIsMember(true);
+          setIsLogin(true);
           setMyData({ image: img, nick: nickname, address: email, rank: "-" });
           navigate("/");
         }}

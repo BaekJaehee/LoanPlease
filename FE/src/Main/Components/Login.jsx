@@ -1,7 +1,6 @@
 import { useState } from "react";
 import loginbutton from "./assets/loginbutton.png";
 import background from "./assets/splash_final.jpg";
-import { useNavigate } from "react-router-dom";
 
 // const mainarea = {
 //   display: "flex",
@@ -56,8 +55,6 @@ font-cusFont1 text-[40px] text-cusColor5 opacity-100
 `;
 
 function Login() {
-  const navigate = useNavigate();
-
   // const [bgstyle, setBgStyle] = useState(mainstyle);
   const [bgstyle, setBgStyle] = useState(mainstyleClass);
   // const [panelstyle, setPanelStyle] = useState(mainarea);
@@ -129,7 +126,8 @@ function Login() {
         <img
           onClick={() => {
             // setIsLogin(true);
-            navigate("/signup");
+            let url = "https://loanplease.kr/oauth2/authorization/google";
+            location.href = url;
           }}
           width={300}
           // style={{ cursor: "pointer" }}

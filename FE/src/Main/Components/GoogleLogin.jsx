@@ -16,17 +16,13 @@ function GoogleLogin() {
 
   useEffect(() => {
     // 구글 로그인 후 쿠키에 토큰 값 저장
-    let url = "https://loanplease.kr/oauth2/authorization/google";
-    location.href = url;
     if (ismember) {
-      navigate("/");
       setIsLogin(true);
-    } else {
-      navigate("/signup");
+      navigate("/");
     }
   }, []);
 
-  return !ismember ? <Signup /> : <div></div>;
+  return <div>{!ismember ? <Signup /> : null}</div>;
 }
 
 export default GoogleLogin;
