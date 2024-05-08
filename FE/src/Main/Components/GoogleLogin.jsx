@@ -3,6 +3,7 @@ import { LoginStore } from "../Store";
 import { useNavigate } from "react-router-dom";
 import { isNewMember } from "../../API/API";
 import Signup from "./Signup";
+import axios from "axios";
 
 function GoogleLogin() {
   const ismember = LoginStore((state) => state.ismember);
@@ -15,8 +16,14 @@ function GoogleLogin() {
     console.log(result);
   };
 
-  useCallback((response) => {
-    console.log(response);
+  const test = async () => {
+    axios.interceptors.response.use((response) => {
+      console.log(response.data);
+    });
+  };
+
+  useEffect(() => {
+    test();
   }, []);
 
   useEffect(() => {
