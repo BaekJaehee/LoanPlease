@@ -1,11 +1,12 @@
 import { PropTypes } from "prop-types"; 
 import { useEffect } from "react";
 import useStore from "../../Store/ShopStore";
+import { owendLoanItems, setLoanItems } from "../API/ShopAPI";
 
-// 슬롯에 중복으로 못넣게 하기
+// db에는 1374 순서인데 왜 1347로 찍히는건지?
 
 function SlotSetting({ openItemModal }) {
-  const { products, userSlotNum, currentPage, setCurrentPage, setSelectedProduct, savedSlot, setSavedSlot, selected1, selected2, selected3, selected4, selected5, setSelected1, setSelected2, setSelected3, setSelected4, setSelected5 } = useStore();
+  const { products, setProducts, userSlotNum, currentPage, setCurrentPage, setSelectedProduct, savedSlot, setSavedSlot, selected1, selected2, selected3, selected4, selected5, setSelected1, setSelected2, setSelected3, setSelected4, setSelected5 } = useStore();
 
   const selectedSlots = [selected1, selected2, selected3, selected4, selected5];
   const setSelectedSlots = [setSelected1, setSelected2, setSelected3, setSelected4, setSelected5];
@@ -19,19 +20,48 @@ function SlotSetting({ openItemModal }) {
     setCurrentPage(1); // 페이지가 변경될 때마다 첫 페이지로 초기화
   }, [products, setCurrentPage]);
 
-  const showDescription = (description) => {
-    setSelectedProduct(description);
+  useEffect(() => {
+    const fetchItems = async () => {
+      try {
+        // const token = localStorage.getItem("accessToken");  // 토큰 어떻게 할지는...
+        // const data = await itemsList(token); // itemsList 함수를 사용하여 데이터 호출
+        // const data = await setLoanItems(); // itemsList 함수를 사용하여 데이터 호출
+        // 생각해보니 렌더링할 때는 유저 보유 아이템을 가져와야 할 듯
+        const data = await owendLoanItems();
+        // 받은 데이터로 상점 아이템 설정
+        // setSavedSlot(data);
+        setProducts(data);
+        console.log("보유: ", data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchItems();
+  }, []); // 빈 배열을 전달하여 컴포넌트가 처음 렌더링될 때만 실행되도록 설정
+
+  const showDetail = (content) => {
+    setSelectedProduct(content);
   };
 
   const setting = (item) => {
-    // 선택된 슬롯을 찾아 상태를 업데이트
-    for (let i = 0; i < userSlotNum; i++) {
-      if (!selectedSlots[i].name) {
-        setSelectedSlots[i](item);
-        savedSlot.push(item);
-        break;
+    // 이미 배치된건지 검사
+    const isAlreadySelected = selectedSlots.some(selectedSlot => selectedSlot.name === item.name);
+    // const isAlreadySelected = selectedSlots.findIndex(selectedSlot => selectedSlot.name === item.name);
+    // 중복이 아닐 때
+    if (!isAlreadySelected) {
+      // 선택된 슬롯을 찾아 상태를 업데이트
+      for (let i = 0; i < userSlotNum; i++) {
+        if (!selectedSlots[i].name) {
+          // setSelectedSlots[i](item.name);
+          setSelectedSlots[i](item);  // 근데 이러니까 배열 길이는 userSlotNum 고정에 빈게 null로 표시된다
+          savedSlot.push(item.id);
+          break;
+        }
       }
     }
+    console.log("selected", selectedSlots)
+    console.log("슬롯", savedSlot);
   };
   
   const clear = (selected, clearFunction) => {
@@ -50,13 +80,29 @@ function SlotSetting({ openItemModal }) {
 
   const reset = () => {
     // 화면에서 지우기
-    setSelected1({ name: null, description: null });
-    setSelected2({ name: null, description: null });
-    setSelected3({ name: null, description: null });
-    setSelected4({ name: null, description: null });
-    setSelected5({ name: null, description: null });
+    setSelected1({ name: null });
+    setSelected2({ name: null });
+    setSelected3({ name: null });
+    setSelected4({ name: null });
+    setSelected5({ name: null });
     // 배열 비우기
     setSavedSlot([]);
+  }
+
+  const save = async () => {
+    try {
+      // const data = savedSlot.map(item => {item.loan.loanId});
+      // await setSavedSlot(data);
+      console.log(savedSlot);
+      // const jsonData = JSON.stringify(savedSlot);
+      // console.log(jsonData)
+      // const data = await setLoanItems(jsonData)
+      const data = await setLoanItems(savedSlot)
+      console.log(data);
+      console.log("save successfully");
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   // console.log(savedSlot); // 왜 콘솔에 두번씩 나오는지 모르겠음 -> useEffect쓰면되는데 어차피 나중에 지울거라 그대로 두기
@@ -82,7 +128,8 @@ function SlotSetting({ openItemModal }) {
         </button>
       </div>
       {/* 사용자가 가지고 있는 아이템(products) */}
-      <div className="flex justify-evenly">
+      {/* <div className="flex justify-evenly"> */}
+      <div className="flex justify-stretch gap-3">
         {/* {products.map((item, index) => ( */}
         {currentItems.map((item, index) => (
           <div 
@@ -90,12 +137,14 @@ function SlotSetting({ openItemModal }) {
           className="font-cusFont1 flex-grow-1 w-[200px] h-[250px] border-2 px-6 py-4 rounded-lg border-black bg-white mb-6 text-center"
           // onClick={() => setting({ name: item.name, description: item.description })}
           >
-            <p className="text-2xl py-4 my-2">{item.name}</p>
+            {/* <p className="text-2xl py-4 my-2">{item.name}</p> */}
+            <p className="text-2xl py-4 my-2">{item.loan.name}</p>
             <div className="h-[80px] text-xl py-3 my-2">
               <button 
                 className="mx-2 px-4 py-2 bg-amber-300 hover:bg-amber-500 rounded-md border-2 border-b-4 border-black focus:ring-4 shadow-lg transform active:scale-y-75 transition-transform"
                 onClick={() => {
-                  showDescription(item.description);
+                  // showDescription(item.description);
+                  showDetail(item.loan);
                   openItemModal();
                 }}
               >
@@ -103,7 +152,8 @@ function SlotSetting({ openItemModal }) {
               </button>
               <button 
                 className="mx-2 px-4 py-2 bg-blue-300 hover:bg-blue-500 rounded-md border-2 border-b-4 border-black focus:ring-4 shadow-lg transform active:scale-y-75 transition-transform"
-                onClick={() => setting({ name: item.name })}
+                // onClick={() => setting({ name: item.loan.name })}
+                onClick={() => setting({ id: item.loan.loanId, name: item.loan.name })}
               >
                 선택하기
               </button>
@@ -124,9 +174,7 @@ function SlotSetting({ openItemModal }) {
             >
               {/* 여기에 클릭해서 넣은거 표시되어야함 */}
               <p className="font-cusFont1 text-2xl py-2 my-2">{selectedSlot.name}</p>
-              {/* <div className="h-[80px] font-cusFont2 text-xl py-3 my-2">
-                <p className="">{selectedSlot.description}</p>
-              </div> */}
+              {/* <p className="font-cusFont1 text-2xl py-2 my-2">{selectedSlot ? selectedSlot.name : `Slot ${index + 1}`}</p> */}
             </div>
           );
         })}
@@ -135,6 +183,7 @@ function SlotSetting({ openItemModal }) {
         {/* 슬롯 저장 */}
         <button 
           // onClick={reset} 
+          onClick={() => {save(savedSlot)}} 
           className="w-[100px] transform -translate-x-1/2 font-cusFont1 mx-2 px-4 py-2 bg-blue-300 hover:bg-blue-500 rounded-md border-2 border-b-4 border-black focus:ring-4 shadow-lg transform active:scale-y-75 transition-transform"
         >
           저장

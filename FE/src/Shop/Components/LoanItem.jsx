@@ -41,11 +41,12 @@ function LoanItem({ openShopModal, loanItems }) {
         </button>
       </div>
       {/* <div className="flex justify-evenly flex-wrap gap-4 my-2 text-center w-full"> */}
-      <div className="flex justify-evenly gap-4 my-2 text-center w-full">
+      {/* <div className="flex justify-center gap-4 my-2 text-center w-full"> */}
+      <div className="flex justify-stretch gap-4 my-2 text-center w-full">
         {/* {loanItems.map((item, index) => ( */}
         {currentItems.map((item, index) => (
           // <div key={index} className={`flex-grow-1 w-[280px] border-2 ${item.purchased === 1 ? 'bg-stone-300' : 'bg-white'} px-6 py-4 rounded-lg border-black ${item.purchased == 1 && 'cursor not allowed text-gray-600'}`}>
-          <div key={index} className={`relative flex-grow-1 w-[280px] h-[500px] border-2 ${item.purchased === 1 ? 'bg-stone-300' : 'bg-white'} px-6 py-4 rounded-lg border-black ${item.purchased == 1 && 'cursor not allowed text-gray-600'}`}>
+          <div key={index} className={`relative flex-grow-1 w-[303px] h-[500px] border-2 ${item.purchased === 1 ? 'bg-stone-300' : 'bg-white'} px-6 py-4 rounded-lg border-black ${item.purchased == 1 && 'cursor not allowed text-gray-600'}`}>
             <p className="font-cusFont1 text-3xl py-4 my-2">{item.name}</p>
             <div className="h-[80px] font-cusFont2 text-xl py-3 my-2">
               <p className="">{item.content}</p>
