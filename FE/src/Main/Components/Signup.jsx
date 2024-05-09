@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import image from "./assets/myavatar.png";
 import { LoginStore } from "../Store";
-import { nicknameCheck, signup, uploadimage } from "../../API/API";
+import { nicknameCheck, signup } from "../../API/API";
 import { useNavigate } from "react-router-dom";
 import { Cookies } from "react-cookie";
 
@@ -142,11 +142,11 @@ function Signup() {
   const signupComplete = async () => {
     if (nickname == "") alert("닉네임은 필수 입력값입니다");
     if (!valid) alert("닉네임을 확인해주세요");
-    if (img != "") {
-      const profileResult = await uploadimage(img);
-      if (!profileResult)
-        alert("이미지 업로드에 실패하였습니다. 다시 시도해주세요");
-    }
+    // if (img != "") {
+    //   const profileResult = await uploadimage(img);
+    //   if (!profileResult)
+    //     alert("이미지 업로드에 실패하였습니다. 다시 시도해주세요");
+    // }
     const data = JSON.stringify({
       nickname: nickname,
       profileImage: img,
