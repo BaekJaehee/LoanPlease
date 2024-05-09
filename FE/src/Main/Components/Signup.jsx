@@ -114,12 +114,12 @@ function Signup() {
     }, 1000);
   }, []);
 
-  const changeImg = (e) => {
-    const file = e.target.files[0];
-    if (file === null) return;
-    const url = URL.createObjectURL(file);
-    if (url !== "") setImg(url);
-  };
+  // const changeImg = (e) => {
+  //   const file = e.target.files[0];
+  //   if (file === null) return;
+  //   const url = URL.createObjectURL(file);
+  //   if (url !== "") setImg(url);
+  // };
 
   const test = async () => {
     setCheck(true);
@@ -148,11 +148,11 @@ function Signup() {
     //     alert("이미지 업로드에 실패하였습니다. 다시 시도해주세요");
     // }
     else {
-      const data = JSON.stringify({
+      const data = {
         nickname: nickname,
         profileImage: img,
         email: email,
-      });
+      };
       const result = await signup(data);
       if (result.data) {
         setIsLogin(true);
@@ -207,7 +207,7 @@ function Signup() {
               width={50}
               src={img}
             />
-            <label
+            {/* <label
               // style={{
               //   fontFamily: "Orbit",
               //   fontSize: "16px",
@@ -227,7 +227,7 @@ function Signup() {
                 e.target.value = "";
               }}
               className="hidden"
-            />
+            /> */}
           </div>
         </div>
         <div className="flex w-[60%] min-w-[400px]">
