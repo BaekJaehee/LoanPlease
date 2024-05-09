@@ -147,17 +147,19 @@ function Signup() {
     //   if (!profileResult)
     //     alert("이미지 업로드에 실패하였습니다. 다시 시도해주세요");
     // }
-    const data = JSON.stringify({
-      nickname: nickname,
-      profileImage: img,
-      email: email,
-    });
-    const result = await signup(data);
-    if (result.data) {
-      setIsLogin(true);
-      navigate("/");
-      setMyData({ ...mydata, image: img, nick: nickname, address: email });
-      localStorage.setItem("mydata", data);
+    else {
+      const data = JSON.stringify({
+        nickname: nickname,
+        profileImage: img,
+        email: email,
+      });
+      const result = await signup(data);
+      if (result.data) {
+        setIsLogin(true);
+        navigate("/");
+        setMyData({ ...mydata, image: img, nick: nickname, address: email });
+        localStorage.setItem("mydata", data);
+      }
     }
   };
 
