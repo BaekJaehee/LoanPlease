@@ -2,8 +2,9 @@
 import { useEffect, useState } from "react";
 import image from "./assets/myavatar.png";
 import { LoginStore } from "../Store";
-import { nicknameCheck, signup } from "../../API/API";
+import { nicknameCheck, signup, uploadimage } from "../../API/API";
 import { useNavigate } from "react-router-dom";
+import { Cookies } from "react-cookie";
 
 // const signupareastyle = {
 //   zIndex: "10",
@@ -57,7 +58,7 @@ import { useNavigate } from "react-router-dom";
 const signupareastyleClass = `
 z-10 absolute flex flex-col justify-around items-start 
 bg-white w-[70%] h-full mx-[15%] p-[60px] 
-translate-x-[-120%]
+translate-x-[-150%]
 `;
 
 const contentareastyleClass = `
@@ -66,7 +67,7 @@ min-w-[150px] w-full h-[80%] my-5
 `;
 
 const inputareastyleClass = `
-w-full max-w-[300px] 
+w-full max-w-[350px] 
 outline-none border-b-2 
 font-cusFont2 mx-2.5 
 `;
@@ -94,17 +95,19 @@ function Signup() {
   const [comment, setComment] = useState("");
 
   const setIsLogin = LoginStore((state) => state.setIsLogin);
-  const setIsMember = LoginStore((state) => state.setIsMember);
   const mydata = LoginStore((state) => state.mydata);
   const setMyData = LoginStore((state) => state.setMyData);
 
   const navigate = useNavigate();
+  const cookie = new Cookies();
 
   useEffect(() => {
+    setEmail(cookie.get("tmpEmail"));
+    setImg(cookie.get("tmpImage"));
     setTimeout(() => {
       setMainStyle(
         mainstyle.replace(
-          "translate-x-[-120%]",
+          "translate-x-[-150%]",
           "translate-x-0 transition-all duration-[1000ms]",
         ),
       );
@@ -118,30 +121,32 @@ function Signup() {
     if (url !== "") setImg(url);
   };
 
-  const checkNickname = async () => {
-    const result = await nicknameCheck(nickname);
-    return result;
-  };
-
   const test = async () => {
     setCheck(true);
     if (nickname == "") setComment("닉네임을 입력해주세요");
-    const result = await nicknameCheck(nickname);
-    result ? setValid(true) : setValid(false);
-    result
-      ? setComment("사용 가능한 닉네임입니다")
-      : setComment("닉네임이 중복됩니다");
+    else {
+      const result = await nicknameCheck(nickname);
+      result ? setValid(true) : setValid(false);
+      result
+        ? setComment("사용 가능한 닉네임입니다")
+        : setComment("닉네임이 중복됩니다");
+    }
   };
 
   // 테스트용 입력 데이터
-  useEffect(() => {
-    setNickname("loanplease");
-    setEmail("ssafy@gmail.com");
-  }, []);
+  // useEffect(() => {
+  //   setNickname("loanplease");
+  //   setEmail("ssafy@gmail.com");
+  // }, []);
 
   const signupComplete = async () => {
     if (nickname == "") alert("닉네임은 필수 입력값입니다");
     if (!valid) alert("닉네임을 확인해주세요");
+    if (img != "") {
+      const profileResult = await uploadimage(img);
+      if (!profileResult)
+        alert("이미지 업로드에 실패하였습니다. 다시 시도해주세요");
+    }
     const data = JSON.stringify({
       nickname: nickname,
       profileImage: img,
@@ -149,10 +154,10 @@ function Signup() {
     });
     const result = await signup(data);
     if (result.data) {
-      setIsMember(true);
       setIsLogin(true);
       navigate("/");
-      setMyData({ image: img, nick: nickname, address: email, rank: "-" });
+      setMyData({ ...mydata, image: img, nick: nickname, address: email });
+      localStorage.setItem("mydata", data);
     }
   };
 
@@ -166,7 +171,7 @@ function Signup() {
           //   fontSize: "36px",
           //   color: "#FFC94A",
           // }}
-          className="ml-10 font-cusFont1 text-[36px] text-cusColor3"
+          className="translate-x-1/2 font-cusFont1 text-[36px] text-cusColor3"
         >
           은행원이 된 것을 환영합니다!
         </p>
@@ -175,7 +180,7 @@ function Signup() {
           //   fontFamily: "비트비트체v2",
           //   fontSize: "20px",
           // }}
-          className="ml-10 font-cusFont1 text-[20px]"
+          className="translate-x-[60%] font-cusFont1 text-[20px]"
         >
           게임에서 사용할 계정 정보를 확인해주세요
         </p>
@@ -223,7 +228,7 @@ function Signup() {
             />
           </div>
         </div>
-        <div className="flex w-[80%] min-w-[500px]">
+        <div className="flex w-[60%] min-w-[400px]">
           {/* <span style={{ fontFamily: "비트비트체v2", fontSize: "24px" }}> */}
           <span className="font-cusFont1 text-2xl">닉네임 :</span>
           <input
@@ -233,6 +238,7 @@ function Signup() {
             onChange={(e) => {
               setNickname(e.target.value);
             }}
+            placeholder="당신의 멋진 닉네임을 입력해주세요!"
           />
           <div
             onClick={async () => {
@@ -252,7 +258,7 @@ function Signup() {
         >
           {comment}
         </div>
-        <div className="flex w-[80%] min-w-[300px]">
+        <div className="flex w-[60%] min-w-[300px]">
           {/* <span style={{ fontFamily: "비트비트체v2", fontSize: "24px" }}> */}
           <span className="font-cusFont1 text-2xl">이메일 :</span>
           {/* <input style={inputareastyle} value={email} /> */}
@@ -266,10 +272,6 @@ function Signup() {
       <div
         onClick={async () => {
           signupComplete();
-          // setIsMember(true);
-          // setIsLogin(true);
-          // navigate("/");
-          // setMyData({ image: img, nick: nickname, address: email, rank: "-" });
         }}
         // style={signupbuttonstyle}
         className={signupbuttonstyleClass}

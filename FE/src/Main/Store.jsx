@@ -1,8 +1,6 @@
 import { create } from "zustand";
 
 export const LoginStore = create((set) => ({
-  ismember: false,
-  setIsMember: (member) => set({ ismember: member }),
   isLogin: false,
   setIsLogin: (login) => set({ isLogin: login }),
   mydata: {

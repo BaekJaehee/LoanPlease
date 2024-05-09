@@ -21,6 +21,7 @@ export const uploadimage = async (file) => {
   return await axios
     .post(url, form)
     .then((response) => {
+      console.log(response.data);
       if (response.status == 200) return true;
       else return false;
     })
@@ -43,7 +44,7 @@ export const nicknameCheck = async (nickname) => {
 };
 
 export const signup = async (data) => {
-  const url = "/api/register";
+  const url = "/api/auth/register";
   return await axios
     .post(url, data)
     .then((response) => {

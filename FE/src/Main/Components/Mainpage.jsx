@@ -114,8 +114,8 @@ function Main() {
   const setRankingpopup = MainStore((state) => state.setRankingpopup);
   const mypagepopup = MainStore((state) => state.mypagepopup);
   const setMypagepopup = MainStore((state) => state.setMypagepopup);
-  const setIsMember = LoginStore((state) => state.setIsMember);
   const mydata = LoginStore((state) => state.mydata);
+  const setMyData = LoginStore((state) => state.setMyData);
   const setIsBgm = MainStore((state) => state.setIsBgm);
   const dialogs = MainStore((state) => state.dialogs);
 
@@ -168,7 +168,9 @@ function Main() {
   };
 
   useEffect(() => {
-    if (mydata.nick != "-") setIsMember(true);
+    // if (mydata.nick != "-") setIsMember(true);
+    if (localStorage.getItem("mydata"))
+      setMyData(JSON.parse(localStorage.getItem("mydata")));
   }, []);
 
   useEffect(() => {
