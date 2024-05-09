@@ -21,6 +21,7 @@ export const uploadimage = async (file) => {
   return await axios
     .post(url, form)
     .then((response) => {
+      console.log(response.data);
       if (response.status == 200) return true;
       else return false;
     })
