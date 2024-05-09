@@ -7,7 +7,7 @@ export default defineConfig({
   server: {
     proxy: {
       "/api": {
-        target: "https://loanplease.kr/api",
+        target: "http://loanplease.kr/api",
         changeOrigin: true,
         secure: false,
       },

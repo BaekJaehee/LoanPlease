@@ -183,7 +183,7 @@ function Main() {
     // <div style={mainstyle}>
     <div className={mainstyleClass}>
       <Menubar
-        data={{ image: mydata.image, nickname: mydata.nick, rank: "-" }}
+        data={{ image: mydata.image, nickname: mydata.nick, rank: mydata.rank }}
       />
       {/* <div style={rankingpanelstyle}> */}
       <div

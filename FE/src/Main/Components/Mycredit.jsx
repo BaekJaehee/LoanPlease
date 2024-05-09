@@ -1,3 +1,4 @@
+import { Cookies } from "react-cookie";
 import { LoginStore } from "../Store";
 
 const mycreditstyleClass = `
@@ -119,6 +120,7 @@ function Mycredit() {
       <div className={buttonareaClass}>
         <div
           onClick={() => {
+            localStorage.clear();
             setIsLogin(false);
           }}
           // style={{
@@ -133,7 +135,15 @@ function Mycredit() {
         </div>
         <div
           onClick={() => {
-            setIsLogin(false);
+            if (window.confirm("정말 탈퇴하시겠습니까?")) {
+              const cookie = new Cookies();
+              if (cookie) {
+                cookie.remove("Authorization");
+                cookie.remove("RefreshToken");
+              }
+              localStorage.clear();
+              setIsLogin(false);
+            }
           }}
           // style={{
           //   fontFamily: "Orbit",
