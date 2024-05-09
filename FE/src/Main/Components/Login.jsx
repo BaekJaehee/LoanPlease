@@ -132,8 +132,8 @@ function Login() {
             if (mydata.nick != "-") {
               setIsLogin(true);
             } else {
-              let url = "http://localhost:8080/oauth2/authorization/google";
-              // let url = "https://loanplease.kr/oauth2/authorization/google";
+              // let url = "http://localhost:8080/oauth2/authorization/google";
+              let url = "https://loanplease.kr/oauth2/authorization/google";
               location.href = url;
             }
           }}
