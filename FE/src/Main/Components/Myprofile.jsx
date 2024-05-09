@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import myavatar from "./assets/myavatar.png";
 import myicon from "./assets/myicon.png";
 import { MypageStore } from "../Store";
@@ -91,6 +91,7 @@ function Myprofile() {
   const setEditmode = MypageStore((state) => state.setEditmode);
   const [img, setImg] = useState(`${myavatar}`);
   const [nickname, setNickname] = useState("loan_please");
+  const [email, setEmail] = useState("ssafy@gmail.com");
 
   const changeImg = (e) => {
     const file = e.target.files[0];
@@ -98,6 +99,14 @@ function Myprofile() {
     const url = URL.createObjectURL(file);
     if (url !== "") setImg(url);
   };
+
+  useEffect(() => {
+    if (localStorage.getItem("mydata")) {
+      setImg(JSON.parse(localStorage.getItem("mydata")).image);
+      setNickname(JSON.parse(localStorage.getItem("mydata")).nick);
+      setEmail(JSON.parse(localStorage.getItem("mydata")).email);
+    }
+  }, []);
 
   return (
     // <div style={myprofilestyle}>
@@ -165,7 +174,7 @@ function Myprofile() {
           {/* <div style={{ fontFamily: "비트비트체v2", fontSize: "16px" }}> */}
           <div className="font-cusFont1 text-base">이메일</div>
           {/* <div style={{ width: "60%", fontFamily: "Orbit", fontSize: "12px" }}> */}
-          <div className="w-[60%] font-cusFont2 text-xs">ssafy@gmail.com</div>
+          <div className="w-[60%] font-cusFont2 text-xs">{email}</div>
         </div>
       </div>
       <img width={70} src={myicon} />
