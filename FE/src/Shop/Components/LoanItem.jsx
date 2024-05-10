@@ -1,5 +1,6 @@
 import { PropTypes } from "prop-types"; 
 import { useEffect } from "react";
+import { purchaseLoanItem } from "../API/ShopAPI";
 import useStore from "../../Store/ShopStore";
 
 function LoanItem({ openLoanItemModal, loanItems }) {
@@ -7,7 +8,7 @@ function LoanItem({ openLoanItemModal, loanItems }) {
   const { currentPage2, setCurrentPage2 } = useStore();
 
   // const itemsPerPage = 8; // 페이지당 보여줄 아이템 수(임의)
-  const itemsPerPage = 4; // 페이지당 보여줄 아이템 수(임의)
+  const itemsPerPage = 5; // 페이지당 보여줄 아이템 수(임의)
   const indexOfLastItem = currentPage2 * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentItems = loanItems.slice(indexOfFirstItem, indexOfLastItem);
@@ -42,20 +43,34 @@ function LoanItem({ openLoanItemModal, loanItems }) {
       </div>
       {/* <div className="flex justify-evenly flex-wrap gap-4 my-2 text-center w-full"> */}
       {/* <div className="flex justify-center gap-4 my-2 text-center w-full"> */}
-      <div className="flex justify-stretch gap-4 my-2 text-center w-full">
+      <div className="flex justify-stretch gap-4 my-2 text-center w-full]">
         {/* {loanItems.map((item, index) => ( */}
         {currentItems.map((item, index) => (
           // <div key={index} className={`flex-grow-1 w-[280px] border-2 ${item.purchased === 1 ? 'bg-stone-300' : 'bg-white'} px-6 py-4 rounded-lg border-black ${item.purchased == 1 && 'cursor not allowed text-gray-600'}`}>
-          <div key={index} className={`relative flex-grow-1 w-[303px] h-[500px] border-2 ${item.purchased === 1 ? 'bg-stone-300' : 'bg-white'} px-6 py-4 rounded-lg border-black ${item.purchased == 1 && 'cursor not allowed text-gray-600'}`}>
-            <p className="font-cusFont1 text-3xl py-4 my-2">{item.name}</p>
-            <div className="h-[80px] font-cusFont2 text-xl py-3 my-2">
-              <p className="">{item.content}</p>
-              <p className="">{item.interest}</p>
-              <p className="">{item.period}</p>
+          // <div key={index} className={`relative flex-grow-1 w-[303px] h-[500px] border-2 ${item.purchased === 1 ? 'bg-stone-300' : 'bg-white'} px-6 py-4 rounded-lg border-black ${item.purchased == 1 && 'cursor not allowed text-gray-600'}`}>
+          // <div key={index} className={`relative flex-grow-1 w-[280px] h-[500px] border-2 ${item.purchased === 1 ? 'bg-stone-300' : 'bg-white'} px-6 py-4 rounded-lg border-black ${item.purchased == 1 && 'cursor not allowed text-gray-600'}`}>
+          <div key={index} className={`relative flex-grow-1 w-[240px] h-[500px] border-2 ${item.purchased === 1 ? 'bg-stone-300' : 'bg-white'} px-3 py-4 rounded-lg border-black ${item.purchased == 1 && 'cursor not allowed text-gray-600'}`}>
+            <p className="font-cusFont1 text-2xl py-4 my-2">{item.name}</p>
+            <div className="h-[80%] font-cusFont2 py-3 my-2">
+              <p className="mb-6 text-xl">{item.content}</p>
+              <p className="text-lg">
+                금리: {item.interest}<br/>
+                기간: {item.period}<br/>
+                한도액: {item.limitAmount}
+              </p>
+              {/* <p className="my-1">
+                {item.content}<br/><br/>
+                금리: {item.interest}<br/>
+                기간: {item.period}<br/>
+                한도액: {item.limitAmount}
+              </p> */}
             </div>
             <button 
               className={`absolute bottom-3 left-1/2 transform -translate-x-1/2 font-cusFont1 my-2 ${item.purchased === 1 ? 'bg-gray-300 border-gray-500' : 'bg-orange-400 hover:bg-orange-600 border-black'} border-2 border-b-4 rounded-lg px-3 py-2  text-xl w-[130px]`}
-              onClick={() => openLoanItemModal()}
+              onClick={() => {
+                purchaseLoanItem(item.loanId);
+                openLoanItemModal();
+              }}
               disabled={item.purchased == 1}
             >
               {/* 가격 */}

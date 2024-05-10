@@ -1,4 +1,5 @@
 import { useRef } from "react";
+import { purchaseGameItem } from "../API/ShopAPI";
 import { PropTypes } from "prop-types"; 
 import useStore from "../../Store/ShopStore";
 
@@ -85,6 +86,7 @@ function SetNumberModal({ closeSetNumberModal, openGameItemModal }) {
               className="mx-2 px-4 py-2 bg-blue-300 hover:bg-blue-500 rounded-md border-2 border-b-4 border-black focus:ring-4 shadow-lg transform active:scale-y-75 transition-transform" 
               onClick={() => { 
                 // 구매 함수 실행
+                purchaseGameItem(value);
                 closeSetNumberModal(); 
                 openGameItemModal(); 
               }}

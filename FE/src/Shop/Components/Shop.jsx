@@ -40,7 +40,7 @@ function Shop() {
         console.log(error);
       }
     };
-
+    
     fetchItems();
   }, []); // 빈 배열을 전달하여 컴포넌트가 처음 렌더링될 때만 실행되도록 설정
   
@@ -64,7 +64,9 @@ function Shop() {
         {/* 사이드바 */}
         {/* <div className="w-1/5 border-r-2 flex flex-col font-cusFont1"> */}
         <div className="w-[250px] border-r-2 font-cusFont1 relative z-10">
-          <div className="p-4 flex-1 mt-20">
+          <div className="h-[15%]"></div>
+          {/* <div className="p-4 flex-1 mt-20"> */}
+          <div className="p-4 flex-1">
             {/* 게임진행 아이템 */}
             <button
               // className="block w-full mb-4 py-2 bg-orange-400 hover:bg-orange-600 rounded-lg mb-2 border-2"
@@ -103,14 +105,16 @@ function Shop() {
         {/* 콘텐츠 */}
         <div className="flex-1 z-10">
           {/* 잔액 */}
-          <div className="border-b-0 p-4 flex justify-end items-center">
+          {/* <div className="border-b-0 p-4 flex justify-end items-center"> */}
+          <div className="border-b-0 p-4 flex justify-end items-center h-[15%]">
             <div className="border-2 rounded-lg bg-white text-right font-cusFont1 text-xl mx-6 pl-2 pr-4 py-2 w-[180px] border-black flex items-center justify-between">
               <img src={won} alt="아이콘" className="w-7 h-7" />
               <span>1000</span>
             </div>
           </div>
           {/* 아이템 */}
-          <div className="p-4">
+          {/* <div className="p-4"> */}
+          <div className="p-4 h-[85%]">
             {currentPage}
           </div>
         </div>

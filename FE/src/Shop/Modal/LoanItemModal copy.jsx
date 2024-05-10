@@ -63,7 +63,7 @@ function LoanItemModal({ closeLoanItemModal, selectedItem }) {
 }
 
 LoanItemModal.propTypes = {
-  closeLoanModal: PropTypes.func.isRequired,
+  closeLoanItemModal: PropTypes.func.isRequired,
   selectedItem: PropTypes.object.isRequired,
 };
 

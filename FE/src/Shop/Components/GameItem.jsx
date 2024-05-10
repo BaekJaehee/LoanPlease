@@ -1,4 +1,5 @@
 import { PropTypes } from "prop-types"; 
+import { purchaseSlot } from "../API/ShopAPI";
 import useStore from "../../Store/ShopStore";
 
 // 유저의 슬롯개수에따라 슬롯추가1,2 띄우기
@@ -30,8 +31,9 @@ function GameItem({ openSetNumberModal, openGameItemModal, gameItems }) {
               <button 
                 className={`absolute bottom-5 left-1/2 transform -translate-x-1/2 font-cusFont1 my-7 ${item.purchased === 1 ? 'bg-gray-300 border-gray-500' : 'bg-orange-400 hover:bg-orange-600 border-black'} border-2 border-b-4 rounded-lg px-3 py-2 text-xl w-[130px]`}
                 onClick={() => {
-                  setSelectedItem(item)
-                  openGameItemModal()
+                  // setSelectedItem(item)
+                  purchaseSlot();
+                  openGameItemModal();
                 }}
                 disabled={item.purchased === 1}
               >
@@ -72,7 +74,7 @@ function GameItem({ openSetNumberModal, openGameItemModal, gameItems }) {
               //   openGameItemModal()
               // }}
               // onClick={() => openSetNumberModal()}
-              onClick={openSetNumberModal}
+              onClick={() => openSetNumberModal()}
               // onClick={handleModalOpen}
               // disabled={item.purchased === 1}
             >

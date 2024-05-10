@@ -1,10 +1,13 @@
 import axios from "axios";
 
+// 192.168.100.178:8080
+
 // 아이템 리스트 조회
 // export const itemsList = async (token) => {
 export const itemsList = async () => {
   // const url = `/api/store/items`;
-  const url = `http://localhost:8080/store/items`;
+  // const url = `http://localhost:8080/store/items`;
+  const url = `http://192.168.100.178:8080/store/items`;
   return await axios
     .get(url, {
       headers: {
@@ -13,6 +16,8 @@ export const itemsList = async () => {
       },
     })
     .then((response) => {
+      console.log(response);
+      console.log(response.data);
       return response.data;
     })
     .catch((e) => {
@@ -42,11 +47,12 @@ export const purchaseSlot = async () => {
 
 // 일회성 게임 아이템 구매
 // export const purchaseGameItem = async (token) => {
-export const purchaseGameItem = async () => {
+export const purchaseGameItem = async (itemId) => {
   // const url = `api/store/items/oneoff`;
   const url = `http://localhost:8080/store/items/oneoff`;
   return await axios
-    .post(url, {
+    // .post(url, {
+    .post(url, itemId, {
       headers: {
         "Content-Type": "application/json",
         // "Authorization": `Bearer ${token}`,
@@ -64,9 +70,11 @@ export const purchaseGameItem = async () => {
 // export const purchaseLoanItem = async (token, loanId) => {
 export const purchaseLoanItem = async (loanId) => {
   // const url = `api/store/items/loan/${loanId}`;
-  const url = `http://localhost:8080/store/items/loan/${loanId}`;
+  // const url = `http://localhost:8080/store/items/loan/${loanId}`;
+  const url = `http://localhost:8080/store/items/loan`;
   return await axios
-    .post(url, {
+    // .post(url, {
+    .post(url, loanId, {
       headers: {
         "Content-Type": "application/json",
         // "Authorization": `Bearer ${token}`,

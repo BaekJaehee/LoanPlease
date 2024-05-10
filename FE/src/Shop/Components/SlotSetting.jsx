@@ -55,7 +55,8 @@ function SlotSetting({ openItemModal }) {
         if (!selectedSlots[i].name) {
           // setSelectedSlots[i](item.name);
           setSelectedSlots[i](item);  // 근데 이러니까 배열 길이는 userSlotNum 고정에 빈게 null로 표시된다
-          savedSlot.push(item.id);
+          // savedSlot.push(item.id);
+          savedSlot[i] = item.id;  // [0, 0, 0, 0, 0]에서 바꾸기
           break;
         }
       }
@@ -164,7 +165,7 @@ function SlotSetting({ openItemModal }) {
         ))}
       </div>
       {/* 소지 슬롯개수(userSlot)만큼 */}
-      <div className="flex justify-evenly">
+      <div className="flex justify-center gap-4">
       {[...Array(userSlotNum)].map((_, index) => {
           const selectedSlot = selectedSlots[index];
           const setSelectedSlot = setSelectedSlots[index];

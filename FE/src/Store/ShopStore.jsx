@@ -131,7 +131,7 @@ const useStore = create((set) => ({
   setSelectedProduct: (description) => set({ selectedProduct: description }),
 
   // 세팅된 슬롯:
-  savedSlot: [],
+  savedSlot: [0, 0, 0, 0, 0],
   setSavedSlot: (item) => set({ savedSlot: item }),
   
   // 슬롯용 페이지네이션
