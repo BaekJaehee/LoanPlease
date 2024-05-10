@@ -18,7 +18,7 @@ function LoanItemModal({ closeLoanItemModal, selectedItem }) {
       <div ref={modalRef} className="w-[270px] h-[180px] bg-yellow-200 p-4 rounded-md font-cusFont1 text-center border-2 z-50 border-black flex flex-col justify-center">
         {/* 바로 구매되도록 */}
         <div>
-          <div className="h-[45px] text-lg">
+          <div className="h-[45px] text-lg  place-content-center">
             <p>구매가 완료되었습니다.</p>
           </div>
           <div className="flex justify-center mt-4">

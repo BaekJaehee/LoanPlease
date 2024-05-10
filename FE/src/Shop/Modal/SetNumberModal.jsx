@@ -51,7 +51,7 @@ function SetNumberModal({ closeSetNumberModal, openGameItemModal }) {
       </style>
       <div ref={modalRef} className="w-[270px] h-[180px] bg-yellow-200 p-4 rounded-md font-cusFont1 text-center border-2 z-50 border-black flex flex-col justify-center">
         <div>
-          <div className="h-[45px] text-2xl">
+          <div className="h-[45px] text-xl place-content-center">
             <p>개수설정</p>
           </div>
           {/* 여기에 카운터 들어감 */}

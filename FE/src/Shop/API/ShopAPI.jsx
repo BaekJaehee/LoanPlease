@@ -6,8 +6,8 @@ import axios from "axios";
 // export const itemsList = async (token) => {
 export const itemsList = async () => {
   // const url = `/api/store/items`;
-  const url = `http://localhost:8080/store/items`;
-  // const url = `http://192.168.100.178:8080/store/items`;
+  // const url = `http://localhost:8080/store/items`;
+  const url = `http://192.168.100.178:8080/store/items`;
   return await axios
     .get(url, {
       headers: {
@@ -26,6 +26,7 @@ export const itemsList = async () => {
   };
 
 // 슬롯 구매
+// 유저 슬롯개수 +1, 포인트 차감
 // export const purchaseSlot = async (token) => {
 export const purchaseSlot = async () => {
   // const url = `api/store/items/slot`;
@@ -46,8 +47,9 @@ export const purchaseSlot = async () => {
 }
 
 // 일회성 게임 아이템 구매
+// 아이템아이디, 개수
 // export const purchaseGameItem = async (token) => {
-export const purchaseGameItem = async (itemId) => {
+export const purchaseGameItem = async (itemId, number) => {
   // const url = `api/store/items/oneoff`;
   const url = `http://localhost:8080/store/items/oneoff`;
   return await axios
@@ -67,6 +69,7 @@ export const purchaseGameItem = async (itemId) => {
 }
 
 // 대출 아이템 구매
+// 대출아이템 아이디
 // export const purchaseLoanItem = async (token, loanId) => {
 export const purchaseLoanItem = async (loanId) => {
   // const url = `api/store/items/loan/${loanId}`;
