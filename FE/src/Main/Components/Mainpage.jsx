@@ -200,7 +200,11 @@ function Main() {
         </div>
       ) : null}
       <Menubar
-        data={{ image: mydata.image, nickname: mydata.nick, rank: mydata.rank }}
+        data={{
+          image: mydata.profileImg,
+          nickname: mydata.nickname,
+          rank: "-",
+        }}
       />
       {/* <div style={rankingpanelstyle}> */}
       <div
