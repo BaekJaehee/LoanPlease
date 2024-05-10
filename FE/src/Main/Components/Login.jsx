@@ -2,7 +2,6 @@ import { useState } from "react";
 import loginbutton from "./assets/loginbutton.png";
 import background from "./assets/splash_final.jpg";
 import { LoginStore } from "../Store";
-import { Cookies } from "react-cookie";
 
 // const mainarea = {
 //   display: "flex",
@@ -67,8 +66,6 @@ function Login() {
 
   const mydata = LoginStore((state) => state.mydata);
   const setIsLogin = LoginStore((state) => state.setIsLogin);
-
-  const cookie = new Cookies();
 
   const init = () => {
     setStartButton(startButton.replace("opacity-100", "opacity-0"));
@@ -138,10 +135,6 @@ function Login() {
               // let url = "http://localhost:8080/oauth2/authorization/google";
               let url = "https://loanplease.kr/oauth2/authorization/google";
               location.href = url;
-              if (cookie.get("tmpEmail") || cookie.get("tmpImage")) {
-                url = "http://loanplease.kr/signup";
-                location.href = url;
-              }
             }
           }}
           width={300}
