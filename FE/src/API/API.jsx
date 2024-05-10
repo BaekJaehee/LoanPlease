@@ -1,10 +1,27 @@
 import axios from "axios";
 
 export const isNewMember = async (email) => {
-  const url = `/api/email/${email}`;
+  const url = `/api/auth/email/${email}`;
   return await axios
     .get(url)
     .then((response) => {
+      console.log(response.data);
+      if (response.status == 200) return true;
+      else return false;
+    })
+    .catch((e) => {
+      console.log(e);
+    });
+};
+
+export const uploadimage = async (file) => {
+  const url = "/api/upload";
+  const form = new FormData();
+  form.append("image", file);
+  return await axios
+    .post(url, form)
+    .then((response) => {
+      console.log(response.data);
       if (response.status == 200) return true;
       else return false;
     })
@@ -14,7 +31,7 @@ export const isNewMember = async (email) => {
 };
 
 export const nicknameCheck = async (nickname) => {
-  const url = `/api/nickname/${nickname}`;
+  const url = `/api/auth/nickname/${nickname}`;
   return await axios
     .get(url)
     .then((response) => {
@@ -27,11 +44,15 @@ export const nicknameCheck = async (nickname) => {
 };
 
 export const signup = async (data) => {
-  const url = "/api/auth/info";
+  const url = "/api/auth/register";
+  const config = {
+    "Content-Type": "application/json",
+  };
   return await axios
-    .post(url, data)
+    .post(url, data, config)
     .then((response) => {
-      return response.data;
+      if (response.status == 200) return response.dataBody;
+      else return {};
     })
     .catch((e) => {
       console.log(e);
@@ -39,7 +60,7 @@ export const signup = async (data) => {
 };
 
 export const changeInfo = async (token, data) => {
-  const url = "/api/auth/info";
+  const url = "/api/auth";
   return await axios
     .put(url, data, {
       headers: {

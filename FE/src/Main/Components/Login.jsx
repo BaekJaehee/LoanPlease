@@ -1,7 +1,7 @@
 import { useState } from "react";
 import loginbutton from "./assets/loginbutton.png";
 import background from "./assets/splash_final.jpg";
-import { useNavigate } from "react-router-dom";
+import { LoginStore } from "../Store";
 
 // const mainarea = {
 //   display: "flex",
@@ -56,8 +56,6 @@ font-cusFont1 text-[40px] text-cusColor5 opacity-100
 `;
 
 function Login() {
-  const navigate = useNavigate();
-
   // const [bgstyle, setBgStyle] = useState(mainstyle);
   const [bgstyle, setBgStyle] = useState(mainstyleClass);
   // const [panelstyle, setPanelStyle] = useState(mainarea);
@@ -65,6 +63,10 @@ function Login() {
 
   const [startButton, setStartButton] = useState(startButtonClass);
   const [audio, setAudio] = useState(<div></div>);
+
+  const mydata = LoginStore((state) => state.mydata);
+  const setIsLogin = LoginStore((state) => state.setIsLogin);
+
   const init = () => {
     setStartButton(startButton.replace("opacity-100", "opacity-0"));
 
@@ -123,13 +125,17 @@ function Login() {
       {/* <div style={panelstyle}> */}
       <div className={panelstyle}>
         {/* <div style={titlestyle}>론플리즈</div> */}
-        {/* <div style={titlestyleClass}>론플리즈</div> */}
         <div className={titlestyleClass}>론플리즈</div>
         <img width={200} src="/loanplease.png" />
         <img
-          onClick={() => {
-            // setIsLogin(true);
-            navigate("/signup");
+          onClick={async () => {
+            if (mydata.nick != "-") {
+              setIsLogin(true);
+            } else {
+              // let url = "http://localhost:8080/oauth2/authorization/google";
+              let url = "https://loanplease.kr/oauth2/authorization/google";
+              location.href = url;
+            }
           }}
           width={300}
           // style={{ cursor: "pointer" }}

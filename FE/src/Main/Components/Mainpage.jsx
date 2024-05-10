@@ -5,7 +5,7 @@ import { LoginStore, MainStore } from "../Store";
 import { useEffect, useState } from "react";
 import Rankingpage from "./Rankingpage";
 import Mypage from "./Mypage";
-import Signup from "./Signup";
+import Noticebar from "./Noticebar";
 
 const mainstyleClass = `
 z-[1] w-full min-w-[260px] h-screen 
@@ -25,6 +25,11 @@ top-[20%] left-[3%]
 
 const mypagepanelstyleClass = `
 flex justify-center z-[2]
+`;
+
+const noticeareastyleClass = `
+absolute translate-x-[calc(100vw_-_350px)] translate-y-[20vh] overflow-y-auto 
+w-[350px] max-h-[calc(100vh_-_20%)] z-20
 `;
 
 const dialogstyleClass = `
@@ -110,14 +115,17 @@ top-[63%] left-[62%] cursor-pointer
 //   cursor: "pointer",
 // };
 
+// 친구 알림 테스트용 데이터
+const noticedata = [];
+// const noticedata = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+
 function Main() {
   const rankingpopup = MainStore((state) => state.rankingpopup);
   const setRankingpopup = MainStore((state) => state.setRankingpopup);
   const mypagepopup = MainStore((state) => state.mypagepopup);
   const setMypagepopup = MainStore((state) => state.setMypagepopup);
-  const ismember = LoginStore((state) => state.ismember);
-  const setIsMember = LoginStore((state) => state.setIsMember);
   const mydata = LoginStore((state) => state.mydata);
+  const setMyData = LoginStore((state) => state.setMyData);
   const setIsBgm = MainStore((state) => state.setIsBgm);
   const dialogs = MainStore((state) => state.dialogs);
 
@@ -170,7 +178,9 @@ function Main() {
   };
 
   useEffect(() => {
-    if (mydata.nick != "-") setIsMember(true);
+    // if (mydata.nick != "-") setIsMember(true);
+    if (localStorage.getItem("mydata"))
+      setMyData(JSON.parse(localStorage.getItem("mydata")));
   }, []);
 
   useEffect(() => {
@@ -182,9 +192,19 @@ function Main() {
   return (
     // <div style={mainstyle}>
     <div className={mainstyleClass}>
-      {!ismember ? <Signup /> : null}
+      {noticedata.length > 0 ? (
+        <div className={noticeareastyleClass}>
+          {noticedata.map((index) => {
+            return <Noticebar key={index} />;
+          })}
+        </div>
+      ) : null}
       <Menubar
-        data={{ image: mydata.image, nickname: mydata.nick, rank: "-" }}
+        data={{
+          image: mydata.profileImg,
+          nickname: mydata.nickname,
+          rank: "-",
+        }}
       />
       {/* <div style={rankingpanelstyle}> */}
       <div
