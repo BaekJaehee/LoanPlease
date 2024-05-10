@@ -95,7 +95,6 @@ function Signup() {
   const [comment, setComment] = useState("");
 
   const setIsLogin = LoginStore((state) => state.setIsLogin);
-  const mydata = LoginStore((state) => state.mydata);
   const setMyData = LoginStore((state) => state.setMyData);
 
   const navigate = useNavigate();
@@ -157,8 +156,8 @@ function Signup() {
       if (result) {
         setIsLogin(true);
         navigate("/");
-        setMyData({ ...mydata, image: img, nick: nickname, email: email });
-        localStorage.setItem("mydata", data);
+        setMyData(result.dataBody);
+        localStorage.setItem("mydata", JSON.stringify(result.dataBody));
       }
     }
   };
