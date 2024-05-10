@@ -153,11 +153,11 @@ function Signup() {
         email: email,
       };
       const result = await signup(data);
-      if (result.data) {
+      if (result) {
         setIsLogin(true);
         navigate("/");
-        setMyData(result.data.dataBody);
-        localStorage.setItem("mydata", JSON.stringify(result.data.dataBody));
+        setMyData(result);
+        localStorage.setItem("mydata", JSON.stringify(result));
       }
     }
   };

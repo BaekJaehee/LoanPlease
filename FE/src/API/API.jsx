@@ -51,7 +51,7 @@ export const signup = async (data) => {
   return await axios
     .post(url, data, config)
     .then((response) => {
-      if (response.status == 200) return response.data;
+      if (response.status == 200) return response.dataBody;
       else return {};
     })
     .catch((e) => {
