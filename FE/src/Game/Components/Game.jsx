@@ -1,4 +1,5 @@
 import useStore from "../../Store/GameStore.jsx"
+import { useState } from "react";
 
 import GameStart from "./GameStart.jsx";
 import GameEnd from "./GameEnd.jsx";
@@ -79,9 +80,24 @@ function Game() {
     useVip,
     useShield,
     useTime,
+    dialogueNum,
     gameInfo,
     updateCustomerState
   } = useStore();
+
+  const { customerInfo } = gameInfo;
+
+  const [message, setMessage] = useState("");
+
+  useEffect(() => {
+    if (dialogueNum === 0) {
+      setMessage(customerInfo && customerInfo.customerMessage);
+    } else if (dialogueNum === 1) {
+      setMessage("돌려보내기");
+    } else if (dialogueNum === 3) {
+      setMessage("VIP 아이템 사용");
+    }
+  }, [dialogueNum, customerInfo]);
 
   const customerImages = {
     Customer1,
@@ -103,8 +119,6 @@ function Game() {
     Customer18
   };
 
-  const { customerInfo } = gameInfo;
-
   let customer = "Customer" 
   
   customer += customerInfo && customerInfo.customerImage
@@ -125,7 +139,8 @@ function Game() {
       const scoreResponse = await postScoreRequest(1, gameInfo); // API 호출
       console.log(scoreResponse)
       const score = scoreResponse.data.score; // API로부터 받은 점수 데이터
-  
+      setMessage(scoreResponse.data.message);
+
       // 점수와 관련 상태 업데이트
       updateCustomerState({
         changeScore: score,
@@ -170,7 +185,7 @@ function Game() {
                   <img src={customerImage} alt="" className="absolute left-[60px] top-[40px] h-[300px]" />
                   <div className="bg-speechBubble bg-contain bg-no-repeat absolute left-[270px] h-[250px] w-[300px]">
                     <div className="absolute left-[17px] top-[50px] w-[218px] h-[120px] text-lg text-center">
-                      <Dialogue />
+                      <p>{message}</p>
                     </div>
 
                     <div className="absolute left-[265px] top-[5px] bg-white/70 w-[100px] h-[100px] rounded-full">
