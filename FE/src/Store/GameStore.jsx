@@ -1,4 +1,5 @@
 import { create } from 'zustand';
+import { fetchCustomerRequest, postScoreRequest } from '../API/CustomerAPI.jsx';
 
 const useStore = create(set => ({
   // 시작 시 모달
@@ -37,10 +38,31 @@ const useStore = create(set => ({
   isVipActive: true,
   isShieldActive: true,
   isTimeActive: true,
+  isShield: false,
 
-  useVip: () => set(state => ({ isVipActive: false })),
-  useShield: () => set(state => ({ isShieldActive: false })),
-  useTime: () => set(state => ({ isTimeActive: false })),
+  useVip: () => {
+    set(state => { 
+      state.selectedProduct = null;
+      state.isVipActive = false,
+      state.dialogueNum = 3;
+      // 버튼 비활성화
+      state.isButtonEnabled = false;
+      // 1초 후 재활성화 및 고객 상태 업데이트
+      state.changeScore = +10000;
+      state.showScore = true
+
+      state.score = state.score + state.changeScore
+
+      setTimeout(() => {
+        set({ isButtonEnabled: true, isCustomer: false, showScore: false });
+      }, 1500);
+      return {};
+      })
+    },
+  
+  
+  useShield: () => set(state => ({ isShieldActive: false, isShield: true })),
+  useTime: () => set(state => ({ isTimeActive: false, time: state.time + 60 })),
 
   // 금융, 비금융 구분
   isFinance: true,
@@ -49,7 +71,10 @@ const useStore = create(set => ({
 
   // 손님 존재 여부
   isCustomer: false,
-  callCustomer: () => set(state => ({ isCustomer: true, dialogueNum: 0 })),
+  callCustomer: async () => {
+    set({ isCustomer: true, dialogueNum: 0 });
+    await useStore.getState().loadGameInfo();  // 상태의 비동기 함수 호출
+  },
 
   endCustomer1: () => {
     set(state => {
@@ -67,16 +92,15 @@ const useStore = create(set => ({
         set({ isButtonEnabled: true, isCustomer: false, showScore: false });
       }, 1500);
 
-      
       return {};
     });
   },
 
-  endCustomer2: () => {
+  endCustomer1: () => {
     set(state => {
       // 고객 정보 및 상품 선택 초기화
       state.selectedProduct = null;
-      state.dialogueNum = 2;
+      state.dialogueNum = 1;
       // 버튼 비활성화
       state.isButtonEnabled = false;
       // 1초 후 재활성화 및 고객 상태 업데이트
@@ -91,12 +115,6 @@ const useStore = create(set => ({
       return {};
     });
   },
-
-  dialogue: [
-    '요구 사항',
-    '돌려보내기를 눌렀습니다.',
-    '추천하기를 눌렀습니다.',
-  ],
 
   dialogueNum: 0,
   setDialogue: (newDialogueNum) => set({ dialogueNum: newDialogueNum }),
@@ -158,6 +176,21 @@ const useStore = create(set => ({
   // 게임 중도 퇴장 창 온오프
   isGamePause: false,
   setGamePause: () => set(state => ({ isGamePause: !state.isGamePause })),
+
+  gameInfo: [],
+
+  loadGameInfo: async () => {
+    try {
+      const data = await fetchCustomerRequest();
+      console.log(data)
+      set({ gameInfo: data.data });
+      console.log(useStore.getState().gameInfo); 
+    } catch (error) {
+      console.error('Failed to load game data:', error);
+    }
+  },
+
+  updateCustomerState: (newState) => set(newState)
 
 
 }));

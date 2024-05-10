@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 import Home from "./Main/index.jsx";
+import Temp from "./Game/Components/Temp.jsx"
 import Game from "./Game/Components/Game.jsx";
 import Shop from "./Shop/Components/Shop.jsx";
 import GoogleLogin from "./Main/Components/GoogleLogin.jsx";
@@ -17,6 +18,7 @@ function App() {
           <Route path="/signup" element={<GoogleLogin />} />
           <Route path="/game" element={<Game />} />
           <Route path="/shop" element={<Shop />} />
+          <Route path="/temp" element={<Temp />} />
         </Routes>
       </BrowserRouter>
     </QueryClientProvider>

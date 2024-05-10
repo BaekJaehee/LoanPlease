@@ -1,8 +1,12 @@
 import useStore from "../../Store/GameStore.jsx"
+
 import GameStart from "./GameStart.jsx";
 import GameEnd from "./GameEnd.jsx";
 import ManualModal from "../Modal/ManualModal.jsx";
 import GamePause from "./GamePause.jsx"
+import GameInfo from "./GameInfo.jsx";
+import GameInfo2 from "./GameInfo2.jsx";
+import Dialogue from "./Dialogue.jsx";
 
 import ExitGame from "../Assets/exit_game.png"
 import SampleCustomer from "../Assets/sample_customer.png"
@@ -16,6 +20,28 @@ import Time from "../Assets/time.png"
 import VipUsed from "../Assets/vip_used.png"
 import ShieldUsed from "../Assets/shield_used.png"
 import TimeUsed from "../Assets/time_used.png"
+
+import Customer1 from "../Assets/customer1.png"
+import Customer2 from "../Assets/customer2.png"
+import Customer3 from "../Assets/customer3.png"
+import Customer4 from "../Assets/customer4.png"
+import Customer5 from "../Assets/customer5.png"
+import Customer6 from "../Assets/customer6.png"
+import Customer7 from "../Assets/customer7.png"
+import Customer8 from "../Assets/customer8.png"
+import Customer9 from "../Assets/customer9.png"
+import Customer11 from "../Assets/customer11.png"
+import Customer12 from "../Assets/customer12.png"
+import Customer13 from "../Assets/customer13.png"
+import Customer14 from "../Assets/customer14.png"
+import Customer15 from "../Assets/customer15.png"
+import Customer16 from "../Assets/customer16.png"
+import Customer17 from "../Assets/customer17.png"
+import Customer18 from "../Assets/customer18.png"
+
+import { postScoreRequest } from "../../API/CustomerAPI.jsx";
+
+import { useEffect } from "react";
 
 
 function Game() {
@@ -39,14 +65,11 @@ function Game() {
     isCustomer,
     callCustomer,
     endCustomer1,
-    endCustomer2,
     products,
     selectedProduct,
     selectProduct,
     isGamePause,
     setGamePause,
-    dialogue,
-    dialogueNum,
     isButtonEnabled,
     showScore,
     changeScore,
@@ -56,7 +79,74 @@ function Game() {
     useVip,
     useShield,
     useTime,
+    gameInfo,
+    updateCustomerState
   } = useStore();
+
+  const customerImages = {
+    Customer1,
+    Customer2,
+    Customer3,
+    Customer4,
+    Customer5,
+    Customer6,
+    Customer7,
+    Customer8,
+    Customer9,
+    Customer11,
+    Customer12,
+    Customer13,
+    Customer14,
+    Customer15,
+    Customer16,
+    Customer17,
+    Customer18
+  };
+
+  const { customerInfo } = gameInfo;
+
+  let customer = "Customer" 
+  
+  customer += customerInfo && customerInfo.customerImage
+
+  const imageKey = `Customer${customerInfo && customerInfo.customerImage}`;
+  const customerImage = customerImages[imageKey] || SampleCustomer;
+
+  async function handleEndCustomer2() {
+
+    updateCustomerState({
+      selectedProduct: null,
+      dialogueNum: 2,
+      isButtonEnabled: false,
+      showScore: false
+    });
+  
+    try {
+      const scoreResponse = await postScoreRequest(1, gameInfo); // API 호출
+      console.log(scoreResponse)
+      const score = scoreResponse.data.score; // API로부터 받은 점수 데이터
+  
+      // 점수와 관련 상태 업데이트
+      updateCustomerState({
+        changeScore: score,
+        showScore: true,
+        score: useStore.getState().score + score
+      });
+  
+      // 1초 후 추가 상태 업데이트
+      setTimeout(() => {
+        updateCustomerState({
+          isButtonEnabled: true,
+          isCustomer: false,
+          showScore: false
+        });
+      }, 1500);
+  
+    } catch (error) {
+      console.error('Failed to post score:', error);
+    }
+  }
+  
 
   return (
     <>
@@ -65,22 +155,22 @@ function Game() {
         {/* 고정 크기의 웹게임 화면, 크기 고정 */}
         <div className="absolute w-[1535px] min-w-[1535px] max-w-[1500px] h-[705px] min-h-[705px] max-h-[680px] border-cusColor3 border-[10px] font-cusFont1 bg-cusColor1/25">
           {showModal && <ManualModal closeModal={closeModal} />}
-          {!timerActive && !isGameEnd && <GameStart />}
+          {/* {!timerActive && !isGameEnd && <GameStart />} */}
           {isGameEnd && <GameEnd />}
           {isGamePause && <GamePause />}
           <div className="h-[70%] flex">
             <div className="h-full w-[57.5%] border-[5px] border-black bg-game bg-cover">
               {isCustomer && (
                 <>
-                  {showScore && <div className="text-center absolute w-[150px] top-[33px] left-[95px] bg-white/40 p-2">
+                  {showScore && <div className="text-center absolute z-50 w-[200px] top-[33px] left-[70px] bg-white/70 p-2">
                     <p className={`text-3xl  ${changeScore >= 0 ? `text-rose-600` : `text-blue-500`}`}>
                       {changeScore > 0 && `+`}{changeScore}
                     </p>
                   </div>}
-                  <img src={SampleCustomer} alt="" className="absolute left-[60px] top-[40px] h-[300px]" />
+                  <img src={customerImage} alt="" className="absolute left-[60px] top-[40px] h-[300px]" />
                   <div className="bg-speechBubble bg-contain bg-no-repeat absolute left-[270px] h-[250px] w-[300px]">
                     <div className="absolute left-[17px] top-[50px] w-[218px] h-[120px] text-lg text-center">
-                      <p>{dialogue[dialogueNum]}</p>
+                      <Dialogue />
                     </div>
 
                     <div className="absolute left-[265px] top-[5px] bg-white/70 w-[100px] h-[100px] rounded-full">
@@ -149,7 +239,7 @@ function Game() {
 
 
                 <div className={`flex items-center justify-center text-xl w-[50%] h-full ${isFinance ? 'bg-cusColor1 text-white border-black border-r-[4px]' : 'bg-gray-300 text-gray-400'}`} onClick={activateFinance}>
-                  <p>금융정보</p>
+                  <p>기본, 금융정보</p>
                 </div>
 
                 <div className={`flex items-center justify-center text-xl w-[50%] h-full ${!isFinance ? 'bg-cusColor1 text-white border-black border-l-[4px]' : 'bg-gray-300 text-gray-400'}`} onClick={deactivateFinance}>
@@ -159,7 +249,9 @@ function Game() {
               </div>
 
               <div className="flex h-[62.5%] border-x-[5px] border-b-[5px] mx-5 border-black rounded-b-lg bg-white">
-                <p className="font-cusFont2">정보가 들어갈 자리입니다.</p>
+                {!isCustomer && <p>"정보가 들어갈 자리입니다."</p>}
+                {isCustomer && isFinance && < GameInfo />}
+                {isCustomer && !isFinance && < GameInfo2 />}
               </div>
 
             </div>
@@ -221,7 +313,7 @@ function Game() {
 
                   {selectedProduct ?
                     (<div className="h-[50%] w-full flex justify-center items-center">
-                      <button className="w-[90%] h-[90%] bg-cusColor5 text-cusColor4 flex justify-center items-center border-[5px] border-black rounded-lg text-xl" onClick={endCustomer2} disabled={!isButtonEnabled}
+                      <button className="w-[90%] h-[90%] bg-cusColor5 text-cusColor4 flex justify-center items-center border-[5px] border-black rounded-lg text-xl" onClick={handleEndCustomer2} disabled={!isButtonEnabled}
                       >
                         <p>추천하기</p>
                       </button>

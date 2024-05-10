@@ -1,26 +1,18 @@
 import axios from "axios";
+import useStore from "../../Store/GameStore";
 import React, { useState, useEffect } from 'react';
 
+import { postScoreRequest } from "../../API/CustomerAPI";
+
 function Temp() {
-  const [data, setData] = useState(null);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get("https://loanplease.kr/api/test");
-        setData(response.data);
-      } catch (error) {
-        console.error('API 요청 중 오류 발생:', error);
-      }
-    };
+  const { gameInfo } = useStore()
 
-    fetchData();
-  }, []);
+  result1 = postScoreRequest(1, gameInfo)
 
   return (
     <div>
-      <h1>테스트</h1>
-      <div>Data from API: {data ? JSON.stringify(data) : 'Loading...'}</div>
+      {result1}
     </div>
   );
 }
