@@ -6,7 +6,7 @@ export const LoginStore = create((set) => ({
   mydata: {
     image: "/loanplease.png",
     nick: "-",
-    address: "",
+    email: "",
     rank: "-",
   },
   setMyData: (data) => set({ mydata: data }),

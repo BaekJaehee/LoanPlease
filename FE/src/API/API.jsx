@@ -48,7 +48,8 @@ export const signup = async (data) => {
   return await axios
     .post(url, data)
     .then((response) => {
-      return response.data;
+      if (response.status == 200) return response.data;
+      else return {};
     })
     .catch((e) => {
       console.log(e);

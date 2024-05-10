@@ -154,10 +154,10 @@ function Signup() {
         email: email,
       };
       const result = await signup(data);
-      if (result.data) {
+      if (result) {
         setIsLogin(true);
         navigate("/");
-        setMyData({ ...mydata, image: img, nick: nickname, address: email });
+        setMyData({ ...mydata, image: img, nick: nickname, email: email });
         localStorage.setItem("mydata", data);
       }
     }
