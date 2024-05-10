@@ -45,8 +45,11 @@ export const nicknameCheck = async (nickname) => {
 
 export const signup = async (data) => {
   const url = "/api/auth/register";
+  const config = {
+    "Content-Type": "application/json",
+  };
   return await axios
-    .post(url, data)
+    .post(url, data, config)
     .then((response) => {
       if (response.status == 200) return response.data;
       else return {};
