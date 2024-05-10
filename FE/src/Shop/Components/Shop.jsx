@@ -5,7 +5,9 @@ import { itemsList } from "../API/ShopAPI";
 import GameItem from "./GameItem";
 import LoanItem from "./LoanItem";
 import SlotSetting from "./SlotSetting";
-import ShopModal from "../Modal/ShopModal";
+import SetNumberModal from "../Modal/SetNumberModal";
+import GameItemModal from "../Modal/GameItemModal";
+import LoanItemModal from "../Modal/LoanItemModal";
 import ItemModal from "../Modal/ItemModal";
 import coin from "../Assets/coin.jpg";
 import won from "../Assets/coin_won.png";
@@ -14,7 +16,16 @@ import won from "../Assets/coin_won.png";
 // 여러번 살 수 있는 아이템?
 
 function Shop() {
-  const { setCurrentComponent, currentComponent, isShopModalOpen, openShopModal, closeShopModal, isItemModalOpen, openItemModal, closeItemModal, selectedItem, selectedProduct, gameItems, setGameItems, loanItems, setLoanItems } = useStore();
+  const { 
+    setCurrentComponent, currentComponent, 
+    isSetNumberModalOpen, openSetNumberModal, closeSetNumberModal,
+    isGameItemModalOpen, openGameItemModal, closeGameItemModal, 
+    isLoanItemModalOpen, openLoanItemModal, closeLoanItemModal,
+    isItemModalOpen, openItemModal, closeItemModal, 
+    selectedItem, 
+    selectedProduct, 
+    gameItems, setGameItems, 
+    loanItems, setLoanItems } = useStore();
   
   useEffect(() => {
     const fetchItems = async () => {
@@ -35,16 +46,18 @@ function Shop() {
   
   let currentPage;
   if (currentComponent === "gameItem") {
-    currentPage = <GameItem openShopModal={openShopModal} gameItems={gameItems} />;
+    currentPage = <GameItem openSetNumberModal={openSetNumberModal} openGameItemModal={openGameItemModal} gameItems={gameItems} />;
   } else if (currentComponent == "loanItem") {
-    currentPage = <LoanItem openShopModal={openShopModal} loanItems={loanItems} />;
+    currentPage = <LoanItem openLoanItemModal={openLoanItemModal} loanItems={loanItems} />;
   } else {
     currentPage = <SlotSetting openItemModal={openItemModal} />;
   }
 
   return (
     <>
-      {isShopModalOpen && <ShopModal closeShopModal={closeShopModal} selectedItem={selectedItem} />}
+      {isSetNumberModalOpen && <SetNumberModal closeSetNumberModal={closeSetNumberModal} openGameItemModal={openGameItemModal} />}
+      {isGameItemModalOpen && <GameItemModal closeGameItemModal={closeGameItemModal} selectedItem={selectedItem} />}
+      {isLoanItemModalOpen && <LoanItemModal closeLoanItemModal={closeLoanItemModal} selectedItem={selectedItem} />}
       {isItemModalOpen && <ItemModal closeItemModal={closeItemModal} selectedProduct={selectedProduct} />}
       <div className="bg-cusColor3 min-h-screen w-full flex">
         <img src={coin} alt="배경" className="absolute w-full h-full object-cover opacity-50 z-0" />

@@ -2,7 +2,7 @@ import { PropTypes } from "prop-types";
 import { useEffect } from "react";
 import useStore from "../../Store/ShopStore";
 
-function LoanItem({ openShopModal, loanItems }) {
+function LoanItem({ openLoanItemModal, loanItems }) {
   // const { loanItems, currentPage2, setCurrentPage2 } = useStore();
   const { currentPage2, setCurrentPage2 } = useStore();
 
@@ -55,7 +55,7 @@ function LoanItem({ openShopModal, loanItems }) {
             </div>
             <button 
               className={`absolute bottom-3 left-1/2 transform -translate-x-1/2 font-cusFont1 my-2 ${item.purchased === 1 ? 'bg-gray-300 border-gray-500' : 'bg-orange-400 hover:bg-orange-600 border-black'} border-2 border-b-4 rounded-lg px-3 py-2  text-xl w-[130px]`}
-              onClick={() => openShopModal()}
+              onClick={() => openLoanItemModal()}
               disabled={item.purchased == 1}
             >
               {/* 가격 */}
@@ -69,7 +69,7 @@ function LoanItem({ openShopModal, loanItems }) {
 }
 
 LoanItem.propTypes = {
-  openShopModal: PropTypes.func.isRequired,
+  openLoanItemModal: PropTypes.func.isRequired,
   loanItems: PropTypes.array.isRequired,
 };
 

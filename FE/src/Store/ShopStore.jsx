@@ -10,7 +10,7 @@ const useStore = create((set) => ({
   setCurrentComponent: (component) => set({ currentComponent: component }),
 
   // 유저 슬롯 개수(임시)
-  userSlotNum: 5,
+  userSlotNum: 3,
   setUserSlotNum: (num) => set({ userSlotNum: num }), // 구매하면 슬롯 수 변경
 
   // 슬롯
@@ -61,10 +61,24 @@ const useStore = create((set) => ({
   ],
   setLoanItems: (item) => set({ loanItems: item }),
 
-  // 구매 확인 모달
-  isShopModalOpen: false,
-  openShopModal: () => set({ isShopModalOpen: true }),
-  closeShopModal: () => set({ isShopModalOpen: false, isPurchased: false }),
+  // 게임 아이템 개수 설정 모달
+  isSetNumberModalOpen: false,
+  openSetNumberModal: () => set({ isSetNumberModalOpen: true }),
+  closeSetNumberModal: () => set({ isSetNumberModalOpen: false }),
+
+  // 게임 아이템 개수
+  value: 0,
+  setValue: (num) => set({ value: num }),
+
+  // 게임 아이템 구매 확인 모달
+  isGameItemModalOpen: false,
+  openGameItemModal: () => set({ isGameItemModalOpen: true }),
+  closeGameItemModal: () => set({ isGameItemModalOpen: false, isPurchased: false }),
+
+  // 대출 아이템 구매 확인 모달
+  isLoanItemModalOpen: false,
+  openLoanItemModal: () => set({ isLoanItemModalOpen: true }),
+  closeLoanItemModal: () => set({ isLoanItemModalOpen: false, isPurchased: false }),
 
   // 아이템 상세 모달
   isItemModalOpen: false,

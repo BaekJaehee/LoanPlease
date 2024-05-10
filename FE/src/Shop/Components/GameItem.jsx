@@ -3,7 +3,7 @@ import useStore from "../../Store/ShopStore";
 
 // 유저의 슬롯개수에따라 슬롯추가1,2 띄우기
 
-function GameItem({ openShopModal, gameItems }) {
+function GameItem({ openSetNumberModal, openGameItemModal, gameItems }) {
   // const { gameItems, setSelectedItem, slots, userSlotNum } = useStore();
   const { setSelectedItem, slots, userSlotNum } = useStore();
 
@@ -12,7 +12,7 @@ function GameItem({ openShopModal, gameItems }) {
   //   openShopModal();
   // }
 
-  console.log(userSlotNum)
+  // console.log(userSlotNum)
 
   return (
     <div>
@@ -31,7 +31,7 @@ function GameItem({ openShopModal, gameItems }) {
                 className={`absolute bottom-5 left-1/2 transform -translate-x-1/2 font-cusFont1 my-7 ${item.purchased === 1 ? 'bg-gray-300 border-gray-500' : 'bg-orange-400 hover:bg-orange-600 border-black'} border-2 border-b-4 rounded-lg px-3 py-2 text-xl w-[130px]`}
                 onClick={() => {
                   setSelectedItem(item)
-                  openShopModal()
+                  openGameItemModal()
                 }}
                 disabled={item.purchased === 1}
               >
@@ -67,12 +67,14 @@ function GameItem({ openShopModal, gameItems }) {
             </div>
             <button 
               className={`absolute bottom-5 left-1/2 transform -translate-x-1/2 font-cusFont1 my-7 ${item.purchased === 1 ? 'bg-gray-300 border-gray-500' : 'bg-orange-400 hover:bg-orange-600 border-black'} border-2 border-b-4 rounded-lg px-3 py-2 text-xl w-[130px]`}
-              onClick={() => {
-                setSelectedItem(item)
-                openShopModal()
-              }}
+              // onClick={() => {
+              //   setSelectedItem(item)
+              //   openGameItemModal()
+              // }}
+              // onClick={() => openSetNumberModal()}
+              onClick={openSetNumberModal}
               // onClick={handleModalOpen}
-              disabled={item.purchased === 1}
+              // disabled={item.purchased === 1}
             >
               {item.price}
             </button>
@@ -84,7 +86,8 @@ function GameItem({ openShopModal, gameItems }) {
 }
 
 GameItem.propTypes = {
-  openShopModal: PropTypes.func.isRequired,
+  openSetNumberModal: PropTypes.func.isRequired,
+  openGameItemModal: PropTypes.func.isRequired,
   // gameItems: PropTypes.object.isRequired,
   gameItems: PropTypes.array.isRequired,
 };

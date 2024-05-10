@@ -137,14 +137,15 @@ function SlotSetting({ openItemModal }) {
           className="font-cusFont1 flex-grow-1 w-[200px] h-[250px] border-2 px-6 py-4 rounded-lg border-black bg-white mb-6 text-center"
           // onClick={() => setting({ name: item.name, description: item.description })}
           >
-            {/* <p className="text-2xl py-4 my-2">{item.name}</p> */}
-            <p className="text-2xl py-4 my-2">{item.loan.name}</p>
+            <p className="text-2xl py-4 my-2">{item.name}</p>
+            {/* <p className="text-2xl py-4 my-2">{item.loan.name}</p> */}
             <div className="h-[80px] text-xl py-3 my-2">
               <button 
                 className="mx-2 px-4 py-2 bg-amber-300 hover:bg-amber-500 rounded-md border-2 border-b-4 border-black focus:ring-4 shadow-lg transform active:scale-y-75 transition-transform"
                 onClick={() => {
                   // showDescription(item.description);
-                  showDetail(item.loan);
+                  // showDetail(item.loan);
+                  showDetail(item);
                   openItemModal();
                 }}
               >
@@ -153,7 +154,8 @@ function SlotSetting({ openItemModal }) {
               <button 
                 className="mx-2 px-4 py-2 bg-blue-300 hover:bg-blue-500 rounded-md border-2 border-b-4 border-black focus:ring-4 shadow-lg transform active:scale-y-75 transition-transform"
                 // onClick={() => setting({ name: item.loan.name })}
-                onClick={() => setting({ id: item.loan.loanId, name: item.loan.name })}
+                // onClick={() => setting({ id: item.loan.loanId, name: item.loan.name })}
+                onClick={() => setting({ id: item.loanId, name: item.name })}
               >
                 선택하기
               </button>

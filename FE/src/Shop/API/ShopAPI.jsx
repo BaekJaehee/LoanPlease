@@ -90,7 +90,7 @@ export const owendLoanItems = async () => {
       },
     })
     .then((response) => {
-      console.log("test", response.data)
+      // console.log("test", response.data)
       // const data = response.data.map(item => item.loan);
       // console.log(data);
       // return data;
