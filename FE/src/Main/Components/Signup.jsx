@@ -148,11 +148,11 @@ function Signup() {
     //     alert("이미지 업로드에 실패하였습니다. 다시 시도해주세요");
     // }
     else {
-      const data = JSON.stringify({
+      const data = {
         nickname: nickname,
         profileImage: img,
         email: email,
-      });
+      };
       const result = await signup(data);
       if (result) {
         setIsLogin(true);
