@@ -6,8 +6,8 @@ import axios from "axios";
 // export const itemsList = async (token) => {
 export const itemsList = async () => {
   // const url = `/api/store/items`;
-  // const url = `http://localhost:8080/store/items`;
-  const url = `http://192.168.100.178:8080/store/items`;
+  const url = `http://localhost:8080/store/items`;
+  // const url = `http://192.168.100.178:8080/store/items`;
   return await axios
     .get(url, {
       headers: {

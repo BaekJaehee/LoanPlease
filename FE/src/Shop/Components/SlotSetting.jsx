@@ -6,7 +6,14 @@ import { owendLoanItems, setLoanItems } from "../API/ShopAPI";
 // db에는 1374 순서인데 왜 1347로 찍히는건지?
 
 function SlotSetting({ openItemModal }) {
-  const { products, setProducts, userSlotNum, currentPage, setCurrentPage, setSelectedProduct, savedSlot, setSavedSlot, selected1, selected2, selected3, selected4, selected5, setSelected1, setSelected2, setSelected3, setSelected4, setSelected5 } = useStore();
+  const { 
+    products, setProducts, 
+    userSlotNum, 
+    currentPage, setCurrentPage, 
+    setSelectedProduct, 
+    savedSlot, setSavedSlot, 
+    selected1, selected2, selected3, selected4, selected5, 
+    setSelected1, setSelected2, setSelected3, setSelected4, setSelected5 } = useStore();
 
   const selectedSlots = [selected1, selected2, selected3, selected4, selected5];
   const setSelectedSlots = [setSelected1, setSelected2, setSelected3, setSelected4, setSelected5];
@@ -109,7 +116,7 @@ function SlotSetting({ openItemModal }) {
   // console.log(savedSlot); // 왜 콘솔에 두번씩 나오는지 모르겠음 -> useEffect쓰면되는데 어차피 나중에 지울거라 그대로 두기
 
   return (
-    <div>
+    <div className="h-full">
       {/* 페이지네이션 */}
       <div className="flex justify-center my-2 font-cusFont1">
         <button 
@@ -130,17 +137,19 @@ function SlotSetting({ openItemModal }) {
       </div>
       {/* 사용자가 가지고 있는 아이템(products) */}
       {/* <div className="flex justify-evenly"> */}
-      <div className="flex justify-stretch gap-3">
+      <div className="flex justify-stretch gap-3 h-[60%]">
         {/* {products.map((item, index) => ( */}
         {currentItems.map((item, index) => (
           <div 
           key={index} 
-          className="font-cusFont1 flex-grow-1 w-[200px] h-[250px] border-2 px-6 py-4 rounded-lg border-black bg-white mb-6 text-center"
+          // className="font-cusFont1 flex-grow-1 w-[200px] h-[250px] border-2 px-6 py-4 rounded-lg border-black bg-white mb-6 text-center"
+          className="font-cusFont1 flex-grow-1 w-[200px] h-[95%] border-2 px-6 py-4 rounded-lg border-black bg-white text-center"
           // onClick={() => setting({ name: item.name, description: item.description })}
           >
-            <p className="text-2xl py-4 my-2">{item.name}</p>
+            <p className="text-2xl py-4 my-2 h-[30%] place-content-center">{item.name}</p>
             {/* <p className="text-2xl py-4 my-2">{item.loan.name}</p> */}
-            <div className="h-[80px] text-xl py-3 my-2">
+            {/* <div className="h-[80px] text-xl py-3 my-2"> */}
+            <div className="h-[55%] text-xl py-3 my-2 place-content-center">
               <button 
                 className="mx-2 px-4 py-2 bg-amber-300 hover:bg-amber-500 rounded-md border-2 border-b-4 border-black focus:ring-4 shadow-lg transform active:scale-y-75 transition-transform"
                 onClick={() => {
@@ -165,14 +174,15 @@ function SlotSetting({ openItemModal }) {
         ))}
       </div>
       {/* 소지 슬롯개수(userSlot)만큼 */}
-      <div className="flex justify-center gap-4">
+      <div className="flex justify-center gap-4 h-[20%]">
       {[...Array(userSlotNum)].map((_, index) => {
           const selectedSlot = selectedSlots[index];
           const setSelectedSlot = setSelectedSlots[index];
           return (
             <div
               key={index}
-              className="mt-12 mb-12 flex-grow-1 w-[200px] h-[100px]  border-2 px-6 py-4 rounded-lg border-black bg-white hover:cursor-pointer text-center"
+              // className="mt-12 mb-12 flex-grow-1 w-[200px] h-[100px]  border-2 px-6 py-4 rounded-lg border-black bg-white hover:cursor-pointer text-center"
+              className="flex-grow-1 w-[200px] h-[80%] border-2 px-6 py-4 rounded-lg border-black bg-white hover:cursor-pointer text-center place-content-center"
               onClick={() => clear(selectedSlot, setSelectedSlot)}
             >
               {/* 여기에 클릭해서 넣은거 표시되어야함 */}
@@ -182,19 +192,19 @@ function SlotSetting({ openItemModal }) {
           );
         })}
       </div>
-      <div className="flex justify-center">
+      <div className="flex justify-center h-[10%]">
         {/* 슬롯 저장 */}
         <button 
           // onClick={reset} 
           onClick={() => {save(savedSlot)}} 
-          className="w-[100px] transform -translate-x-1/2 font-cusFont1 mx-2 px-4 py-2 bg-blue-300 hover:bg-blue-500 rounded-md border-2 border-b-4 border-black focus:ring-4 shadow-lg transform active:scale-y-75 transition-transform"
+          className="w-[100px] h-[50px] transform -translate-x-1/2 font-cusFont1 mx-2 px-4 py-2 bg-blue-300 hover:bg-blue-500 rounded-md border-2 border-b-4 border-black focus:ring-4 shadow-lg transform active:scale-y-75 transition-transform"
         >
           저장
         </button>
         {/* 슬롯 초기화 */}
         <button 
           onClick={reset} 
-          className="w-[100px] transform -translate-x-1/2 font-cusFont1 mx-2 px-4 py-2 bg-red-300 hover:bg-red-500 rounded-md border-2 border-b-4 border-black focus:ring-4 shadow-lg transform active:scale-y-75 transition-transform"
+          className="w-[100px] h-[50px] transform -translate-x-1/2 font-cusFont1 mx-2 px-4 py-2 bg-red-300 hover:bg-red-500 rounded-md border-2 border-b-4 border-black focus:ring-4 shadow-lg transform active:scale-y-75 transition-transform"
         >
           초기화
         </button>
