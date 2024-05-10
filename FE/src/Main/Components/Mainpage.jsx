@@ -5,6 +5,7 @@ import { LoginStore, MainStore } from "../Store";
 import { useEffect, useState } from "react";
 import Rankingpage from "./Rankingpage";
 import Mypage from "./Mypage";
+import Noticebar from "./Noticebar";
 
 const mainstyleClass = `
 z-[1] w-full min-w-[260px] h-screen 
@@ -24,6 +25,11 @@ top-[20%] left-[3%]
 
 const mypagepanelstyleClass = `
 flex justify-center z-[2]
+`;
+
+const noticeareastyleClass = `
+absolute translate-x-[calc(100vw_-_350px)] translate-y-[20vh] overflow-y-auto 
+w-[350px] max-h-[calc(100vh_-_20%)] z-20
 `;
 
 const dialogstyleClass = `
@@ -109,6 +115,10 @@ top-[63%] left-[62%] cursor-pointer
 //   cursor: "pointer",
 // };
 
+// 친구 알림 테스트용 데이터
+const noticedata = [];
+// const noticedata = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+
 function Main() {
   const rankingpopup = MainStore((state) => state.rankingpopup);
   const setRankingpopup = MainStore((state) => state.setRankingpopup);
@@ -182,6 +192,13 @@ function Main() {
   return (
     // <div style={mainstyle}>
     <div className={mainstyleClass}>
+      {noticedata.length > 0 ? (
+        <div className={noticeareastyleClass}>
+          {noticedata.map((index) => {
+            return <Noticebar key={index} />;
+          })}
+        </div>
+      ) : null}
       <Menubar
         data={{ image: mydata.image, nickname: mydata.nick, rank: mydata.rank }}
       />
