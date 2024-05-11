@@ -54,7 +54,7 @@ export const purchaseGameItem = async (itemId, number) => {
   const url = `http://localhost:8080/store/items/oneoff`;
   return await axios
     // .post(url, {
-    .post(url, itemId, {
+    .post(url, { itemId, number }, {
       headers: {
         "Content-Type": "application/json",
         // "Authorization": `Bearer ${token}`,
@@ -112,7 +112,7 @@ export const owendLoanItems = async () => {
     })
 }
 
-// 슬롯에 대출 아이템 선택
+// 슬롯에 대출 아이템 선택해서 저장
 // export const setLoanItems = async (token) => {
 export const setLoanItems = async (savedSlot) => {
 // export const setLoanItems = async (jsonData) => {

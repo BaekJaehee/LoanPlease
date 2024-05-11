@@ -195,7 +195,6 @@ function SlotSetting({ openItemModal }) {
       <div className="flex justify-center h-[10%]">
         {/* 슬롯 저장 */}
         <button 
-          // onClick={reset} 
           onClick={() => {save(savedSlot)}} 
           className="w-[100px] h-[50px] transform -translate-x-1/2 font-cusFont1 mx-2 px-4 py-2 bg-blue-300 hover:bg-blue-500 rounded-md border-2 border-b-4 border-black focus:ring-4 shadow-lg transform active:scale-y-75 transition-transform"
         >

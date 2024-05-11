@@ -123,6 +123,10 @@ const useStore = create((set) => ({
   // 유저가 가지고 있는 아이템
   products: [
     // {name: '상품1', content: '설명1', ...},
+    // {name: '상품1', content: '설명1'},
+    // {name: '상품2', content: '설명1'},
+    // {name: '상품3', content: '설명1'},
+    // {name: '상품4', content: '설명1'},
   ],
   setProducts: (item) => set({ products: item }),
 

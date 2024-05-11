@@ -3,7 +3,7 @@ import { purchaseGameItem } from "../API/ShopAPI";
 import { PropTypes } from "prop-types"; 
 import useStore from "../../Store/ShopStore";
 
-function SetNumberModal({ closeSetNumberModal, openGameItemModal }) {
+function SetNumberModal({ closeSetNumberModal, openGameItemModal, itemId }) {
   // const { isPurchasing, setIsPurchasing, nextSlot, setIsPurchased } = useStore();
   const { value, setValue } = useStore();
   const modalRef = useRef();
@@ -86,7 +86,7 @@ function SetNumberModal({ closeSetNumberModal, openGameItemModal }) {
               className="mx-2 px-4 py-2 bg-blue-300 hover:bg-blue-500 rounded-md border-2 border-b-4 border-black focus:ring-4 shadow-lg transform active:scale-y-75 transition-transform" 
               onClick={() => { 
                 // 구매 함수 실행
-                purchaseGameItem(value);
+                purchaseGameItem(itemId, value);
                 closeSetNumberModal(); 
                 openGameItemModal(); 
               }}
@@ -106,6 +106,7 @@ function SetNumberModal({ closeSetNumberModal, openGameItemModal }) {
 SetNumberModal.propTypes = {
   closeSetNumberModal: PropTypes.func.isRequired,
   openGameItemModal: PropTypes.func.isRequired,
+  itemId: PropTypes.number.isRequired,
   // selectedItem: PropTypes.object.isRequired,
 };
 

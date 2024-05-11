@@ -77,9 +77,7 @@ function GameItem({ openSetNumberModal, openGameItemModal, gameItems }) {
               //   openGameItemModal()
               // }}
               // onClick={() => openSetNumberModal()}
-              onClick={() => openSetNumberModal()}
-              // onClick={handleModalOpen}
-              // disabled={item.purchased === 1}
+              onClick={() => openSetNumberModal(item.itemId)}
             >
               {item.price}
             </button>
