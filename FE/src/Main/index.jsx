@@ -9,7 +9,7 @@ function Home() {
   const isLogin = LoginStore((state) => state.isLogin);
   const setIsLogin = LoginStore((state) => state.setIsLogin);
 
-  const myinfo = async (token) => {
+  const myinfo = async () => {
     const cookie = new Cookies()
     const token = cookie.get('Authorization')
     const info =  await getUserInfo(token)
