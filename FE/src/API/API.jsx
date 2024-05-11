@@ -1,8 +1,12 @@
 import axios from "axios";
 
-export const getUserInfo = async () => {
+export const getUserInfo = async (token) => {
   const url = '/api/user-info'
-  return await axios.get(url)
+  return await axios.get(url, {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  })
   .then(response => {
     if (response.status == 200) return response.data
     else return {}
