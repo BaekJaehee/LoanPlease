@@ -1,18 +1,14 @@
 import axios from "axios";
 
-export const isNewMember = async (email) => {
-  const url = `/api/auth/email/${email}`;
-  return await axios
-    .get(url)
-    .then((response) => {
-      console.log(response.data);
-      if (response.status == 200) return true;
-      else return false;
-    })
-    .catch((e) => {
-      console.log(e);
-    });
-};
+export const getUserInfo = async () => {
+  const url = '/api/user-info'
+  return await axios.get(url)
+  .then(response => {
+    if (response.status == 200) return response.data
+    else return {}
+  })
+  .catch(e => { console.log(e) })
+}
 
 export const uploadimage = async (file) => {
   const url = "/api/upload";

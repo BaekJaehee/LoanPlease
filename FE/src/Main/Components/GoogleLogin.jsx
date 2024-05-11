@@ -10,13 +10,6 @@ function GoogleLogin() {
 
   const cookie = new Cookies();
 
-  useEffect(() => {
-    if (cookie.get("Authorization")) {
-      setIsLogin(true);
-      navigate("/");
-    }
-  }, []);
-
   return (
     <div>
       <Signup />
