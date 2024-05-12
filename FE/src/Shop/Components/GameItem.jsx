@@ -4,7 +4,7 @@ import useStore from "../../Store/ShopStore";
 
 // 유저의 슬롯개수에따라 슬롯추가1,2 띄우기
 
-function GameItem({ openSetNumberModal, openGameItemModal, gameItems }) {
+function GameItem({ openSetNumberModal, openGameItemModal, openWarningModal, gameItems, userPoint }) {
   // const { gameItems, setSelectedItem, slots, userSlotNum } = useStore();
   const { setSelectedItem, slots, userSlotNum } = useStore();
 
@@ -12,6 +12,34 @@ function GameItem({ openSetNumberModal, openGameItemModal, gameItems }) {
   //   setSelectedItem(item);
   //   openShopModal();
   // }
+
+  const handlePurchaseSlot = async (item) => {
+    if (userPoint < item.price) {
+      openWarningModal();
+      return;
+    }
+
+    try {
+      await purchaseSlot();
+      openGameItemModal();
+      // 구매 후 포인트 반영되도록(백엔드에서?)
+    } catch {
+      console.error(error);
+    }
+  }
+
+  const handlePurchaseGameItem = async (item) => {
+    if (userPoint < item.price) {
+      openWarningModal();
+      return;
+    }
+
+    try {
+      openSetNumberModal(item.itemId);
+    } catch {
+      console.error(error);
+    }
+  }
 
   // console.log(userSlotNum)
 
@@ -32,9 +60,9 @@ function GameItem({ openSetNumberModal, openGameItemModal, gameItems }) {
               <button 
                 className={`absolute bottom-5 left-1/2 transform -translate-x-1/2 font-cusFont1 my-7 ${item.purchased === 1 ? 'bg-gray-300 border-gray-500' : 'bg-orange-400 hover:bg-orange-600 border-black'} border-2 border-b-4 rounded-lg px-3 py-2 text-xl w-[130px]`}
                 onClick={() => {
-                  // setSelectedItem(item)
-                  purchaseSlot();
-                  openGameItemModal();
+                  handlePurchaseSlot(item);
+                  // purchaseSlot();
+                  // openGameItemModal();
                 }}
                 disabled={item.purchased === 1}
               >
@@ -76,8 +104,8 @@ function GameItem({ openSetNumberModal, openGameItemModal, gameItems }) {
               //   setSelectedItem(item)
               //   openGameItemModal()
               // }}
-              // onClick={() => openSetNumberModal()}
-              onClick={() => openSetNumberModal(item.itemId)}
+              // onClick={() => openSetNumberModal(item.itemId)}
+              onClick={() => handlePurchaseGameItem(item)}
             >
               {item.price}
             </button>

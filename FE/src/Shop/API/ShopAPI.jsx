@@ -135,3 +135,20 @@ export const setLoanItems = async (savedSlot) => {
       console.log(e);
     });
 }
+
+export const getUserInfo = async () => {
+  const url = `http://192.168.100.178:8080/api/user-info`
+  return await axios
+    .get(url, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+    .then((response) => {
+      console.log("user-info:", response.data)
+      return response.data;
+    })
+    .catch((e) => {
+      console.log(e);
+    });
+}

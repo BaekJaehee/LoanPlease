@@ -9,6 +9,10 @@ const useStore = create((set) => ({
   currentComponent: 'gameItem',
   setCurrentComponent: (component) => set({ currentComponent: component }),
 
+  // 유저 포인트(임시)
+  userPoint: 0,
+  setUserPoint: (num) => set({ userPoint: num }),
+
   // 유저 슬롯 개수(임시)
   userSlotNum: 3,
   setUserSlotNum: (num) => set({ userSlotNum: num }), // 구매하면 슬롯 수 변경
@@ -84,6 +88,11 @@ const useStore = create((set) => ({
   isItemModalOpen: false,
   openItemModal: () => set({ isItemModalOpen: true }),
   closeItemModal: () => set({ isItemModalOpen: false }),
+
+  // 포인트 부족 시 경고 모달
+  isWarningModalOpen: false,
+  openWarningModal: () => set({ isWarningModalOpen: true }),
+  closeWarningModal: () => set({ isWarningModalOpen: false }),
 
   // 구매확정 모달로 전환
   isPurchasing: false,

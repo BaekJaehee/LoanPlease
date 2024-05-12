@@ -9,6 +9,7 @@ import SetNumberModal from "../Modal/SetNumberModal";
 import GameItemModal from "../Modal/GameItemModal";
 import LoanItemModal from "../Modal/LoanItemModal";
 import ItemModal from "../Modal/ItemModal";
+import WarningModal from "../Modal/WarningModal";
 import coin from "../Assets/coin.jpg";
 import won from "../Assets/coin_won.png";
 
@@ -18,15 +19,18 @@ import won from "../Assets/coin_won.png";
 function Shop() {
   const { 
     setCurrentComponent, currentComponent, 
+    setUserPoint, userPoint,
     isSetNumberModalOpen, openSetNumberModal, closeSetNumberModal,
     isGameItemModalOpen, openGameItemModal, closeGameItemModal, 
     isLoanItemModalOpen, openLoanItemModal, closeLoanItemModal,
     isItemModalOpen, openItemModal, closeItemModal, 
+    isWarningModalOpen, openWarningModal, closeWarningModal,
     selectedItem, 
     selectedProduct, 
     gameItems, setGameItems, 
     loanItems, setLoanItems } = useStore();
   
+  // 아이템 정보 가져오기
   useEffect(() => {
     const fetchItems = async () => {
       try {
@@ -43,12 +47,28 @@ function Shop() {
     
     fetchItems();
   }, []); // 빈 배열을 전달하여 컴포넌트가 처음 렌더링될 때만 실행되도록 설정
+
+  // 유저 정보 가져오기
+  useEffect(() => {
+    const fetchUserInfo = async () => {
+      try {
+        const data = await getUserInfo();
+        // 유저 포인트
+        // setUserPoint(data.point);  // 뭐 이런식
+        // 유저가 가진 아이템
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    // userInfo 상태에 변화가 있을 때만 실행
+  }, [userInfo]);
   
   let currentPage;
+  // 유저 포인트 props로 전달하기 -> 포인트 부족 시 warning modal
   if (currentComponent === "gameItem") {
-    currentPage = <GameItem openSetNumberModal={openSetNumberModal} openGameItemModal={openGameItemModal} gameItems={gameItems} />;
+    currentPage = <GameItem openSetNumberModal={openSetNumberModal} openGameItemModal={openGameItemModal} openWarningModal={openWarningModal} gameItems={gameItems} userPoint={userPoint} />;
   } else if (currentComponent == "loanItem") {
-    currentPage = <LoanItem openLoanItemModal={openLoanItemModal} loanItems={loanItems} />;
+    currentPage = <LoanItem openLoanItemModal={openLoanItemModal} openWarningModal={openWarningModal} loanItems={loanItems} userPoint={userPoint} />;
   } else {
     currentPage = <SlotSetting openItemModal={openItemModal} />;
   }
@@ -59,6 +79,7 @@ function Shop() {
       {isGameItemModalOpen && <GameItemModal closeGameItemModal={closeGameItemModal} selectedItem={selectedItem} />}
       {isLoanItemModalOpen && <LoanItemModal closeLoanItemModal={closeLoanItemModal} selectedItem={selectedItem} />}
       {isItemModalOpen && <ItemModal closeItemModal={closeItemModal} selectedProduct={selectedProduct} />}
+      {isWarningModalOpen && <WarningModal closeWarningModal={closeWarningModal} />}
       <div className="bg-cusColor3 min-h-screen w-full flex">
         <img src={coin} alt="배경" className="absolute w-full h-full object-cover opacity-50 z-0" />
         {/* 사이드바 */}
