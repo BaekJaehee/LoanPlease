@@ -53,8 +53,8 @@ export const signup = async (data) => {
       withCredentials: true,
     })
     .then((response) => {
-      if (response.status == 200) return response;
-      else return {};
+      if (response.data.status == 200) return response.data.dataBody;
+      else console.log(response);
     })
     .catch((e) => {
       console.log(e);
