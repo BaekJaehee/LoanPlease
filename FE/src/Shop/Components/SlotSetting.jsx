@@ -102,8 +102,8 @@ function SlotSetting({ openItemModal, openSaveSlotModal }) {
     setSelected3({ name: null });
     setSelected4({ name: null });
     setSelected5({ name: null });
-    // 배열 비우기
-    setSavedSlot([]);
+    // 배열 초기화
+    setSavedSlot([0, 0, 0, 0, 0]);
   }
 
   const save = async () => {

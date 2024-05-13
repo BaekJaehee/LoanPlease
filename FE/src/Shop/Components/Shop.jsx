@@ -65,7 +65,7 @@ function Shop() {
   //   // userInfo 상태에 변화가 있을 때만 실행
   // }, [userInfo]);
 
-  console.log(userPoint);
+  // console.log(userPoint);
   
   let currentPage;
   // 유저 포인트 props로 전달하기 -> 포인트 부족 시 warning modal
