@@ -5,7 +5,7 @@ import { owendLoanItems, setLoanItems } from "../API/ShopAPI";
 
 // db에는 1374 순서인데 왜 1347로 찍히는건지?
 
-function SlotSetting({ openItemModal }) {
+function SlotSetting({ openItemModal, openSaveSlotModal }) {
   const { 
     products, setProducts, 
     userSlotNum, 
@@ -75,15 +75,24 @@ function SlotSetting({ openItemModal }) {
   const clear = (selected, clearFunction) => {
     // 선택된 슬롯의 인덱스를 찾기
     const selectedIndex = selectedSlots.findIndex(slot => slot === selected);
-    // 현재 클릭한 슬롯을 비움
+    // 현재 클릭한 슬롯을 비움(화면)
     clearFunction({ name: null, description: null });
-    savedSlot.splice(selectedIndex, 1)[0];
+    // 슬롯 데이터 비움(0)
+    savedSlot[selectedIndex] = 0;
+  
     // 앞쪽 슬롯들을 앞으로 당겨오기
     for (let i = selectedIndex; i < userSlotNum - 1; i++) {
       setSelectedSlots[i](selectedSlots[i + 1]);
+      // 슬롯을 비우고 0으로 채움
+      savedSlot[i] = savedSlot[i + 1] ? savedSlot[i + 1] : 0;
     }
     // 마지막 슬롯을 비움
     setSelectedSlots[userSlotNum - 1]({ name: null, description: null });
+    // 마지막 슬롯을 0으로 채움
+    savedSlot[userSlotNum - 1] = 0;
+  
+    // savedSlot 상태 업데이트
+    setSavedSlot([...savedSlot]);
   };
 
   const reset = () => {
@@ -107,7 +116,6 @@ function SlotSetting({ openItemModal }) {
       // const data = await setLoanItems(jsonData)
       const data = await setLoanItems(savedSlot)
       console.log(data);
-      console.log("save successfully");
     } catch (error) {
       console.error(error);
     }
@@ -195,8 +203,10 @@ function SlotSetting({ openItemModal }) {
       <div className="flex justify-center h-[10%]">
         {/* 슬롯 저장 */}
         <button 
-          // onClick={reset} 
-          onClick={() => {save(savedSlot)}} 
+          onClick={() => {
+            openSaveSlotModal();
+            save(savedSlot);
+          }} 
           className="w-[100px] h-[50px] transform -translate-x-1/2 font-cusFont1 mx-2 px-4 py-2 bg-blue-300 hover:bg-blue-500 rounded-md border-2 border-b-4 border-black focus:ring-4 shadow-lg transform active:scale-y-75 transition-transform"
         >
           저장
@@ -215,6 +225,7 @@ function SlotSetting({ openItemModal }) {
 
 SlotSetting.propTypes = {
   openItemModal: PropTypes.func.isRequired,
+  openSaveSlotModal: PropTypes.func.isRequired,
 }
 
 export default SlotSetting;

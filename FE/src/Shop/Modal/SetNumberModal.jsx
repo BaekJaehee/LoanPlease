@@ -3,13 +3,11 @@ import { purchaseGameItem } from "../API/ShopAPI";
 import { PropTypes } from "prop-types"; 
 import useStore from "../../Store/ShopStore";
 
-function SetNumberModal({ closeSetNumberModal, openGameItemModal }) {
-  // const { isPurchasing, setIsPurchasing, nextSlot, setIsPurchased } = useStore();
+function SetNumberModal({ closeSetNumberModal, openGameItemModal, openWarningModal, userPoint, itemId, price }) {
   const { value, setValue } = useStore();
+  // const { value, setValue, setSelectedItem } = useStore();
+  // const { itemId: itemId, price: itemPrice } = selectedItem;
   const modalRef = useRef();
-
-  // console.log(value);
-  // console.log(typeof(value));
 
   // 모달 바깥을 클릭하면 모달이 닫히도록
   const handleOutsideClick = (e) => {
@@ -27,6 +25,21 @@ function SetNumberModal({ closeSetNumberModal, openGameItemModal }) {
 
   const increment = () => {
     setValue(value + 1);
+  }
+
+  const handlePurchaseItems = async () => {
+    if (userPoint < price * value) {
+      openWarningModal();
+      return;
+    } else {
+      try {
+        await purchaseGameItem(itemId, value);
+        closeSetNumberModal(); 
+        openGameItemModal(); 
+      } catch (error) {
+        console.error(error)
+      }
+    }
   }
 
   return(
@@ -53,6 +66,9 @@ function SetNumberModal({ closeSetNumberModal, openGameItemModal }) {
         <div>
           <div className="h-[45px] text-xl place-content-center">
             <p>개수설정</p>
+            {/* <p>아이템 아이디{itemId}</p>
+            <p>아이템가격{price}</p> */}
+            <p>유저포인트{userPoint}</p>
           </div>
           {/* 여기에 카운터 들어감 */}
           <div className="flex flex-row h-10 w-full rounded-lg relative bg-transparent mt-1">
@@ -86,9 +102,10 @@ function SetNumberModal({ closeSetNumberModal, openGameItemModal }) {
               className="mx-2 px-4 py-2 bg-blue-300 hover:bg-blue-500 rounded-md border-2 border-b-4 border-black focus:ring-4 shadow-lg transform active:scale-y-75 transition-transform" 
               onClick={() => { 
                 // 구매 함수 실행
-                purchaseGameItem(value);
-                closeSetNumberModal(); 
-                openGameItemModal(); 
+                // purchaseGameItem(itemId, value);
+                // closeSetNumberModal(); 
+                // openGameItemModal(); 
+                handlePurchaseItems();
               }}
               disabled={value === 0}
             >
@@ -106,7 +123,10 @@ function SetNumberModal({ closeSetNumberModal, openGameItemModal }) {
 SetNumberModal.propTypes = {
   closeSetNumberModal: PropTypes.func.isRequired,
   openGameItemModal: PropTypes.func.isRequired,
-  // selectedItem: PropTypes.object.isRequired,
+  openWarningModal: PropTypes.func.isRequired,
+  itemId: PropTypes.number.isRequired,
+  price: PropTypes.number.isRequired,
+  userPoint: PropTypes.number.isRequired,
 };
 
 export default SetNumberModal;

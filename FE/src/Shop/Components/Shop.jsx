@@ -9,8 +9,10 @@ import SetNumberModal from "../Modal/SetNumberModal";
 import GameItemModal from "../Modal/GameItemModal";
 import LoanItemModal from "../Modal/LoanItemModal";
 import ItemModal from "../Modal/ItemModal";
+import WarningModal from "../Modal/WarningModal";
 import coin from "../Assets/coin.jpg";
 import won from "../Assets/coin_won.png";
+import SaveSlotModal from "../Modal/SaveSlotModal";
 
 // 구매여부 0, 1로 구분 -> 구매 확정 시 1로 변환
 // 여러번 살 수 있는 아이템?
@@ -18,15 +20,19 @@ import won from "../Assets/coin_won.png";
 function Shop() {
   const { 
     setCurrentComponent, currentComponent, 
+    setUserPoint, userPoint,
     isSetNumberModalOpen, openSetNumberModal, closeSetNumberModal,
     isGameItemModalOpen, openGameItemModal, closeGameItemModal, 
     isLoanItemModalOpen, openLoanItemModal, closeLoanItemModal,
     isItemModalOpen, openItemModal, closeItemModal, 
+    isSaveSlotModalOpen, openSaveSlotModal, closeSaveSlotModal,
+    isWarningModalOpen, openWarningModal, closeWarningModal,
     selectedItem, 
     selectedProduct, 
     gameItems, setGameItems, 
     loanItems, setLoanItems } = useStore();
   
+  // 아이템 정보 가져오기
   useEffect(() => {
     const fetchItems = async () => {
       try {
@@ -43,22 +49,43 @@ function Shop() {
     
     fetchItems();
   }, []); // 빈 배열을 전달하여 컴포넌트가 처음 렌더링될 때만 실행되도록 설정
+
+  // 유저 정보 가져오기
+  // useEffect(() => {
+  //   const fetchUserInfo = async () => {
+  //     try {
+  //       const data = await getUserInfo();
+  //       // 유저 포인트
+  //       // setUserPoint(data.point);  // 뭐 이런식
+  //       // 유저가 가진 아이템
+  //     } catch (error) {
+  //       console.error(error);
+  //     }
+  //   };
+  //   // userInfo 상태에 변화가 있을 때만 실행
+  // }, [userInfo]);
+
+  console.log(userPoint);
   
   let currentPage;
+  // 유저 포인트 props로 전달하기 -> 포인트 부족 시 warning modal
   if (currentComponent === "gameItem") {
-    currentPage = <GameItem openSetNumberModal={openSetNumberModal} openGameItemModal={openGameItemModal} gameItems={gameItems} />;
+    currentPage = <GameItem openSetNumberModal={openSetNumberModal} openGameItemModal={openGameItemModal} openWarningModal={openWarningModal} gameItems={gameItems} userPoint={userPoint} />;
   } else if (currentComponent == "loanItem") {
-    currentPage = <LoanItem openLoanItemModal={openLoanItemModal} loanItems={loanItems} />;
+    currentPage = <LoanItem openLoanItemModal={openLoanItemModal} openWarningModal={openWarningModal} loanItems={loanItems} userPoint={userPoint} />;
   } else {
-    currentPage = <SlotSetting openItemModal={openItemModal} />;
+    currentPage = <SlotSetting openItemModal={openItemModal} openSaveSlotModal={openSaveSlotModal} />;
   }
 
   return (
     <>
-      {isSetNumberModalOpen && <SetNumberModal closeSetNumberModal={closeSetNumberModal} openGameItemModal={openGameItemModal} />}
-      {isGameItemModalOpen && <GameItemModal closeGameItemModal={closeGameItemModal} selectedItem={selectedItem} />}
-      {isLoanItemModalOpen && <LoanItemModal closeLoanItemModal={closeLoanItemModal} selectedItem={selectedItem} />}
+      {isSetNumberModalOpen && selectedItem && <SetNumberModal closeSetNumberModal={closeSetNumberModal} openGameItemModal={openGameItemModal} openWarningModal={openWarningModal} userPoint={userPoint} itemId={selectedItem.itemId} price={selectedItem.price} />}
+      {/* {isSetNumberModalOpen && <SetNumberModal closeSetNumberModal={closeSetNumberModal} openGameItemModal={openGameItemModal} openWarningModal={openWarningModal} userPoint={userPoint} itemId={selectedItem.itemId} price={selectedItem.price} />} */}
+      {isGameItemModalOpen && <GameItemModal closeGameItemModal={closeGameItemModal} />}
+      {isLoanItemModalOpen && <LoanItemModal closeLoanItemModal={closeLoanItemModal} />}
       {isItemModalOpen && <ItemModal closeItemModal={closeItemModal} selectedProduct={selectedProduct} />}
+      {isWarningModalOpen && <WarningModal closeWarningModal={closeWarningModal} />}
+      {isSaveSlotModalOpen && <SaveSlotModal closeSaveSlotModal={closeSaveSlotModal} />}
       <div className="bg-cusColor3 min-h-screen w-full flex">
         <img src={coin} alt="배경" className="absolute w-full h-full object-cover opacity-50 z-0" />
         {/* 사이드바 */}
@@ -109,7 +136,7 @@ function Shop() {
           <div className="border-b-0 p-4 flex justify-end items-center h-[15%]">
             <div className="border-2 rounded-lg bg-white text-right font-cusFont1 text-xl mx-6 pl-2 pr-4 py-2 w-[180px] border-black flex items-center justify-between">
               <img src={won} alt="아이콘" className="w-7 h-7" />
-              <span>1000</span>
+              <span>{userPoint}</span>
             </div>
           </div>
           {/* 아이템 */}

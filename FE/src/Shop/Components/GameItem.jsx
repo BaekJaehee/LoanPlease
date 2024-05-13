@@ -1,17 +1,46 @@
+import { useEffect } from "react";
 import { PropTypes } from "prop-types"; 
 import { purchaseSlot } from "../API/ShopAPI";
 import useStore from "../../Store/ShopStore";
 
 // 유저의 슬롯개수에따라 슬롯추가1,2 띄우기
 
-function GameItem({ openSetNumberModal, openGameItemModal, gameItems }) {
-  // const { gameItems, setSelectedItem, slots, userSlotNum } = useStore();
-  const { setSelectedItem, slots, userSlotNum } = useStore();
+function GameItem({ openSetNumberModal, openGameItemModal, openWarningModal, gameItems, userPoint }) {
+  const { selectedItem, setSelectedItem, slots, userSlotNum } = useStore();
 
   // const handleModalOpen = () => {
   //   setSelectedItem(item);
   //   openShopModal();
   // }
+
+  const handlePurchaseSlot = async (item) => {
+    if (userPoint < item.price) {
+      openWarningModal();
+      return;
+    }
+
+    try {
+      await purchaseSlot();
+      openGameItemModal();
+      // 구매 후 포인트 반영되도록(백엔드에서?)
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  const handleCount = async (item) => {
+    setSelectedItem(item);
+    // console.log("selected:", selectedItem);
+    // openSetNumberModal(selectedItem.itemId, selectedItem.price);
+  }
+
+  useEffect(() => {
+    if (selectedItem) {
+      console.log("selected:", selectedItem);
+      openSetNumberModal(selectedItem.itemId, selectedItem.price);
+    }
+  }, [selectedItem, openSetNumberModal]);
+
 
   // console.log(userSlotNum)
 
@@ -32,9 +61,9 @@ function GameItem({ openSetNumberModal, openGameItemModal, gameItems }) {
               <button 
                 className={`absolute bottom-5 left-1/2 transform -translate-x-1/2 font-cusFont1 my-7 ${item.purchased === 1 ? 'bg-gray-300 border-gray-500' : 'bg-orange-400 hover:bg-orange-600 border-black'} border-2 border-b-4 rounded-lg px-3 py-2 text-xl w-[130px]`}
                 onClick={() => {
-                  // setSelectedItem(item)
-                  purchaseSlot();
-                  openGameItemModal();
+                  handlePurchaseSlot(item);
+                  // purchaseSlot();
+                  // openGameItemModal();
                 }}
                 disabled={item.purchased === 1}
               >
@@ -76,11 +105,9 @@ function GameItem({ openSetNumberModal, openGameItemModal, gameItems }) {
               //   setSelectedItem(item)
               //   openGameItemModal()
               // }}
-              // onClick={() => openSetNumberModal()}
-              onClick={() => openSetNumberModal()}
-              // onClick={handleModalOpen}
-              // disabled={item.purchased === 1}
-            >
+              onClick={() => handleCount(item)}
+              // onClick={() => openSetNumberModal(item.itemId, item.price)}
+              >
               {item.price}
             </button>
           </div>
@@ -93,8 +120,10 @@ function GameItem({ openSetNumberModal, openGameItemModal, gameItems }) {
 GameItem.propTypes = {
   openSetNumberModal: PropTypes.func.isRequired,
   openGameItemModal: PropTypes.func.isRequired,
+  openWarningModal: PropTypes.func.isRequired,
   // gameItems: PropTypes.object.isRequired,
   gameItems: PropTypes.array.isRequired,
+  userPoint: PropTypes.number.isRequired,
 };
 
 export default GameItem;

@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { purchaseLoanItem } from "../API/ShopAPI";
 import useStore from "../../Store/ShopStore";
 
-function LoanItem({ openLoanItemModal, loanItems }) {
+function LoanItem({ openLoanItemModal, openWarningModal, loanItems, userPoint }) {
   // const { loanItems, currentPage2, setCurrentPage2 } = useStore();
   const { currentPage2, setCurrentPage2 } = useStore();
 
@@ -18,7 +18,21 @@ function LoanItem({ openLoanItemModal, loanItems }) {
   // }, [loanItems, setCurrentPage2]);
   }, [setCurrentPage2]);
 
-  console.log(loanItems)
+  // console.log(loanItems)
+
+  const handlePurchaseLoanItem = async (item) => {
+    if (userPoint < item.price) {
+      openWarningModal();
+      return;
+    }
+
+    try {
+      await purchaseLoanItem(item.loanId);
+      openLoanItemModal();
+    } catch (error) {
+      console.error(error);
+    }
+  }  
 
 
   return (
@@ -68,8 +82,9 @@ function LoanItem({ openLoanItemModal, loanItems }) {
             <button 
               className={`absolute bottom-3 left-1/2 transform -translate-x-1/2 font-cusFont1 my-2 ${item.purchased === 1 ? 'bg-gray-300 border-gray-500' : 'bg-orange-400 hover:bg-orange-600 border-black'} border-2 border-b-4 rounded-lg px-3 py-2  text-xl w-[130px]`}
               onClick={() => {
-                purchaseLoanItem(item.loanId);
-                openLoanItemModal();
+                handlePurchaseLoanItem(item)
+                // purchaseLoanItem(item.loanId);
+                // openLoanItemModal();
               }}
               disabled={item.purchased == 1}
             >
@@ -85,7 +100,9 @@ function LoanItem({ openLoanItemModal, loanItems }) {
 
 LoanItem.propTypes = {
   openLoanItemModal: PropTypes.func.isRequired,
+  openWarningModal: PropTypes.func.isRequired,
   loanItems: PropTypes.array.isRequired,
+  userPoint: PropTypes.number.isRequired,
 };
 
 export default LoanItem;

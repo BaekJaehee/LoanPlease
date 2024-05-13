@@ -2,8 +2,9 @@ import { useRef } from "react";
 import { PropTypes } from "prop-types"; 
 import useStore from "../../Store/ShopStore";
 
-function GameItemModal({ closeGameItemModal, selectedItem }) {
-  const { isPurchasing, setIsPurchasing, nextSlot, setIsPurchased } = useStore();
+// function GameItemModal({ closeGameItemModal, selectedItem }) {
+function GameItemModal({ closeGameItemModal }) {
+  // const { isPurchasing, setIsPurchasing, nextSlot, setIsPurchased } = useStore();
   const modalRef = useRef();
 
   // 모달 바깥을 클릭하면 모달이 닫히도록
@@ -38,7 +39,7 @@ function GameItemModal({ closeGameItemModal, selectedItem }) {
 
 GameItemModal.propTypes = {
   closeGameItemModal: PropTypes.func.isRequired,
-  selectedItem: PropTypes.object.isRequired,
+  // selectedItem: PropTypes.object.isRequired,
 };
 
 export default GameItemModal;
