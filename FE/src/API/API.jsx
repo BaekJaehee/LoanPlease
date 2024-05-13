@@ -1,13 +1,14 @@
 import axios from "axios";
 
-export const isNewMember = async (email) => {
-  const url = `/api/auth/email/${email}`;
+export const getUserInfo = async () => {
+  const url = "/api/user-info";
   return await axios
-    .get(url)
+    .get(url, {
+      withCredentials: true,
+    })
     .then((response) => {
-      console.log(response.data);
-      if (response.status == 200) return true;
-      else return false;
+      if (response.status == 200) return response.data;
+      else return {};
     })
     .catch((e) => {
       console.log(e);
@@ -33,7 +34,9 @@ export const uploadimage = async (file) => {
 export const nicknameCheck = async (nickname) => {
   const url = `/api/auth/nickname/${nickname}`;
   return await axios
-    .get(url)
+    .get(url, {
+      withCredentials: true,
+    })
     .then((response) => {
       if (response.status == 200) return true;
       else return false;
@@ -45,13 +48,12 @@ export const nicknameCheck = async (nickname) => {
 
 export const signup = async (data) => {
   const url = "/api/auth/register";
-  const config = {
-    "Content-Type": "application/json",
-  };
   return await axios
-    .post(url, data, config)
+    .post(url, data, {
+      withCredentials: true,
+    })
     .then((response) => {
-      if (response.status == 200) return response.dataBody;
+      if (response.status == 200) return response;
       else return {};
     })
     .catch((e) => {

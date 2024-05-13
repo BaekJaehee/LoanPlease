@@ -2,16 +2,17 @@ import { useEffect } from "react";
 import Login from "./Components/Login";
 import Main from "./Components/Mainpage";
 import { LoginStore } from "./Store";
-import { Cookies } from "react-cookie";
 
 function Home() {
   const isLogin = LoginStore((state) => state.isLogin);
   const setIsLogin = LoginStore((state) => state.setIsLogin);
+  const setMyData = LoginStore((state) => state.setMyData);
 
   useEffect(() => {
-    const cookies = new Cookies();
-    const string = cookies.get("Authorization") || cookies.get("RefreshToken");
-    if (string) setIsLogin(true);
+    if (localStorage.getItem("mydata")) {
+      setIsLogin(true);
+      setMyData(JSON.parse(localStorage.getItem("mydata")));
+    }
   }, []);
 
   return <>{isLogin ? <Main /> : <Login />}</>;

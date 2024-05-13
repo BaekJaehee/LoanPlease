@@ -122,8 +122,10 @@ function Signup() {
 
   const test = async () => {
     setCheck(true);
-    if (nickname == "") setComment("닉네임을 입력해주세요");
-    else {
+    if (nickname == "") {
+      setValid(false);
+      setComment("닉네임을 입력해주세요");
+    } else {
       const result = await nicknameCheck(nickname);
       result ? setValid(true) : setValid(false);
       result
@@ -153,11 +155,15 @@ function Signup() {
         email: email,
       };
       const result = await signup(data);
-      if (result) {
-        setIsLogin(true);
-        navigate("/");
+      console.log(result);
+      if (result.status) {
+        cookie.remove("tmpEmail");
+        cookie.remove("tmpImage");
+        console.log(result);
         setMyData(result);
         localStorage.setItem("mydata", JSON.stringify(result));
+        setIsLogin(true);
+        navigate("/");
       }
     }
   };
