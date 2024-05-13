@@ -5,7 +5,7 @@ import { owendLoanItems, setLoanItems } from "../API/ShopAPI";
 
 // db에는 1374 순서인데 왜 1347로 찍히는건지?
 
-function SlotSetting({ openItemModal }) {
+function SlotSetting({ openItemModal, openSaveSlotModal }) {
   const { 
     products, setProducts, 
     userSlotNum, 
@@ -195,7 +195,10 @@ function SlotSetting({ openItemModal }) {
       <div className="flex justify-center h-[10%]">
         {/* 슬롯 저장 */}
         <button 
-          onClick={() => {save(savedSlot)}} 
+          onClick={() => {
+            openSaveSlotModal();
+            save(savedSlot);
+          }} 
           className="w-[100px] h-[50px] transform -translate-x-1/2 font-cusFont1 mx-2 px-4 py-2 bg-blue-300 hover:bg-blue-500 rounded-md border-2 border-b-4 border-black focus:ring-4 shadow-lg transform active:scale-y-75 transition-transform"
         >
           저장
@@ -214,6 +217,7 @@ function SlotSetting({ openItemModal }) {
 
 SlotSetting.propTypes = {
   openItemModal: PropTypes.func.isRequired,
+  openSaveSlotModal: PropTypes.func.isRequired,
 }
 
 export default SlotSetting;

@@ -12,6 +12,7 @@ import ItemModal from "../Modal/ItemModal";
 import WarningModal from "../Modal/WarningModal";
 import coin from "../Assets/coin.jpg";
 import won from "../Assets/coin_won.png";
+import SaveSlotModal from "../Modal/SaveSlotModal";
 
 // 구매여부 0, 1로 구분 -> 구매 확정 시 1로 변환
 // 여러번 살 수 있는 아이템?
@@ -24,6 +25,7 @@ function Shop() {
     isGameItemModalOpen, openGameItemModal, closeGameItemModal, 
     isLoanItemModalOpen, openLoanItemModal, closeLoanItemModal,
     isItemModalOpen, openItemModal, closeItemModal, 
+    isSaveSlotModalOpen, openSaveSlotModal, closeSaveSlotModal,
     isWarningModalOpen, openWarningModal, closeWarningModal,
     selectedItem, 
     selectedProduct, 
@@ -49,19 +51,19 @@ function Shop() {
   }, []); // 빈 배열을 전달하여 컴포넌트가 처음 렌더링될 때만 실행되도록 설정
 
   // 유저 정보 가져오기
-  useEffect(() => {
-    const fetchUserInfo = async () => {
-      try {
-        const data = await getUserInfo();
-        // 유저 포인트
-        // setUserPoint(data.point);  // 뭐 이런식
-        // 유저가 가진 아이템
-      } catch (error) {
-        console.error(error);
-      }
-    };
-    // userInfo 상태에 변화가 있을 때만 실행
-  }, [userInfo]);
+  // useEffect(() => {
+  //   const fetchUserInfo = async () => {
+  //     try {
+  //       const data = await getUserInfo();
+  //       // 유저 포인트
+  //       // setUserPoint(data.point);  // 뭐 이런식
+  //       // 유저가 가진 아이템
+  //     } catch (error) {
+  //       console.error(error);
+  //     }
+  //   };
+  //   // userInfo 상태에 변화가 있을 때만 실행
+  // }, [userInfo]);
   
   let currentPage;
   // 유저 포인트 props로 전달하기 -> 포인트 부족 시 warning modal
@@ -70,7 +72,7 @@ function Shop() {
   } else if (currentComponent == "loanItem") {
     currentPage = <LoanItem openLoanItemModal={openLoanItemModal} openWarningModal={openWarningModal} loanItems={loanItems} userPoint={userPoint} />;
   } else {
-    currentPage = <SlotSetting openItemModal={openItemModal} />;
+    currentPage = <SlotSetting openItemModal={openItemModal} openSaveSlotModal={openSaveSlotModal} />;
   }
 
   return (
@@ -80,6 +82,7 @@ function Shop() {
       {isLoanItemModalOpen && <LoanItemModal closeLoanItemModal={closeLoanItemModal} selectedItem={selectedItem} />}
       {isItemModalOpen && <ItemModal closeItemModal={closeItemModal} selectedProduct={selectedProduct} />}
       {isWarningModalOpen && <WarningModal closeWarningModal={closeWarningModal} />}
+      {isSaveSlotModalOpen && <SaveSlotModal closeSaveSlotModal={closeSaveSlotModal} />}
       <div className="bg-cusColor3 min-h-screen w-full flex">
         <img src={coin} alt="배경" className="absolute w-full h-full object-cover opacity-50 z-0" />
         {/* 사이드바 */}

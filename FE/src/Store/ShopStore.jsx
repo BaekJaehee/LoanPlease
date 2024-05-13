@@ -10,7 +10,7 @@ const useStore = create((set) => ({
   setCurrentComponent: (component) => set({ currentComponent: component }),
 
   // 유저 포인트(임시)
-  userPoint: 0,
+  userPoint: 10000,
   setUserPoint: (num) => set({ userPoint: num }),
 
   // 유저 슬롯 개수(임시)
@@ -93,6 +93,11 @@ const useStore = create((set) => ({
   isWarningModalOpen: false,
   openWarningModal: () => set({ isWarningModalOpen: true }),
   closeWarningModal: () => set({ isWarningModalOpen: false }),
+
+  // 슬롯 저장 모달
+  isSaveSlotModalOpen: false,
+  openSaveSlotModal: () => set({ isSaveSlotModalOpen: true }),
+  closeSaveSlotModal: () => set({ isSaveSlotModalOpen: false }),
 
   // 구매확정 모달로 전환
   isPurchasing: false,
