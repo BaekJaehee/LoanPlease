@@ -54,7 +54,7 @@ export const signup = async (data) => {
     })
     .then((response) => {
       if (response.status == 200) return response;
-      else return {};
+      else console.log(response);
     })
     .catch((e) => {
       console.log(e);
