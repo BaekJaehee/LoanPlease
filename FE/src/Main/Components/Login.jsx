@@ -110,12 +110,6 @@ function Login() {
       <div onClick={init} className={startButton}>
         Press To Start
       </div>
-      {/* <iframe
-        src="audioes/intro_bgm.mp3"
-        allow="autoplay"
-        id="audio"
-        style={{ display: "none" }}
-      /> */}
       {/* <img style={bgstyle} src={background} /> */}
       <img className={bgstyle} src={background} />
       {/* <div style={panelstyle}> */}

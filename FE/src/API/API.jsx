@@ -7,7 +7,7 @@ export const getUserInfo = async () => {
       withCredentials: true,
     })
     .then((response) => {
-      if (response.status == 200) return response.data;
+      if (response.data.status == 200) return response.data.dataBody;
       else console.log(response);
     })
     .catch((e) => {
