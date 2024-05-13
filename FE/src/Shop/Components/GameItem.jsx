@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { PropTypes } from "prop-types"; 
 import { purchaseSlot } from "../API/ShopAPI";
 import useStore from "../../Store/ShopStore";
@@ -5,8 +6,7 @@ import useStore from "../../Store/ShopStore";
 // 유저의 슬롯개수에따라 슬롯추가1,2 띄우기
 
 function GameItem({ openSetNumberModal, openGameItemModal, openWarningModal, gameItems, userPoint }) {
-  // const { gameItems, setSelectedItem, slots, userSlotNum } = useStore();
-  const { setSelectedItem, slots, userSlotNum } = useStore();
+  const { selectedItem, setSelectedItem, slots, userSlotNum } = useStore();
 
   // const handleModalOpen = () => {
   //   setSelectedItem(item);
@@ -23,23 +23,24 @@ function GameItem({ openSetNumberModal, openGameItemModal, openWarningModal, gam
       await purchaseSlot();
       openGameItemModal();
       // 구매 후 포인트 반영되도록(백엔드에서?)
-    } catch {
+    } catch (error) {
       console.error(error);
     }
   }
 
-  const handlePurchaseGameItem = async (item) => {
-    if (userPoint < item.price) {
-      openWarningModal();
-      return;
-    }
-
-    try {
-      openSetNumberModal(item.itemId);
-    } catch {
-      console.error(error);
-    }
+  const handleCount = async (item) => {
+    setSelectedItem(item);
+    // console.log("selected:", selectedItem);
+    // openSetNumberModal(selectedItem.itemId, selectedItem.price);
   }
+
+  useEffect(() => {
+    if (selectedItem) {
+      console.log("selected:", selectedItem);
+      openSetNumberModal(selectedItem.itemId, selectedItem.price);
+    }
+  }, [selectedItem, openSetNumberModal]);
+
 
   // console.log(userSlotNum)
 
@@ -104,9 +105,9 @@ function GameItem({ openSetNumberModal, openGameItemModal, openWarningModal, gam
               //   setSelectedItem(item)
               //   openGameItemModal()
               // }}
-              // onClick={() => openSetNumberModal(item.itemId)}
-              onClick={() => handlePurchaseGameItem(item)}
-            >
+              onClick={() => handleCount(item)}
+              // onClick={() => openSetNumberModal(item.itemId, item.price)}
+              >
               {item.price}
             </button>
           </div>
@@ -119,8 +120,10 @@ function GameItem({ openSetNumberModal, openGameItemModal, openWarningModal, gam
 GameItem.propTypes = {
   openSetNumberModal: PropTypes.func.isRequired,
   openGameItemModal: PropTypes.func.isRequired,
+  openWarningModal: PropTypes.func.isRequired,
   // gameItems: PropTypes.object.isRequired,
   gameItems: PropTypes.array.isRequired,
+  userPoint: PropTypes.number.isRequired,
 };
 
 export default GameItem;

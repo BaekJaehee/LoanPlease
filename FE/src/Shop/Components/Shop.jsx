@@ -64,6 +64,8 @@ function Shop() {
   //   };
   //   // userInfo 상태에 변화가 있을 때만 실행
   // }, [userInfo]);
+
+  console.log(userPoint);
   
   let currentPage;
   // 유저 포인트 props로 전달하기 -> 포인트 부족 시 warning modal
@@ -77,9 +79,10 @@ function Shop() {
 
   return (
     <>
-      {isSetNumberModalOpen && <SetNumberModal closeSetNumberModal={closeSetNumberModal} openGameItemModal={openGameItemModal} />}
-      {isGameItemModalOpen && <GameItemModal closeGameItemModal={closeGameItemModal} selectedItem={selectedItem} />}
-      {isLoanItemModalOpen && <LoanItemModal closeLoanItemModal={closeLoanItemModal} selectedItem={selectedItem} />}
+      {isSetNumberModalOpen && selectedItem && <SetNumberModal closeSetNumberModal={closeSetNumberModal} openGameItemModal={openGameItemModal} openWarningModal={openWarningModal} userPoint={userPoint} itemId={selectedItem.itemId} price={selectedItem.price} />}
+      {/* {isSetNumberModalOpen && <SetNumberModal closeSetNumberModal={closeSetNumberModal} openGameItemModal={openGameItemModal} openWarningModal={openWarningModal} userPoint={userPoint} itemId={selectedItem.itemId} price={selectedItem.price} />} */}
+      {isGameItemModalOpen && <GameItemModal closeGameItemModal={closeGameItemModal} />}
+      {isLoanItemModalOpen && <LoanItemModal closeLoanItemModal={closeLoanItemModal} />}
       {isItemModalOpen && <ItemModal closeItemModal={closeItemModal} selectedProduct={selectedProduct} />}
       {isWarningModalOpen && <WarningModal closeWarningModal={closeWarningModal} />}
       {isSaveSlotModalOpen && <SaveSlotModal closeSaveSlotModal={closeSaveSlotModal} />}
@@ -133,7 +136,7 @@ function Shop() {
           <div className="border-b-0 p-4 flex justify-end items-center h-[15%]">
             <div className="border-2 rounded-lg bg-white text-right font-cusFont1 text-xl mx-6 pl-2 pr-4 py-2 w-[180px] border-black flex items-center justify-between">
               <img src={won} alt="아이콘" className="w-7 h-7" />
-              <span>1000</span>
+              <span>{userPoint}</span>
             </div>
           </div>
           {/* 아이템 */}

@@ -29,7 +29,7 @@ function LoanItem({ openLoanItemModal, openWarningModal, loanItems, userPoint })
     try {
       await purchaseLoanItem(item.loanId);
       openLoanItemModal();
-    } catch {
+    } catch (error) {
       console.error(error);
     }
   }  
@@ -100,7 +100,9 @@ function LoanItem({ openLoanItemModal, openWarningModal, loanItems, userPoint })
 
 LoanItem.propTypes = {
   openLoanItemModal: PropTypes.func.isRequired,
+  openWarningModal: PropTypes.func.isRequired,
   loanItems: PropTypes.array.isRequired,
+  userPoint: PropTypes.number.isRequired,
 };
 
 export default LoanItem;

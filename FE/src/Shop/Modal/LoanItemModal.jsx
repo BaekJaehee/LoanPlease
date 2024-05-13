@@ -2,7 +2,8 @@ import { useRef } from "react";
 import { PropTypes } from "prop-types"; 
 import useStore from "../../Store/ShopStore";
 
-function LoanItemModal({ closeLoanItemModal, selectedItem }) {
+// function LoanItemModal({ closeLoanItemModal, selectedItem }) {
+function LoanItemModal({ closeLoanItemModal }) {
   const { isPurchasing, setIsPurchasing, nextSlot, setIsPurchased } = useStore();
   const modalRef = useRef();
 
@@ -24,7 +25,8 @@ function LoanItemModal({ closeLoanItemModal, selectedItem }) {
           <div className="flex justify-center mt-4">
             <button 
               className="mx-2 px-4 py-2 bg-red-300 hover:bg-red-500 rounded-md border-2 border-b-4 border-black focus:ring-4 shadow-lg transform active:scale-y-75 transition-transform" 
-              onClick={() => { closeLoanItemModal(); nextSlot(); }}
+              // onClick={() => { closeLoanItemModal(); nextSlot(); }}
+              onClick={() => { closeLoanItemModal() }}
               // onClick={closeModal}
             >
               닫기
@@ -37,8 +39,8 @@ function LoanItemModal({ closeLoanItemModal, selectedItem }) {
 }
 
 LoanItemModal.propTypes = {
-  closeLoanModal: PropTypes.func.isRequired,
-  selectedItem: PropTypes.object.isRequired,
+  closeLoanItemModal: PropTypes.func.isRequired,
+  // selectedItem: PropTypes.object.isRequired,
 };
 
 export default LoanItemModal;
