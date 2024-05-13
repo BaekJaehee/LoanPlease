@@ -126,16 +126,16 @@ function SlotSetting({ openItemModal, openSaveSlotModal }) {
   return (
     <div className="h-full">
       {/* 페이지네이션 */}
-      <div className="flex justify-center my-2 font-cusFont1">
+      <div className="flex justify-center my-2 font-cusFont1 h-[8%]">
         <button 
-          className="mx-2 px-4 py-2 bg-emerald-300 hover:bg-emerald-500 rounded-md border-2 border-b-4 border-black focus:ring-4 shadow-lg transform active:scale-y-75 transition-transform"
+          className="mx-2 px-4 py-2 bg-emerald-300 hover:bg-emerald-500 rounded-md border-2 border-b-4 border-black focus:ring-4 shadow-lg transform active:scale-y-75 transition-transform h-[45px]"
           onClick={() => setCurrentPage(currentPage - 1)} 
           disabled={currentPage === 1} 
         >
           이전 페이지
         </button>
         <button 
-          className="mx-2 px-4 py-2 bg-emerald-300 hover:bg-emerald-500 rounded-md border-2 border-b-4 border-black focus:ring-4 shadow-lg transform active:scale-y-75 transition-transform"
+          className="mx-2 px-4 py-2 bg-emerald-300 hover:bg-emerald-500 rounded-md border-2 border-b-4 border-black focus:ring-4 shadow-lg transform active:scale-y-75 transition-transform h-[45px]"
           onClick={() => setCurrentPage(currentPage + 1)} 
           disabled={currentItems.length !== itemsPerPage || currentPage === Math.ceil(products.length / itemsPerPage)} 
 
