@@ -1,0 +1,21 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* 글꼴 */
+@font-face {
+  font-family: "비트비트체v2";
+  src: url(/fonts/DNFBitBitv2.ttf);
+}
+
+@font-face {
+  font-family: "Orbit";
+  src: url(/fonts/Orbit-Regular.ttf);
+}
+
+* {
+  -ms-overflow-style: none;
+}
+::-webkit-scrollbar {
+  display: none;
+}
