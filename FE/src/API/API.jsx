@@ -8,23 +8,7 @@ export const getUserInfo = async () => {
     })
     .then((response) => {
       if (response.status == 200) return response.data;
-      else return {};
-    })
-    .catch((e) => {
-      console.log(e);
-    });
-};
-
-export const uploadimage = async (file) => {
-  const url = "/api/upload";
-  const form = new FormData();
-  form.append("image", file);
-  return await axios
-    .post(url, form)
-    .then((response) => {
-      console.log(response.data);
-      if (response.status == 200) return true;
-      else return false;
+      else console.log(response);
     })
     .catch((e) => {
       console.log(e);

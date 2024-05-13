@@ -1,9 +1,6 @@
 import { useState } from "react";
 import loginbutton from "./assets/loginbutton.png";
 import background from "./assets/splash_final.jpg";
-import { LoginStore } from "../Store";
-import { Cookies } from "react-cookie";
-import { getUserInfo } from "../../API/API";
 
 // const mainarea = {
 //   display: "flex",
@@ -65,23 +62,6 @@ function Login() {
 
   const [startButton, setStartButton] = useState(startButtonClass);
   const [audio, setAudio] = useState(<div></div>);
-
-  const setIsLogin = LoginStore((state) => state.setIsLogin);
-
-  const myinfo = async () => {
-    const cookie = new Cookies();
-    const token = cookie.get("Authorization");
-    if (token) {
-      const info = await getUserInfo(token);
-      if (info) {
-        localStorage.setItem("mydata", JSON.stringify(info));
-        setIsLogin(true);
-      } else {
-        localStorage.clear();
-        setIsLogin(false);
-      }
-    }
-  };
 
   const init = () => {
     setStartButton(startButton.replace("opacity-100", "opacity-0"));
@@ -148,7 +128,6 @@ function Login() {
             // let url = "http://localhost:8080/oauth2/authorization/google";
             let url = "https://loanplease.kr/oauth2/authorization/google";
             location.href = url;
-            // myinfo();
           }}
           width={300}
           // style={{ cursor: "pointer" }}

@@ -15,7 +15,6 @@ function GoogleLogin() {
     const token = cookie.get("Authorization");
     if (token) {
       const info = await getUserInfo(token);
-      console.log(info);
       return info;
     }
   };
