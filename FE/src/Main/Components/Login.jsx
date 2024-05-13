@@ -76,10 +76,10 @@ function Login() {
       if (info) {
         localStorage.setItem("mydata", JSON.stringify(info));
         setIsLogin(true);
+      } else {
+        localStorage.clear();
+        setIsLogin(false);
       }
-    } else {
-      localStorage.clear();
-      setIsLogin(false);
     }
   };
 
@@ -148,7 +148,7 @@ function Login() {
             // let url = "http://localhost:8080/oauth2/authorization/google";
             let url = "https://loanplease.kr/oauth2/authorization/google";
             location.href = url;
-            await myinfo();
+            myinfo();
           }}
           width={300}
           // style={{ cursor: "pointer" }}
