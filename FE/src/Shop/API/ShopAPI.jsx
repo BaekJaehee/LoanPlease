@@ -7,8 +7,6 @@ const token = document.cookie // 쿠키 읽기
       .find(row => row.startsWith('Authorization='))  // Authorization 찾기
       ?.split('=')[1];  // 의 value 값
 
-console.log(token);
-
 // 아이템 리스트 조회
 // export const itemsList = async (token) => {
 export const itemsList = async () => {
@@ -23,7 +21,7 @@ export const itemsList = async () => {
       },
     })
     .then((response) => {
-      console.log(response);
+      console.log(token);
       console.log(response.data);
       return response.data;
     })

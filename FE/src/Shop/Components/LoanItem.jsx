@@ -38,16 +38,16 @@ function LoanItem({ openLoanItemModal, openWarningModal, loanItems, userPoint })
   return (
     <div className="h-full">
       {/* 페이지네이션 */}
-      <div className="flex justify-center my-2 font-cusFont1">
+      <div className="flex justify-center my-2 font-cusFont1 h-[8%]">
         <button 
-          className="mx-2 px-4 py-2 bg-emerald-300 hover:bg-emerald-500 rounded-md border-2 border-b-4 border-black focus:ring-4 shadow-lg transform active:scale-y-75 transition-transform"
+          className="mx-2 px-4 py-2 bg-emerald-300 hover:bg-emerald-500 rounded-md border-2 border-b-4 border-black focus:ring-4 shadow-lg transform active:scale-y-75 transition-transform h-[45px]"
           onClick={() => setCurrentPage2(currentPage2 - 1)} 
           disabled={currentPage2 === 1} 
         >
           이전 페이지
         </button>
         <button 
-          className="mx-2 px-4 py-2 bg-emerald-300 hover:bg-emerald-500 rounded-md border-2 border-b-4 border-black focus:ring-4 shadow-lg transform active:scale-y-75 transition-transform"
+          className="mx-2 px-4 py-2 bg-emerald-300 hover:bg-emerald-500 rounded-md border-2 border-b-4 border-black focus:ring-4 shadow-lg transform active:scale-y-75 transition-transform h-[45px]"
           onClick={() => setCurrentPage2(currentPage2 + 1)} 
           // 다 떴는데 비어있는 다음 페이지로 넘어가지 않도록
           disabled={currentItems.length !== itemsPerPage || currentPage2 === Math.ceil(loanItems.length / itemsPerPage)} 
@@ -57,7 +57,8 @@ function LoanItem({ openLoanItemModal, openWarningModal, loanItems, userPoint })
       </div>
       {/* <div className="flex justify-evenly flex-wrap gap-4 my-2 text-center w-full"> */}
       {/* <div className="flex justify-center gap-4 my-2 text-center w-full"> */}
-      <div className="flex justify-stretch gap-4 my-2 text-center w-full h-full">
+      {/* <div className="flex justify-stretch gap-4 my-2 text-center w-full h-full"> */}
+      <div className="flex justify-stretch gap-4 my-2 text-center w-full h-[90%]">
         {/* {loanItems.map((item, index) => ( */}
         {currentItems.map((item, index) => (
           // <div key={index} className={`flex-grow-1 w-[280px] border-2 ${item.purchased === 1 ? 'bg-stone-300' : 'bg-white'} px-6 py-4 rounded-lg border-black ${item.purchased == 1 && 'cursor not allowed text-gray-600'}`}>
