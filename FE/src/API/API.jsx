@@ -34,7 +34,9 @@ export const uploadimage = async (file) => {
 export const nicknameCheck = async (nickname) => {
   const url = `/api/auth/nickname/${nickname}`;
   return await axios
-    .get(url)
+    .get(url, {
+      withCredentials: true,
+    })
     .then((response) => {
       if (response.status == 200) return true;
       else return false;
