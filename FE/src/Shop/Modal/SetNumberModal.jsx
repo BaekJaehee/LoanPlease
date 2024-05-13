@@ -66,9 +66,9 @@ function SetNumberModal({ closeSetNumberModal, openGameItemModal, openWarningMod
         <div>
           <div className="h-[45px] text-xl place-content-center">
             <p>개수설정</p>
-            {/* <p>아이템 아이디{itemId}</p>
-            <p>아이템가격{price}</p> */}
-            <p>유저포인트{userPoint}</p>
+            {/* <p>아이템 아이디{itemId}</p> */}
+            {/* <p>아이템가격{price}</p> */}
+            {/* <p>유저포인트{userPoint}</p> */}
           </div>
           {/* 여기에 카운터 들어감 */}
           <div className="flex flex-row h-10 w-full rounded-lg relative bg-transparent mt-1">
