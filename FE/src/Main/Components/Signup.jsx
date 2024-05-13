@@ -153,6 +153,7 @@ function Signup() {
         email: email,
       };
       const result = await signup(data);
+      console.log(result);
       if (result) {
         setMyData(result);
         localStorage.setItem("mydata", JSON.stringify(result));
