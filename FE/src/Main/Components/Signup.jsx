@@ -153,7 +153,10 @@ function Signup() {
         email: email,
       };
       const result = await signup(data);
-      if (result) {
+      if (result != {}) {
+        cookie.remove("tmpEmail");
+        cookie.remove("tmpImage");
+        console.log(result);
         setMyData(result);
         localStorage.setItem("mydata", JSON.stringify(result));
         setIsLogin(true);
