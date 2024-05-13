@@ -10,7 +10,7 @@ const useStore = create((set) => ({
   setCurrentComponent: (component) => set({ currentComponent: component }),
 
   // 유저 포인트(임시)
-  userPoint: 10000,
+  userPoint: 10,
   setUserPoint: (num) => set({ userPoint: num }),
 
   // 유저 슬롯 개수(임시)
