@@ -155,7 +155,7 @@ function Signup() {
         email: email,
       };
       const result = await signup(data);
-      if (result != {}) {
+      if (result.status) {
         cookie.remove("tmpEmail");
         cookie.remove("tmpImage");
         console.log(result);
