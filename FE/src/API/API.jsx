@@ -1,18 +1,17 @@
 import axios from "axios";
 
-export const getUserInfo = async (token) => {
-  const url = '/api/user-info'
-  return await axios.get(url, {
-    headers: {
-      Authorization: `Bearer ${token}`
-    }
-  })
-  .then(response => {
-    if (response.status == 200) return response.data
-    else return {}
-  })
-  .catch(e => { console.log(e) })
-}
+export const getUserInfo = async () => {
+  const url = "/api/user-info";
+  return await axios
+    .get(url)
+    .then((response) => {
+      if (response.status == 200) return response.data;
+      else return {};
+    })
+    .catch((e) => {
+      console.log(e);
+    });
+};
 
 export const uploadimage = async (file) => {
   const url = "/api/upload";
