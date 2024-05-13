@@ -65,7 +65,7 @@ function Shop() {
   //   // userInfo 상태에 변화가 있을 때만 실행
   // }, [userInfo]);
 
-  console.log(userPoint);
+  // console.log(userPoint);
   
   let currentPage;
   // 유저 포인트 props로 전달하기 -> 포인트 부족 시 warning modal
@@ -84,7 +84,7 @@ function Shop() {
       {isGameItemModalOpen && <GameItemModal closeGameItemModal={closeGameItemModal} />}
       {isLoanItemModalOpen && <LoanItemModal closeLoanItemModal={closeLoanItemModal} />}
       {isItemModalOpen && <ItemModal closeItemModal={closeItemModal} selectedProduct={selectedProduct} />}
-      {isWarningModalOpen && <WarningModal closeWarningModal={closeWarningModal} />}
+      {isWarningModalOpen && <WarningModal closeWarningModal={closeWarningModal} closeSetNumberModal={closeSetNumberModal} />}
       {isSaveSlotModalOpen && <SaveSlotModal closeSaveSlotModal={closeSaveSlotModal} />}
       <div className="bg-cusColor3 min-h-screen w-full flex">
         <img src={coin} alt="배경" className="absolute w-full h-full object-cover opacity-50 z-0" />

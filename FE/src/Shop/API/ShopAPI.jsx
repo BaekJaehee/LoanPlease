@@ -2,6 +2,13 @@ import axios from "axios";
 
 // 192.168.100.178:8080
 
+const token = document.cookie // 쿠키 읽기
+      .split('; ')  // 항목 분리
+      .find(row => row.startsWith('Authorization='))  // Authorization 찾기
+      ?.split('=')[1];  // 의 value 값
+
+console.log(token);
+
 // 아이템 리스트 조회
 // export const itemsList = async (token) => {
 export const itemsList = async () => {
@@ -12,7 +19,7 @@ export const itemsList = async () => {
     .get(url, {
       headers: {
         "Content-Type": "application/json",
-        // "Authorization": `Bearer ${token}`,
+        "Authorization": `Bearer ${token}`,
       },
     })
     .then((response) => {
@@ -35,7 +42,7 @@ export const purchaseSlot = async () => {
     .post(url, {
       headers: {
         "Content-Type": "application/json",
-        // "Authorization": `Bearer ${token}`,
+        "Authorization": `Bearer ${token}`,
       },
     })
     .then((response) => {
@@ -57,7 +64,7 @@ export const purchaseGameItem = async (itemId, number) => {
     .post(url, { itemId, number }, {
       headers: {
         "Content-Type": "application/json",
-        // "Authorization": `Bearer ${token}`,
+        "Authorization": `Bearer ${token}`,
       },
     })
     .then((response) => {
@@ -80,7 +87,7 @@ export const purchaseLoanItem = async (loanId) => {
     .post(url, loanId, {
       headers: {
         "Content-Type": "application/json",
-        // "Authorization": `Bearer ${token}`,
+        "Authorization": `Bearer ${token}`,
       },
     })
     .then((response) => {
@@ -98,6 +105,7 @@ export const owendLoanItems = async () => {
     .get(url, {
       headers: {
         "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`,
       },
     })
     .then((response) => {
@@ -124,7 +132,7 @@ export const setLoanItems = async (savedSlot) => {
     .post(url, savedSlot, {
       headers: {
         "Content-Type": "application/json",
-        // "Authorization": `Bearer ${token}`,
+        "Authorization": `Bearer ${token}`,
       },
     })
     .then((response) => {
@@ -142,6 +150,7 @@ export const getUserInfo = async () => {
     .get(url, {
       headers: {
         "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`,
       },
     })
     .then((response) => {
