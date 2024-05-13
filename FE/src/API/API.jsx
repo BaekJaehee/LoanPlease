@@ -78,3 +78,43 @@ export const exit = async (token, id) => {
       console.log(e);
     });
 };
+
+export const friendsearch = async () => {
+  const url = "/api/friends";
+  return await axios
+    .get(url)
+    .then((response) => {
+      if (response.data.status == 200) {
+        return response.data.dataBody.friends;
+      } else console.log(response);
+    })
+    .catch((e) => console.log(e));
+};
+
+export const friendsearchByname = async (input) => {
+  const url = `/api/friends/search/${input}`;
+  return await axios
+    .get(url)
+    .then((response) => {
+      if (response.data.data) {
+        return response.data.data.friends;
+      } else console.log(response);
+    })
+    .catch((e) => console.log(e));
+};
+
+export const friendrequest = async (id) => {
+  const url = "/api/friends/request";
+  return await axios
+    .post(url, {})
+    .then((response) => {})
+    .catch((e) => console.log(e));
+};
+
+export const friendresponse = async (id, answer) => {
+  const url = "/api/friends/response";
+  return await axios
+    .post(url, {})
+    .then((response) => {})
+    .catch((e) => console.log(e));
+};
