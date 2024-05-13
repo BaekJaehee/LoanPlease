@@ -113,13 +113,6 @@ function Signup() {
     }, 1000);
   }, []);
 
-  // const changeImg = (e) => {
-  //   const file = e.target.files[0];
-  //   if (file === null) return;
-  //   const url = URL.createObjectURL(file);
-  //   if (url !== "") setImg(url);
-  // };
-
   const test = async () => {
     setCheck(true);
     if (nickname == "") {
@@ -143,11 +136,6 @@ function Signup() {
   const signupComplete = async () => {
     if (nickname == "") alert("닉네임은 필수 입력값입니다");
     if (!valid) alert("닉네임을 확인해주세요");
-    // if (img != "") {
-    //   const profileResult = await uploadimage(img);
-    //   if (!profileResult)
-    //     alert("이미지 업로드에 실패하였습니다. 다시 시도해주세요");
-    // }
     else {
       const data = {
         nickname: nickname,
@@ -158,7 +146,6 @@ function Signup() {
       if (result) {
         cookie.remove("tmpEmail");
         cookie.remove("tmpImage");
-        console.log(result);
         setMyData(result);
         localStorage.setItem("mydata", JSON.stringify(result));
         setIsLogin(true);
@@ -211,27 +198,6 @@ function Signup() {
               width={50}
               src={img}
             />
-            {/* <label
-              // style={{
-              //   fontFamily: "Orbit",
-              //   fontSize: "16px",
-              //   cursor: "pointer",
-              // }}
-              className="cursor-pointer font-cusFont2 text-base"
-              htmlFor="imageicon"
-            >
-              프로필 사진 바꾸기
-            </label>
-            <input
-              type="file"
-              id="imageicon"
-              accept="image/*"
-              onChange={(e) => {
-                changeImg(e);
-                e.target.value = "";
-              }}
-              className="hidden"
-            /> */}
           </div>
         </div>
         <div className="flex w-[60%] min-w-[400px]">

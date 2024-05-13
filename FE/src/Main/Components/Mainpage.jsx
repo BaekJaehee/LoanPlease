@@ -3,6 +3,8 @@ import Menubar from "./Menubar";
 import background from "./assets/main_final.jpg";
 import { LoginStore, MainStore } from "../Store";
 import { useEffect, useState } from "react";
+import { Cookies } from "react-cookie";
+import { getUserInfo } from "../../API/API";
 import Rankingpage from "./Rankingpage";
 import Mypage from "./Mypage";
 import Noticebar from "./Noticebar";
@@ -177,10 +179,25 @@ function Main() {
     };
   };
 
+  const userstats = async () => {
+    const cookie = new Cookies();
+    const token = cookie.get("Authorization");
+    if (token) {
+      const info = await getUserInfo(token);
+      return info;
+    }
+  };
+
   useEffect(() => {
-    // if (mydata.nick != "-") setIsMember(true);
-    if (localStorage.getItem("mydata"))
+    if (localStorage.getItem("mydata")) {
       setMyData(JSON.parse(localStorage.getItem("mydata")));
+      userstats().then((value) => {
+        if (value) {
+          setMyData({ ...mydata, value });
+          localStorage.setItem("mydata", JSON.stringify(mydata));
+        }
+      });
+    }
   }, []);
 
   useEffect(() => {
