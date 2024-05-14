@@ -82,9 +82,6 @@ export const purchaseGameItem = async (itemId, number) => {
 // 대출 아이템 구매
 // 대출아이템 아이디
 export const purchaseLoanItem = async (loanId) => {
-  // const token = await FromCookie();
-  // const url = `api/store/items/loan/${loanId}`;
-  // const url = `http://localhost:8080/store/items/loan/${loanId}`;
   const url = `http://localhost:8080/store/items/loan`;
   return await axios
     // .post(url, {

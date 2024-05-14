@@ -4,7 +4,7 @@ import { PropTypes } from "prop-types";
 import useStore from "../../Store/ShopStore";
 
 function SetNumberModal({ closeSetNumberModal, openGameItemModal, openWarningModal, userPoint, itemId, price }) {
-  const { value, setValue } = useStore();
+  const { value, setValue, setUserPoint } = useStore();
   // const { value, setValue, setSelectedItem } = useStore();
   // const { itemId: itemId, price: itemPrice } = selectedItem;
   const modalRef = useRef();
@@ -13,7 +13,7 @@ function SetNumberModal({ closeSetNumberModal, openGameItemModal, openWarningMod
   const handleOutsideClick = (e) => {
     if (modalRef.current && !modalRef.current.contains(e.target)) {
       closeSetNumberModal();
-      setValue(0);
+      setValue(1);
     }
   };
 
@@ -34,7 +34,15 @@ function SetNumberModal({ closeSetNumberModal, openGameItemModal, openWarningMod
     } else {
       try {
         await purchaseGameItem(itemId, value);
+
         closeSetNumberModal(); 
+        // 구매 후 포인트 업데이트
+        // const updatedPoint = userPoint - item.price;
+        const updatedPoint = userPoint - price * value;
+        setUserPoint(updatedPoint);
+
+        setValue(1);  // 구매 후 모달 닫으면 value 1로 초기화
+        
         openGameItemModal(); 
       } catch (error) {
         console.error(error)

@@ -66,12 +66,18 @@ function Shop() {
   // }, [userInfo]);
 
   // console.log(userPoint);
+
+  // const handleUpdatePoint = (updatedPoint) => {
+  //   setUserPoint(updatedPoint);
+  // }
   
   let currentPage;
   // 유저 포인트 props로 전달하기 -> 포인트 부족 시 warning modal
   if (currentComponent === "gameItem") {
+    // currentPage = <GameItem openSetNumberModal={openSetNumberModal} openGameItemModal={openGameItemModal} openWarningModal={openWarningModal} gameItems={gameItems} userPoint={userPoint} setUserPoint={handleUpdatePoint} />;
     currentPage = <GameItem openSetNumberModal={openSetNumberModal} openGameItemModal={openGameItemModal} openWarningModal={openWarningModal} gameItems={gameItems} userPoint={userPoint} />;
   } else if (currentComponent == "loanItem") {
+    // currentPage = <LoanItem openLoanItemModal={openLoanItemModal} openWarningModal={openWarningModal} loanItems={loanItems} userPoint={userPoint} setUserPoint={handleUpdatePoint} />;
     currentPage = <LoanItem openLoanItemModal={openLoanItemModal} openWarningModal={openWarningModal} loanItems={loanItems} userPoint={userPoint} />;
   } else {
     currentPage = <SlotSetting openItemModal={openItemModal} openSaveSlotModal={openSaveSlotModal} />;

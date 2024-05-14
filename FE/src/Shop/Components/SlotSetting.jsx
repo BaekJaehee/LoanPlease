@@ -101,6 +101,7 @@ function SlotSetting({ openItemModal, openSaveSlotModal }) {
     setSavedSlot([...savedSlot]);
   };
 
+  // 슬롯 리셋
   const reset = () => {
     // 화면에서 지우기
     setSelected1({ name: null });
@@ -112,23 +113,15 @@ function SlotSetting({ openItemModal, openSaveSlotModal }) {
     setSavedSlot([0, 0, 0, 0, 0]);
   }
 
+  // 슬롯 저장
   const save = async () => {
     try {
-      // const data = savedSlot.map(item => {item.loan.loanId});
-      // await setSavedSlot(data);
       console.log(savedSlot);
-      // const jsonData = JSON.stringify(savedSlot);
-      // console.log(jsonData)
-      // const data = await setLoanItems(jsonData)
-      // const data = await setLoanItems(savedSlot)
       await setLoanItems(savedSlot)
-      // console.log(data);
     } catch (error) {
       console.error(error);
     }
   }
-
-  // console.log(savedSlot); // 왜 콘솔에 두번씩 나오는지 모르겠음 -> useEffect쓰면되는데 어차피 나중에 지울거라 그대로 두기
 
   return (
     <div className="h-full">

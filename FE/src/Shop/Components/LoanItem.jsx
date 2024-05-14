@@ -5,7 +5,7 @@ import useStore from "../../Store/ShopStore";
 
 function LoanItem({ openLoanItemModal, openWarningModal, loanItems, userPoint }) {
   // const { loanItems, currentPage2, setCurrentPage2 } = useStore();
-  const { currentPage2, setCurrentPage2 } = useStore();
+  const { currentPage2, setCurrentPage2, setUserPoint } = useStore();
 
   // const itemsPerPage = 8; // 페이지당 보여줄 아이템 수(임의)
   const itemsPerPage = 5; // 페이지당 보여줄 아이템 수(임의)
@@ -28,6 +28,10 @@ function LoanItem({ openLoanItemModal, openWarningModal, loanItems, userPoint })
 
     try {
       await purchaseLoanItem(item.loanId);
+
+      const updatedPoint = userPoint - item.price;
+      setUserPoint(updatedPoint);
+
       openLoanItemModal();
     } catch (error) {
       console.error(error);
@@ -81,7 +85,7 @@ function LoanItem({ openLoanItemModal, openWarningModal, loanItems, userPoint })
               </p> */}
             </div>
             <button 
-              className={`absolute bottom-3 left-1/2 transform -translate-x-1/2 font-cusFont1 my-2 ${item.purchased === 1 ? 'bg-gray-300 border-gray-500' : 'bg-orange-400 hover:bg-orange-600 border-black'} border-2 border-b-4 rounded-lg px-3 py-2  text-xl w-[130px]`}
+              className={`absolute bottom-3 left-1/2 transform -translate-x-1/2 font-cusFont1 my-2 ${item.purchased === 1 ? 'bg-gray-300 border-gray-500' : 'bg-orange-400 hover:bg-orange-600 border-black'} border-2 border-b-4 rounded-lg px-3 py-2  text-xl w-[130px] focus:ring-4 shadow-lg transform active:scale-y-75 transition-transform`}
               onClick={() => {
                 handlePurchaseLoanItem(item)
                 // purchaseLoanItem(item.loanId);

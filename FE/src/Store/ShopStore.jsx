@@ -10,11 +10,11 @@ const useStore = create((set) => ({
   setCurrentComponent: (component) => set({ currentComponent: component }),
 
   // 유저 포인트(임시)
-  userPoint: 10,
+  userPoint: 20000,
   setUserPoint: (num) => set({ userPoint: num }),
 
   // 유저 슬롯 개수(임시)
-  userSlotNum: 5,
+  userSlotNum: 3,
   setUserSlotNum: (num) => set({ userSlotNum: num }), // 구매하면 슬롯 수 변경
 
   // 슬롯
@@ -71,7 +71,7 @@ const useStore = create((set) => ({
   closeSetNumberModal: () => set({ isSetNumberModalOpen: false }),
 
   // 게임 아이템 개수
-  value: 0,
+  value: 1, // 기본 1
   setValue: (num) => set({ value: num }),
 
   // 게임 아이템 구매 확인 모달
