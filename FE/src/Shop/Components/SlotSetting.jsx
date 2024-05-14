@@ -30,15 +30,21 @@ function SlotSetting({ openItemModal, openSaveSlotModal }) {
   useEffect(() => {
     const fetchItems = async () => {
       try {
+        // const token = document.cookie // 쿠키 읽기
+        //   .split('; ')  // 항목 분리
+        //   .find(row => row.startsWith('Authorization='))  // Authorization 찾기
+        //   ?.split('=')[1];  // 의 value 값
         // const token = localStorage.getItem("accessToken");  // 토큰 어떻게 할지는...
         // const data = await itemsList(token); // itemsList 함수를 사용하여 데이터 호출
         // const data = await setLoanItems(); // itemsList 함수를 사용하여 데이터 호출
+
         // 생각해보니 렌더링할 때는 유저 보유 아이템을 가져와야 할 듯
+        // const data = await owendLoanItems(token);
         const data = await owendLoanItems();
         // 받은 데이터로 상점 아이템 설정
         // setSavedSlot(data);
         setProducts(data);
-        console.log("보유: ", data);
+        // console.log("보유: ", data);
       } catch (error) {
         console.log(error);
       }
@@ -68,8 +74,8 @@ function SlotSetting({ openItemModal, openSaveSlotModal }) {
         }
       }
     }
-    console.log("selected", selectedSlots)
-    console.log("슬롯", savedSlot);
+    // console.log("selected", selectedSlots)
+    // console.log("슬롯", savedSlot);
   };
   
   const clear = (selected, clearFunction) => {
@@ -114,8 +120,9 @@ function SlotSetting({ openItemModal, openSaveSlotModal }) {
       // const jsonData = JSON.stringify(savedSlot);
       // console.log(jsonData)
       // const data = await setLoanItems(jsonData)
-      const data = await setLoanItems(savedSlot)
-      console.log(data);
+      // const data = await setLoanItems(savedSlot)
+      await setLoanItems(savedSlot)
+      // console.log(data);
     } catch (error) {
       console.error(error);
     }
@@ -145,7 +152,8 @@ function SlotSetting({ openItemModal, openSaveSlotModal }) {
       </div>
       {/* 사용자가 가지고 있는 아이템(products) */}
       {/* <div className="flex justify-evenly"> */}
-      <div className="flex justify-stretch gap-3 h-[60%]">
+      {/* <div className="flex justify-stretch gap-3 h-[60%]"> */}
+      <div className="flex justify-stretch gap-3 h-[50%]">
         {/* {products.map((item, index) => ( */}
         {currentItems.map((item, index) => (
           <div 
@@ -190,7 +198,7 @@ function SlotSetting({ openItemModal, openSaveSlotModal }) {
             <div
               key={index}
               // className="mt-12 mb-12 flex-grow-1 w-[200px] h-[100px]  border-2 px-6 py-4 rounded-lg border-black bg-white hover:cursor-pointer text-center"
-              className="flex-grow-1 w-[200px] h-[80%] border-2 px-6 py-4 rounded-lg border-black bg-white hover:cursor-pointer text-center place-content-center"
+              className="flex-grow-1 w-[230px] h-[90%] border-2 px-6 py-4 rounded-lg border-black bg-white hover:cursor-pointer text-center place-content-center"
               onClick={() => clear(selectedSlot, setSelectedSlot)}
             >
               {/* 여기에 클릭해서 넣은거 표시되어야함 */}
