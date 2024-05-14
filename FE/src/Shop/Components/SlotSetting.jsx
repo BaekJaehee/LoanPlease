@@ -1,6 +1,5 @@
 import { PropTypes } from "prop-types"; 
 import { useEffect } from "react";
-import Cookies from "universal-cookie";
 import useStore from "../../Store/ShopStore";
 import { owendLoanItems, setLoanItems } from "../API/ShopAPI";
 
@@ -31,8 +30,6 @@ function SlotSetting({ openItemModal, openSaveSlotModal }) {
   useEffect(() => {
     const fetchItems = async () => {
       try {
-        // const cookies = new Cookies();
-        // const token = cookies.get("Authorization");
         // const token = document.cookie // 쿠키 읽기
         //   .split('; ')  // 항목 분리
         //   .find(row => row.startsWith('Authorization='))  // Authorization 찾기
