@@ -7,7 +7,6 @@ import ManualModal from "../Modal/ManualModal.jsx";
 import GamePause from "./GamePause.jsx"
 import GameInfo from "./GameInfo.jsx";
 import GameInfo2 from "./GameInfo2.jsx";
-import Dialogue from "./Dialogue.jsx";
 
 import ExitGame from "../Assets/exit_game.png"
 import SampleCustomer from "../Assets/sample_customer.png"
@@ -21,6 +20,7 @@ import Time from "../Assets/time.png"
 import VipUsed from "../Assets/vip_used.png"
 import ShieldUsed from "../Assets/shield_used.png"
 import TimeUsed from "../Assets/time_used.png"
+import Loader from "../Assets/Loader.gif"
 
 import Customer1 from "../Assets/customer1.png"
 import Customer2 from "../Assets/customer2.png"
@@ -40,12 +40,12 @@ import Customer16 from "../Assets/customer16.png"
 import Customer17 from "../Assets/customer17.png"
 import Customer18 from "../Assets/customer18.png"
 
-import { postScoreRequest } from "../../API/CustomerAPI.jsx";
+import { postScoreRequest, fetchGetawayRequest } from "../../API/CustomerAPI.jsx";
 
 import { useEffect } from "react";
 
-
 function Game() {
+
   function formatNumber(num) {
     return String(num).padStart(2, '0');
   }
@@ -65,7 +65,6 @@ function Game() {
     deactivateFinance,
     isCustomer,
     callCustomer,
-    endCustomer1,
     products,
     selectedProduct,
     selectProduct,
@@ -82,7 +81,9 @@ function Game() {
     useTime,
     dialogueNum,
     gameInfo,
-    updateCustomerState
+    updateCustomerState,
+    isShield,
+    setIsShield
   } = useStore();
 
   const { customerInfo } = gameInfo;
@@ -92,10 +93,14 @@ function Game() {
   useEffect(() => {
     if (dialogueNum === 0) {
       setMessage(customerInfo && customerInfo.customerMessage);
-    } else if (dialogueNum === 1) {
-      setMessage("돌려보내기");
     } else if (dialogueNum === 3) {
-      setMessage("VIP 아이템 사용");
+      setMessage(() => (
+        <>
+          큼.. 뭐 이런걸 다
+          <br />
+          (VIP 아이템 사용)
+        </>
+      ));
     }
   }, [dialogueNum, customerInfo]);
 
@@ -126,6 +131,42 @@ function Game() {
   const imageKey = `Customer${customerInfo && customerInfo.customerImage}`;
   const customerImage = customerImages[imageKey] || SampleCustomer;
 
+  async function handleEndCustomer1() {
+
+    updateCustomerState({
+      selectedProduct: null,
+      dialogueNum: 1,
+      isButtonEnabled: false,
+      showScore: false
+    });
+  
+    try {
+      const scoreResponse = await fetchGetawayRequest(gameInfo); // API 호출
+      console.log(scoreResponse)
+      let score = scoreResponse.data.score; // API로부터 받은 점수 데이터
+      setMessage(scoreResponse.data.message);
+
+      // 점수와 관련 상태 업데이트
+      updateCustomerState({
+        changeScore: score,
+        showScore: true,
+        score: useStore.getState().score + score
+      });
+  
+      // 1초 후 추가 상태 업데이트
+      setTimeout(() => {
+        updateCustomerState({
+          isButtonEnabled: true,
+          isCustomer: false,
+          showScore: false
+        });
+      }, 1500);
+  
+    } catch (error) {
+      console.error('Failed to post score:', error);
+    }
+  }
+
   async function handleEndCustomer2() {
 
     updateCustomerState({
@@ -138,8 +179,22 @@ function Game() {
     try {
       const scoreResponse = await postScoreRequest(1, gameInfo); // API 호출
       console.log(scoreResponse)
-      const score = scoreResponse.data.score; // API로부터 받은 점수 데이터
-      setMessage(scoreResponse.data.message);
+      let score = scoreResponse.data.score; // API로부터 받은 점수 데이터
+      if (isShield && score < 0) {
+        score = 0
+        setMessage(() => (
+          <>
+            봐줬다..
+            <br />
+            (실드 아이템 발동)
+          </>
+        ));
+        setIsShield()
+      }
+      else {
+        setMessage(scoreResponse.data.message);
+      }
+
 
       // 점수와 관련 상태 업데이트
       updateCustomerState({
@@ -170,7 +225,7 @@ function Game() {
         {/* 고정 크기의 웹게임 화면, 크기 고정 */}
         <div className="absolute w-[1535px] min-w-[1535px] max-w-[1500px] h-[705px] min-h-[705px] max-h-[680px] border-cusColor3 border-[10px] font-cusFont1 bg-cusColor1/25">
           {showModal && <ManualModal closeModal={closeModal} />}
-          {/* {!timerActive && !isGameEnd && <GameStart />} */}
+          {!timerActive && !isGameEnd && <GameStart />}
           {isGameEnd && <GameEnd />}
           {isGamePause && <GamePause />}
           <div className="h-[70%] flex">
@@ -215,12 +270,12 @@ function Game() {
                       </div>
                     </div>
 
-                    <div className="absolute left-[396px] top-[233px] w-[100px] h-[100px] bg-white/50 pl-5 pt-5">
+                    {customerInfo && customerInfo.customerMaterials[0] && (<div className="absolute left-[396px] top-[233px] w-[100px] h-[100px] bg-white/50 pl-5 pt-5">
                       <img src={Document} alt="" className="w-full h-full" />
-                    </div>
-                    <div className="absolute left-[496px] top-[233px] w-[100px] h-[100px] bg-white/50 px-2 pt-5">
+                    </div>)}
+                    {customerInfo && customerInfo.customerMaterials[1] && (<div className="absolute left-[496px] top-[233px] w-[100px] h-[100px] bg-white/50 px-2 pt-5">
                       <img src={Stamp} alt="" className="w-full h-full" />
-                    </div>
+                    </div>)}
                   </div>
                 </>
 
@@ -264,7 +319,10 @@ function Game() {
               </div>
 
               <div className="flex h-[62.5%] border-x-[5px] border-b-[5px] mx-5 border-black rounded-b-lg bg-white">
-                {!isCustomer && <p>"정보가 들어갈 자리입니다."</p>}
+                {!isCustomer && 
+                <>
+                  <img src={Loader} alt="" className="ml-[70px]" />
+                </>}
                 {isCustomer && isFinance && < GameInfo />}
                 {isCustomer && !isFinance && < GameInfo2 />}
               </div>
@@ -321,7 +379,7 @@ function Game() {
                 <div className="w-[30%] h-[94%]">
 
                   <div className="h-[50%] w-full flex justify-center items-center">
-                    <button className="w-[90%] h-[90%] bg-red-500 text-white flex justify-center items-center border-[5px] border-black rounded-lg text-xl" onClick={endCustomer1} disabled={!isButtonEnabled}>
+                    <button className="w-[90%] h-[90%] bg-red-500 text-white flex justify-center items-center border-[5px] border-black rounded-lg text-xl" onClick={handleEndCustomer1} disabled={!isButtonEnabled}>
                       <p>돌려보내기</p>
                     </button>
                   </div>

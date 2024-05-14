@@ -1,7 +1,8 @@
 import { create } from 'zustand';
-import { fetchCustomerRequest, postScoreRequest } from '../API/CustomerAPI.jsx';
+import { fetchCustomerRequest, patchScoreRequest } from '../API/CustomerAPI.jsx';
 
 const useStore = create(set => ({
+
   // 시작 시 모달
   showModal: false,
   setShowModal: () => set(state => ({ showModal: !state.showModal })),
@@ -22,7 +23,11 @@ const useStore = create(set => ({
             return { time: state.time - 1 };
           } else {
             clearInterval(state.timerId); // 타이머 중지
-            return { isGameEnd: true, timerActive: false }; // 게임 종료 상태 업데이트
+            patchScoreRequest(state.score) // 스코어 업데이트 API 호출
+              .then(response => set({ credit: response.data }))
+              .catch(error => console.error('Failed to update score:', error));
+            set({ isGameEnd: true, timerActive: false }); // 게임 종료 상태 업데이트
+            return {};
           }
         });
       }, 1000);
@@ -31,6 +36,7 @@ const useStore = create(set => ({
   },
 
   score: 0,
+  credit: 0,
   isGameEnd: false,
   showScore: false,
   changeScore: 0,
@@ -39,12 +45,13 @@ const useStore = create(set => ({
   isShieldActive: true,
   isTimeActive: true,
   isShield: false,
+  setIsShield: () => set(state => ({ isShield: false })),
 
   useVip: () => {
-    set(state => { 
+    set(state => {
       state.selectedProduct = null;
       state.isVipActive = false,
-      state.dialogueNum = 3;
+        state.dialogueNum = 3;
       // 버튼 비활성화
       state.isButtonEnabled = false;
       // 1초 후 재활성화 및 고객 상태 업데이트
@@ -57,10 +64,10 @@ const useStore = create(set => ({
         set({ isButtonEnabled: true, isCustomer: false, showScore: false });
       }, 1500);
       return {};
-      })
-    },
-  
-  
+    })
+  },
+
+
   useShield: () => set(state => ({ isShieldActive: false, isShield: true })),
   useTime: () => set(state => ({ isTimeActive: false, time: state.time + 60 })),
 
@@ -74,46 +81,6 @@ const useStore = create(set => ({
   callCustomer: async () => {
     set({ isCustomer: true, dialogueNum: 0 });
     await useStore.getState().loadGameInfo();  // 상태의 비동기 함수 호출
-  },
-
-  endCustomer1: () => {
-    set(state => {
-      // 고객 정보 및 상품 선택 초기화
-      state.selectedProduct = null;
-      state.dialogueNum = 1;
-      // 버튼 비활성화
-      state.isButtonEnabled = false;
-      state.changeScore = 1000;
-      state.showScore = true
-      
-      // 1초 후 재활성화 및 고객 상태 업데이트
-      state.score = state.score + state.changeScore
-      setTimeout(() => {
-        set({ isButtonEnabled: true, isCustomer: false, showScore: false });
-      }, 1500);
-
-      return {};
-    });
-  },
-
-  endCustomer1: () => {
-    set(state => {
-      // 고객 정보 및 상품 선택 초기화
-      state.selectedProduct = null;
-      state.dialogueNum = 1;
-      // 버튼 비활성화
-      state.isButtonEnabled = false;
-      // 1초 후 재활성화 및 고객 상태 업데이트
-      state.changeScore = -1000;
-      state.showScore = true
-
-      state.score = state.score + state.changeScore
-
-      setTimeout(() => {
-        set({ isButtonEnabled: true, isCustomer: false, showScore: false });
-      }, 1500);
-      return {};
-    });
   },
 
   dialogueNum: 0,
@@ -184,7 +151,7 @@ const useStore = create(set => ({
       const data = await fetchCustomerRequest();
       console.log(data)
       set({ gameInfo: data.data });
-      console.log(useStore.getState().gameInfo); 
+      console.log(useStore.getState().gameInfo);
     } catch (error) {
       console.error('Failed to load game data:', error);
     }

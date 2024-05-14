@@ -3,8 +3,6 @@ import useStore from "../../Store/GameStore.jsx"
 function GameInfo() {
   const { gameInfo } = useStore();
 
-  console.log(gameInfo)
-
   const { customerInfo, financialInfo } = gameInfo;
 
   return (
