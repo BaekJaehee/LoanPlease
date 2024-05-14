@@ -191,7 +191,7 @@ function SlotSetting({ openItemModal, openSaveSlotModal }) {
             <div
               key={index}
               // className="mt-12 mb-12 flex-grow-1 w-[200px] h-[100px]  border-2 px-6 py-4 rounded-lg border-black bg-white hover:cursor-pointer text-center"
-              className="flex-grow-1 w-[230px] h-[90%] border-2 px-6 py-4 rounded-lg border-black bg-white hover:cursor-pointer text-center place-content-center"
+              className="flex-grow-1 w-[220px] h-[90%] border-2 px-6 py-4 rounded-lg border-black bg-white hover:cursor-pointer text-center place-content-center"
               onClick={() => clear(selectedSlot, setSelectedSlot)}
             >
               {/* 여기에 클릭해서 넣은거 표시되어야함 */}

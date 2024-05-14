@@ -124,8 +124,11 @@ const useStore = create((set) => ({
 
   // 화면에 보이는 슬롯 채우기
   selected1: {name: null},
+  // selected1: {name: '로우 대출'},
   selected2: {name: null},
+  // selected2: {name: '미디 대출'},
   selected3: {name: null},
+  // selected3: {name: '하이 대출'},
   selected4: {name: null},
   selected5: {name: null},
   setSelected1: (item) => set({ selected1: {name: item.name} }),
@@ -149,7 +152,7 @@ const useStore = create((set) => ({
   setSelectedProduct: (description) => set({ selectedProduct: description }),
 
   // 세팅된 슬롯:
-  savedSlot: [0, 0, 0, 0, 0],
+  savedSlot: [1, 2, 3, 0, 0],
   setSavedSlot: (item) => set({ savedSlot: item }),
   
   // 슬롯용 페이지네이션
