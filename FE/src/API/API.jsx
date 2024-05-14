@@ -1,29 +1,14 @@
 import axios from "axios";
 
-export const isNewMember = async (email) => {
-  const url = `/api/auth/email/${email}`;
+export const getUserInfo = async () => {
+  const url = "/api/user-info";
   return await axios
-    .get(url)
-    .then((response) => {
-      console.log(response.data);
-      if (response.status == 200) return true;
-      else return false;
+    .get(url, {
+      withCredentials: true,
     })
-    .catch((e) => {
-      console.log(e);
-    });
-};
-
-export const uploadimage = async (file) => {
-  const url = "/api/upload";
-  const form = new FormData();
-  form.append("image", file);
-  return await axios
-    .post(url, form)
     .then((response) => {
-      console.log(response.data);
-      if (response.status == 200) return true;
-      else return false;
+      if (response.data.status == 200) return response.data.dataBody;
+      else console.log(response);
     })
     .catch((e) => {
       console.log(e);
@@ -33,7 +18,9 @@ export const uploadimage = async (file) => {
 export const nicknameCheck = async (nickname) => {
   const url = `/api/auth/nickname/${nickname}`;
   return await axios
-    .get(url)
+    .get(url, {
+      withCredentials: true,
+    })
     .then((response) => {
       if (response.status == 200) return true;
       else return false;
@@ -46,10 +33,12 @@ export const nicknameCheck = async (nickname) => {
 export const signup = async (data) => {
   const url = "/api/auth/register";
   return await axios
-    .post(url, data)
+    .post(url, data, {
+      withCredentials: true,
+    })
     .then((response) => {
-      if (response.status == 200) return response.data;
-      else return {};
+      if (response.data.status == 200) return response.data.dataBody;
+      else console.log(response);
     })
     .catch((e) => {
       console.log(e);

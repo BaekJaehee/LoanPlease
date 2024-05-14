@@ -1,8 +1,6 @@
 import { useState } from "react";
 import loginbutton from "./assets/loginbutton.png";
 import background from "./assets/splash_final.jpg";
-import { LoginStore } from "../Store";
-import { Cookies } from "react-cookie";
 
 // const mainarea = {
 //   display: "flex",
@@ -65,11 +63,6 @@ function Login() {
   const [startButton, setStartButton] = useState(startButtonClass);
   const [audio, setAudio] = useState(<div></div>);
 
-  const mydata = LoginStore((state) => state.mydata);
-  const setIsLogin = LoginStore((state) => state.setIsLogin);
-
-  const cookie = new Cookies();
-
   const init = () => {
     setStartButton(startButton.replace("opacity-100", "opacity-0"));
 
@@ -117,12 +110,6 @@ function Login() {
       <div onClick={init} className={startButton}>
         Press To Start
       </div>
-      {/* <iframe
-        src="audioes/intro_bgm.mp3"
-        allow="autoplay"
-        id="audio"
-        style={{ display: "none" }}
-      /> */}
       {/* <img style={bgstyle} src={background} /> */}
       <img className={bgstyle} src={background} />
       {/* <div style={panelstyle}> */}
@@ -132,17 +119,9 @@ function Login() {
         <img width={200} src="/loanplease.png" />
         <img
           onClick={async () => {
-            if (mydata.nick != "-") {
-              setIsLogin(true);
-            } else {
-              // let url = "http://localhost:8080/oauth2/authorization/google";
-              let url = "https://loanplease.kr/oauth2/authorization/google";
-              location.href = url;
-              if (cookie.get("tmpEmail") || cookie.get("tmpImage")) {
-                url = "http://loanplease.kr/signup";
-                location.href = url;
-              }
-            }
+            // let url = "http://localhost:8080/oauth2/authorization/google";
+            let url = "https://loanplease.kr/oauth2/authorization/google";
+            location.href = url;
           }}
           width={300}
           // style={{ cursor: "pointer" }}

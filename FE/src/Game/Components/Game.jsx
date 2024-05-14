@@ -177,7 +177,7 @@ function Game() {
             <div className="h-full w-[57.5%] border-[5px] border-black bg-game bg-cover">
               {isCustomer && (
                 <>
-                  {showScore && <div className="text-center absolute z-50 w-[200px] top-[33px] left-[70px] bg-white/70 p-2">
+                  {showScore && <div className="text-center absolute w-[150px] z-50 top-[15px] left-[85px] bg-white/70 p-2">
                     <p className={`text-3xl  ${changeScore >= 0 ? `text-rose-600` : `text-blue-500`}`}>
                       {changeScore > 0 && `+`}{changeScore}
                     </p>
