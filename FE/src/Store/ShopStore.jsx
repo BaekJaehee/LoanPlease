@@ -14,7 +14,7 @@ const useStore = create((set) => ({
   setUserPoint: (num) => set({ userPoint: num }),
 
   // 유저 슬롯 개수(임시)
-  userSlotNum: 3,
+  userSlotNum: 5,
   setUserSlotNum: (num) => set({ userSlotNum: num }), // 구매하면 슬롯 수 변경
 
   // 슬롯

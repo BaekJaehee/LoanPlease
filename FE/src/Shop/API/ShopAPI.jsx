@@ -1,11 +1,15 @@
 import axios from "axios";
+import { Cookies } from "universal-cookie";
 
 // 192.168.100.178:8080
 
-const token = document.cookie // 쿠키 읽기
-      .split('; ')  // 항목 분리
-      .find(row => row.startsWith('Authorization='))  // Authorization 찾기
-      ?.split('=')[1];  // 의 value 값
+const cookies = new Cookies();
+const token = cookies.get("Authorization");
+
+// const token = document.cookie // 쿠키 읽기
+//       .split('; ')  // 항목 분리
+//       .find(row => row.startsWith('Authorization='))  // Authorization 찾기
+//       ?.split('=')[1];  // 의 value 값
 
 // 아이템 리스트 조회
 // export const itemsList = async (token) => {
@@ -22,7 +26,7 @@ export const itemsList = async () => {
     })
     .then((response) => {
       console.log(token);
-      console.log(response.data);
+      // console.log(response.data);
       return response.data;
     })
     .catch((e) => {
