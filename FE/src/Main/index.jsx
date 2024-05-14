@@ -36,11 +36,16 @@ function Home() {
   };
 
   useEffect(() => {
-    const cookie = new Cookies();
-    const token = cookie.get("Authorization");
-    if (token) {
+    if (localStorage.getItem("mydata")) {
       setIsLogin(true);
-      getmyinfo();
+      setMyData(JSON.parse(localStorage.getItem("mydata")));
+    } else {
+      const cookie = new Cookies();
+      const token = cookie.get("Authorization");
+      if (token) {
+        setIsLogin(true);
+        getmyinfo();
+      }
     }
   }, []);
 
