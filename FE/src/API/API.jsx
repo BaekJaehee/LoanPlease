@@ -1,5 +1,18 @@
 import axios from "axios";
 
+export const tokenrefresh = async () => {
+  const url = "/api/refresh";
+  return await axios
+    .get(url, {
+      withCredentials: true,
+    })
+    .then((response) => {
+      if (response.status == 200) return response.data;
+      else console.log(response);
+    })
+    .catch((e) => console.log(e));
+};
+
 export const getUserInfo = async () => {
   const url = "/api/user-info";
   return await axios
