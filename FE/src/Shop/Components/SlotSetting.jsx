@@ -18,7 +18,7 @@ function SlotSetting({ openItemModal, openSaveSlotModal }) {
   const selectedSlots = [selected1, selected2, selected3, selected4, selected5];
   const setSelectedSlots = [setSelected1, setSelected2, setSelected3, setSelected4, setSelected5];
 
-  const itemsPerPage = 6; // 페이지당 보여줄 아이템 수(임의)
+  const itemsPerPage = 5; // 페이지당 보여줄 아이템 수(임의)
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentItems = products.slice(indexOfFirstItem, indexOfLastItem);
@@ -152,7 +152,7 @@ function SlotSetting({ openItemModal, openSaveSlotModal }) {
           <div 
           key={index} 
           // className="font-cusFont1 flex-grow-1 w-[200px] h-[250px] border-2 px-6 py-4 rounded-lg border-black bg-white mb-6 text-center"
-          className="font-cusFont1 flex-grow-1 w-[200px] h-[95%] border-2 px-6 py-4 rounded-lg border-black bg-white text-center"
+          className="font-cusFont1 flex-grow-1 w-[240px] h-[95%] border-2 px-6 py-4 rounded-lg border-black bg-white text-center"
           // onClick={() => setting({ name: item.name, description: item.description })}
           >
             <p className="text-2xl py-4 my-2 h-[30%] place-content-center">{item.name}</p>
