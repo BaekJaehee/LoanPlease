@@ -1,5 +1,6 @@
 import { PropTypes } from "prop-types"; 
 import { useEffect } from "react";
+import Cookies from "universal-cookie";
 import useStore from "../../Store/ShopStore";
 import { owendLoanItems, setLoanItems } from "../API/ShopAPI";
 
@@ -30,14 +31,16 @@ function SlotSetting({ openItemModal, openSaveSlotModal }) {
   useEffect(() => {
     const fetchItems = async () => {
       try {
-        const token = document.cookie // 쿠키 읽기
-          .split('; ')  // 항목 분리
-          .find(row => row.startsWith('Authorization='))  // Authorization 찾기
-          ?.split('=')[1];  // 의 value 값
+        // const cookies = new Cookies();
+        // const token = cookies.get("Authorization");
+        // const token = document.cookie // 쿠키 읽기
+        //   .split('; ')  // 항목 분리
+        //   .find(row => row.startsWith('Authorization='))  // Authorization 찾기
+        //   ?.split('=')[1];  // 의 value 값
         // const token = localStorage.getItem("accessToken");  // 토큰 어떻게 할지는...
         // const data = await itemsList(token); // itemsList 함수를 사용하여 데이터 호출
         // const data = await setLoanItems(); // itemsList 함수를 사용하여 데이터 호출
-        
+
         // 생각해보니 렌더링할 때는 유저 보유 아이템을 가져와야 할 듯
         // const data = await owendLoanItems(token);
         const data = await owendLoanItems();

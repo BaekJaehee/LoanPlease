@@ -138,7 +138,7 @@ export const setLoanItems = async (savedSlot) => {
       },
     })
     .then((response) => {
-      console.log("setLoanItems:", response.data)
+      // console.log("setLoanItems:", response.data)
       return response.data;
     })
     .catch((e) => {
