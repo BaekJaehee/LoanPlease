@@ -45,16 +45,23 @@ overflow-x-hidden overflow-y-auto
 // };
 
 function SearchPage() {
-
-  const [inputdata, setInputData] = useState('')
+  const [inputdata, setInputData] = useState("");
 
   return (
     // <div style={searchpagestyle}>
     <div className={searchpagestyleClass}>
       {/* <input style={searchlinestyle} /> */}
-      <input className={searchlinestyleClass} value={inputdata} onChange={e => {setInputData(e.target.value)}} />
+      <input
+        className={searchlinestyleClass}
+        value={inputdata}
+        onChange={(e) => {
+          setInputData(e.target.value);
+        }}
+      />
       {/* <div style={searchresultarea}> */}
-      <div className={searchresultareaClass}>{PageQuery()}</div>
+      <div className={searchresultareaClass}>
+        {<PageQuery inputdata={inputdata} />}
+      </div>
     </div>
   );
 }
