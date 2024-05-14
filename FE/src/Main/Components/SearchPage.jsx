@@ -1,4 +1,5 @@
 /* eslint-disable react/jsx-key */
+import { useState } from "react";
 import { PageQuery } from "./InfiniteQuery.jsx";
 
 const searchpagestyleClass = `
@@ -44,13 +45,23 @@ overflow-x-hidden overflow-y-auto
 // };
 
 function SearchPage() {
+  const [inputdata, setInputData] = useState("");
+
   return (
     // <div style={searchpagestyle}>
     <div className={searchpagestyleClass}>
       {/* <input style={searchlinestyle} /> */}
-      <input className={searchlinestyleClass} />
+      <input
+        className={searchlinestyleClass}
+        value={inputdata}
+        onChange={(e) => {
+          setInputData(e.target.value);
+        }}
+      />
       {/* <div style={searchresultarea}> */}
-      <div className={searchresultareaClass}>{PageQuery()}</div>
+      <div className={searchresultareaClass}>
+        {<PageQuery inputdata={inputdata} />}
+      </div>
     </div>
   );
 }
