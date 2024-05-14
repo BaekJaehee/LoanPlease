@@ -44,7 +44,7 @@ function Home() {
       const token = cookie.get("Authorization");
       if (token) {
         setIsLogin(true);
-        getmyinfo();
+        // getmyinfo();
       }
     }
   }, []);
