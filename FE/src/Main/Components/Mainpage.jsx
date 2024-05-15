@@ -5,7 +5,6 @@ import { LoginStore, MainStore } from "../Store";
 import { useEffect, useState } from "react";
 import { Cookies } from "react-cookie";
 import { getUserInfo } from "../../API/API";
-import { NativeEventSource, EventSourcePolyfill } from "event-source-polyfill";
 import Rankingpage from "./Rankingpage";
 import Mypage from "./Mypage";
 import Noticebar from "./Noticebar";
@@ -202,33 +201,33 @@ function Main() {
   }, []);
 
   useEffect(() => {
-    const source = new EventSource("https://loanplease.kr/api/connect", {
-      withCredentials: false,
-    });
-    source.addEventListener("open", function (e) {
-      console.log(e);
-    });
-    source.addEventListener("message", function (e) {
-      console.log(e);
-    });
-    source.addEventListener(
-      "error",
-      function (e) {
-        if (e.eventPhase == EventSource.CLOSED) source.close();
-        if (e.target.readyState == EventSource.CLOSED) {
-          console.log("Server Disconnected");
-        } else if (e.target.readyState == EventSource.CONNECTING) {
-          console.log("Server Connecting...");
-        }
-      },
-      false,
-    );
+    // const source = new EventSource("https://loanplease.kr/api/connect", {
+    //   withCredentials: false,
+    // });
+    // source.addEventListener("open", function (e) {
+    //   console.log(e);
+    // });
+    // source.addEventListener("message", function (e) {
+    //   console.log(e);
+    // });
+    // source.addEventListener(
+    //   "error",
+    //   function (e) {
+    //     if (e.eventPhase == EventSource.CLOSED) source.close();
+    //     if (e.target.readyState == EventSource.CLOSED) {
+    //       console.log("Server Disconnected");
+    //     } else if (e.target.readyState == EventSource.CONNECTING) {
+    //       console.log("Server Connecting...");
+    //     }
+    //   },
+    //   false,
+    // );
     setRankingpopup(false);
     setMypagepopup(false);
     setIsBgm(true);
-    return () => {
-      source.close();
-    };
+    // return () => {
+    //   source.close();
+    // };
   }, []);
 
   return (
