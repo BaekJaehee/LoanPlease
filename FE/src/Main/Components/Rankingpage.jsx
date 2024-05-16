@@ -217,7 +217,7 @@ function Rankingpage() {
           className={buttonareaClass}
         >
           <div
-            onClick={() => {
+            onClick={async () => {
               if (index == 1) {
                 makeClickSound();
                 switchmode();
@@ -229,7 +229,7 @@ function Rankingpage() {
             전체랭킹
           </div>
           <div
-            onClick={() => {
+            onClick={async () => {
               if (index == 0) {
                 makeClickSound();
                 switchmode();
