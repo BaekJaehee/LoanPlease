@@ -13,7 +13,8 @@ function SlotSetting({ openItemModal, openSaveSlotModal, products, slotNumber, s
     // userSlotNum, 
     currentPage, setCurrentPage, 
     setSelectedProduct, 
-    savedSlot, setSavedSlot, 
+    // savedSlot, setSavedSlot, 
+    setSavedSlot, 
     // selected1, selected2, selected3, selected4, selected5, 
     setSelected1, setSelected2, setSelected3, setSelected4, setSelected5 } = useStore();
 
