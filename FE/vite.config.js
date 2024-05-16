@@ -9,6 +9,7 @@ export default defineConfig({
       "/api": {
         target: "http://loanplease.kr/api",
         changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api/, ""),
         secure: false,
       },
     },
