@@ -160,7 +160,7 @@ function Rankingpage() {
   const [datalist, setDataList] = useState(null);
 
   const getallrankings = async () => {
-    const result = await rankinglist();
+    const result = await Promise.all(rankinglist());
     const resultdata = result.map((value, index) => {
       return <Rankingdata key={index + 1} data={value} rank={index + 1} />;
     });
@@ -168,7 +168,7 @@ function Rankingpage() {
   };
 
   const getallfriendrankings = async () => {
-    const result = await friendrankinglist();
+    const result = await Promise.all(friendrankinglist());
     const resultdata = result.map((value, index) => {
       return <Rankingdata key={index + 1} data={value} rank={index + 1} />;
     });
