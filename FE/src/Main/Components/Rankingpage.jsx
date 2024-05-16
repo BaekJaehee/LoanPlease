@@ -159,15 +159,15 @@ function Rankingpage() {
 
   const [datalist, setDataList] = useState([]);
 
-  const getallrankings = useMemo(async () => {
+  const getallrankings = async () => {
     const result = await rankinglist();
     setDataList(result);
-  }, [index]);
+  };
 
-  const getallfriendrankings = useMemo(async () => {
+  const getallfriendrankings = async () => {
     const result = await friendrankinglist();
     setDataList(result);
-  }, [index]);
+  };
 
   const switchmode = () => {
     setIndex(1 - index);
@@ -180,8 +180,8 @@ function Rankingpage() {
   };
 
   useEffect(() => {
-    index == 0 ? getallrankings() : getallfriendrankings();
-  }, [index, setIndex]);
+    getallrankings();
+  }, []);
 
   return (
     // <div style={rankingstyle}>
