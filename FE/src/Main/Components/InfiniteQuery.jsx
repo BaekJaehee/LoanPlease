@@ -74,7 +74,7 @@ export const PageQuery = (props) => {
         const item = {
           image: resultdata[i].profileImg,
           nickname: resultdata[i].nickname,
-          isFollow: true,
+          isFollow: resultdata[i].isFollow,
         };
         result.push(item);
       }
