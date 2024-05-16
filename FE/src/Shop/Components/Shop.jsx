@@ -60,29 +60,6 @@ function Shop() {
     fetchItems();
   }, []); // 빈 배열을 전달하여 컴포넌트가 처음 렌더링될 때만 실행되도록 설정
 
-  // 유저 정보 가져오기
-  // const fetchUserInfo = async () => {
-  //   try {
-  //     console.log("시작?")
-  //     const data = await getUserInfo();
-  //     // console.log("유저정보", data);
-  //     console.log("유저정보", data.dataBody);
-  //     // 유저 포인트
-  //     setPoint(data.dataBody.point);  // 뭐 이런식
-  //     // 슬롯 수
-  //     setSlotNum(data.dataBody.slotNum);
-  //     // 유저가 가진 아이템
-  //     setProducts(data.dataBody.userLoanList)
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // }
-
-  // useEffect(() => {
-  //   fetchUserInfo();
-  // }, [point, slotNum, products])
-
-
   useEffect(() => {
     const fetchUserInfo = async () => {
       try {
@@ -103,7 +80,37 @@ function Shop() {
         // 유저가 배치한 슬롯
         // setSavedSlot([data.dataBody.slot_1, data.dataBody.slot_2, data.dataBody.slot_3, data.dataBody.slot_4, data.dataBody.slot_5])
         setSavedSlot([slot_1, slot_2, slot_3, slot_4, slot_5]);
-        // setSelected1(products.loanName[0])
+
+        // selected 채우기
+        savedSlot.forEach((slotId, index) => {
+          // 해당 칸이 0이 아니라면 (0: 아이템 없음)
+          if (slotId !== 0) {
+            // products의 loanId가 slotId에 해당하는 아이템 이름 찾기
+            const selectedItem = products.find(product => product.loanId === slotId);
+            // 찾은 아이템의 이름을 해당하는 selected 상태에 저장
+            if (selectedItem) {
+              switch (index) {
+                case 0:
+                  setSelected1({ name: selectedItem.loanName });
+                  break;
+                case 1:
+                  setSelected2({ name: selectedItem.loanName });
+                  break;
+                case 2:
+                  setSelected3({ name: selectedItem.loanName });
+                  break;
+                case 3:
+                  setSelected4({ name: selectedItem.loanName });
+                  break;
+                case 4:
+                  setSelected5({ name: selectedItem.loanName });
+                  break;
+                default:
+                  break;
+              }
+            }
+          }
+        });
       } catch (error) {
         console.error(error);
       }
@@ -113,22 +120,22 @@ function Shop() {
   // }, [point, slotNum, products]);
   }, []);
 
-  useEffect(() => {
-    // savedSlot에 있는 숫자를 이용하여 해당하는 loanName을 찾아 selectedSlots에 설정
-    const updatedSelectedSlots = savedSlot.map(slotId => {
-      // savedSlot에 있는 각 숫자가 loanId와 일치하는 상품을 찾아 selectedSlots에 설정
-      const selectedProduct = products.find(product => product.loanId === slotId);
-      // 해당하는 상품이 없다면 빈 문자열로 설정
-      return selectedProduct ? selectedProduct.loanName : "";
-    });
+  // useEffect(() => {
+  //   // savedSlot에 있는 숫자를 이용하여 해당하는 loanName을 찾아 selectedSlots에 설정
+  //   const updatedSelectedSlots = savedSlot.map(slotId => {
+  //     // savedSlot에 있는 각 숫자가 loanId와 일치하는 상품을 찾아 selectedSlots에 설정
+  //     const selectedProduct = products.find(product => product.loanId === slotId);
+  //     // 해당하는 상품이 없다면 빈 문자열로 설정
+  //     return selectedProduct ? selectedProduct.loanName : "";
+  //   });
   
-    // SlotSetting 컴포넌트로 selectedSlots를 전달
-    setSelected1(updatedSelectedSlots[0]);
-    setSelected2(updatedSelectedSlots[1]);
-    setSelected3(updatedSelectedSlots[2]);
-    setSelected4(updatedSelectedSlots[3]);
-    setSelected5(updatedSelectedSlots[4]);
-  }, [savedSlot, products]);
+  //   // SlotSetting 컴포넌트로 selectedSlots를 전달
+  //   setSelected1(updatedSelectedSlots[0]);
+  //   setSelected2(updatedSelectedSlots[1]);
+  //   setSelected3(updatedSelectedSlots[2]);
+  //   setSelected4(updatedSelectedSlots[3]);
+  //   setSelected5(updatedSelectedSlots[4]);
+  // }, [savedSlot, products]);
 
   // useEffect(() => {
   //   const fetchUserInfo = async () => {
@@ -166,11 +173,11 @@ function Shop() {
   if (currentComponent === "gameItem") {
     // currentPage = <GameItem openSetNumberModal={openSetNumberModal} openGameItemModal={openGameItemModal} openWarningModal={openWarningModal} gameItems={gameItems} userPoint={userPoint} setUserPoint={handleUpdatePoint} />;
     currentPage = <GameItem openSetNumberModal={openSetNumberModal} openGameItemModal={openGameItemModal} openWarningModal={openWarningModal} gameItems={gameItems} point={point} slotNumber={slotNumber} />;
-  } else if (currentComponent == "loanItem") {
+  } else if (currentComponent === "loanItem") {
     // currentPage = <LoanItem openLoanItemModal={openLoanItemModal} openWarningModal={openWarningModal} loanItems={loanItems} userPoint={userPoint} setUserPoint={handleUpdatePoint} />;
     currentPage = <LoanItem openLoanItemModal={openLoanItemModal} openWarningModal={openWarningModal} loanItems={loanItems} point={point} />;
   } else {
-    currentPage = <SlotSetting openItemModal={openItemModal} openSaveSlotModal={openSaveSlotModal} products={products} slotNumber={slotNumber} savedSlot={savedSlot} selectedSlots={selectedSlots} />;
+    currentPage = <SlotSetting openItemModal={openItemModal} openSaveSlotModal={openSaveSlotModal} products={products} slotNumber={slotNumber} savedSlot={savedSlot} selectedSlots={selectedSlots} savedSlot={savedSlot} selected1={selected1} selected2={selected2} selected3={selected3} selected4={selected4} selected5={selected5} />;
   }
 
   return (

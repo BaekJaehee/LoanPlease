@@ -6,7 +6,7 @@ import { setLoanItems } from "../API/ShopAPI";
 
 // db에는 1374 순서인데 왜 1347로 찍히는건지?
 
-function SlotSetting({ openItemModal, openSaveSlotModal, products, slotNumber }) {
+function SlotSetting({ openItemModal, openSaveSlotModal, products, slotNumber, savedSlot, selected1, selected2, selected3, selected4, selected5 }) {
   const { 
     // products, setProducts, 
     setProducts,
@@ -14,7 +14,7 @@ function SlotSetting({ openItemModal, openSaveSlotModal, products, slotNumber })
     currentPage, setCurrentPage, 
     setSelectedProduct, 
     savedSlot, setSavedSlot, 
-    selected1, selected2, selected3, selected4, selected5, 
+    // selected1, selected2, selected3, selected4, selected5, 
     setSelected1, setSelected2, setSelected3, setSelected4, setSelected5 } = useStore();
 
   const selectedSlots = [selected1, selected2, selected3, selected4, selected5];
@@ -205,6 +205,12 @@ SlotSetting.propTypes = {
   openSaveSlotModal: PropTypes.func.isRequired,
   products: PropTypes.array.isRequired,
   slotNumber: PropTypes.number.isRequired,
+  savedSlot: PropTypes.array.isRequired,
+  selected1: PropTypes.object.isRequired,
+  selected2: PropTypes.object.isRequired,
+  selected3: PropTypes.object.isRequired,
+  selected4: PropTypes.object.isRequired,
+  selected5: PropTypes.object.isRequired,
 }
 
 export default SlotSetting;
