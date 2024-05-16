@@ -10,6 +10,7 @@ function Home() {
   const setIsLogin = LoginStore((state) => state.setIsLogin);
   const setMyData = LoginStore((state) => state.setMyData);
 
+  // 토큰 기반 유저 정보 가져오는 함수. 토큰 만료 시 refresh 후 다시 정보 요청 시도함.
   const getmyinfo = async () => {
     getUserInfo()
       .then((value) => {
@@ -18,7 +19,19 @@ function Home() {
           setMyData(value);
           setIsLogin(true);
         } else {
-          console.log(value);
+          tokenrefresh
+            .then((response) => {
+              if (response) {
+                getUserInfo()
+                  .then((info) => {
+                    localStorage.setItem("mydata", JSON.stringify(info));
+                    setMyData(info);
+                    setIsLogin(true);
+                  })
+                  .catch((e) => console.log(e));
+              }
+            })
+            .catch((e) => console.log(e));
         }
       })
       .catch((e) => console.log(e));
