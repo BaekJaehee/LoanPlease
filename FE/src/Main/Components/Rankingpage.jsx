@@ -161,18 +161,18 @@ function Rankingpage() {
 
   const getallrankings = async () => {
     rankinglist().then((result) => {
-      const resultdata = result.map((value, index) => {
+      const resultdata = <div>{result.data && result.data.map((value, index) => {
         return <Rankingdata key={index + 1} data={value} rank={index + 1} />;
-      });
+      })}</div>;
       setDataList(resultdata);
     });
   };
 
   const getallfriendrankings = async () => {
     friendrankinglist().then((result) => {
-      const resultdata = result.map((value, index) => {
+      const resultdata = <div>{result.data && result.data.map((value, index) => {
         return <Rankingdata key={index + 1} data={value} rank={index + 1} />;
-      });
+      })}</div>;
       setDataList(resultdata);
     });
   };
