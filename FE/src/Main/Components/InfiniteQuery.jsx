@@ -110,7 +110,7 @@ export const PageQuery = (props) => {
       // 입력값 존재할 시 해당 값을 포함하는 유저 목록 검색하기
       getInputResult();
     }
-  }, [props.inputdata]);
+  }, []);
 
   if (isLoading) return <div>loading...</div>;
 
