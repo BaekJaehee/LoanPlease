@@ -1,4 +1,4 @@
-import { useEffect, useState, useMemo } from "react";
+import { useEffect, useState } from "react";
 import { RankingStore } from "../Store";
 import search from "./assets/search_icon.png";
 import Rankingdata from "./Rankingdata";
@@ -85,68 +85,68 @@ w-full h-[200px] my-5 overflow-y-auto
 //   overflowY: "auto",
 // };
 
-const rankingdummydata = [
-  {
-    image: "",
-    nickname: "fdvddfv",
-    score: 10000,
-  },
-  {
-    image: "",
-    nickname: "dfghfgdhsgg",
-    score: 10000,
-  },
-  {
-    image: "",
-    nickname: "4t3gfre",
-    score: 10000,
-  },
-  {
-    image: "",
-    nickname: "aergsrtg",
-    score: 10000,
-  },
-  {
-    image: "",
-    nickname: "aergsrtg",
-    score: 10000,
-  },
-  {
-    image: "",
-    nickname: "aergsrtg",
-    score: 10000,
-  },
-  {
-    image: "",
-    nickname: "aergsrtg",
-    score: 10000,
-  },
-  {
-    image: "",
-    nickname: "aergsrtg",
-    score: 10000,
-  },
-  {
-    image: "",
-    nickname: "aergsrtg",
-    score: 10000,
-  },
-  {
-    image: "",
-    nickname: "aergsrtg",
-    score: 10000,
-  },
-  {
-    image: "",
-    nickname: "aergsrtg",
-    score: 10000,
-  },
-  {
-    image: "",
-    nickname: "aergsrtg",
-    score: 10000,
-  },
-];
+// const rankingdummydata = [
+//   {
+//     image: "",
+//     nickname: "fdvddfv",
+//     score: 10000,
+//   },
+//   {
+//     image: "",
+//     nickname: "dfghfgdhsgg",
+//     score: 10000,
+//   },
+//   {
+//     image: "",
+//     nickname: "4t3gfre",
+//     score: 10000,
+//   },
+//   {
+//     image: "",
+//     nickname: "aergsrtg",
+//     score: 10000,
+//   },
+//   {
+//     image: "",
+//     nickname: "aergsrtg",
+//     score: 10000,
+//   },
+//   {
+//     image: "",
+//     nickname: "aergsrtg",
+//     score: 10000,
+//   },
+//   {
+//     image: "",
+//     nickname: "aergsrtg",
+//     score: 10000,
+//   },
+//   {
+//     image: "",
+//     nickname: "aergsrtg",
+//     score: 10000,
+//   },
+//   {
+//     image: "",
+//     nickname: "aergsrtg",
+//     score: 10000,
+//   },
+//   {
+//     image: "",
+//     nickname: "aergsrtg",
+//     score: 10000,
+//   },
+//   {
+//     image: "",
+//     nickname: "aergsrtg",
+//     score: 10000,
+//   },
+//   {
+//     image: "",
+//     nickname: "aergsrtg",
+//     score: 10000,
+//   },
+// ];
 
 function Rankingpage() {
   // const selected = { ...buttonstyle, backgroundColor: "#FFD1E3" };
@@ -160,19 +160,21 @@ function Rankingpage() {
   const [datalist, setDataList] = useState(null);
 
   const getallrankings = async () => {
-    const result = await Promise.all(rankinglist());
-    const resultdata = result.map((value, index) => {
-      return <Rankingdata key={index + 1} data={value} rank={index + 1} />;
+    rankinglist().then((result) => {
+      const resultdata = result.map((value, index) => {
+        return <Rankingdata key={index + 1} data={value} rank={index + 1} />;
+      });
+      setDataList(resultdata);
     });
-    setDataList(resultdata);
   };
 
   const getallfriendrankings = async () => {
-    const result = await Promise.all(friendrankinglist());
-    const resultdata = result.map((value, index) => {
-      return <Rankingdata key={index + 1} data={value} rank={index + 1} />;
+    friendrankinglist().then((result) => {
+      const resultdata = result.map((value, index) => {
+        return <Rankingdata key={index + 1} data={value} rank={index + 1} />;
+      });
+      setDataList(resultdata);
     });
-    setDataList(resultdata);
   };
 
   const switchmode = () => {
