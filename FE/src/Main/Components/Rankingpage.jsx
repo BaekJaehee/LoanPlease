@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { RankingStore } from "../Store";
 import search from "./assets/search_icon.png";
 import Rankingdata from "./Rankingdata";
@@ -159,15 +159,15 @@ function Rankingpage() {
 
   const [datalist, setDataList] = useState([]);
 
-  const getallrankings = async () => {
+  const getallrankings = useMemo(async () => {
     const result = await rankinglist();
     setDataList(result);
-  };
+  }, [index]);
 
-  const getallfriendrankings = async () => {
+  const getallfriendrankings = useMemo(async () => {
     const result = await friendrankinglist();
     setDataList(result);
-  };
+  }, [index]);
 
   const switchmode = () => {
     setIndex(1 - index);
@@ -215,6 +215,7 @@ function Rankingpage() {
               if (index == 1) {
                 makeClickSound();
                 switchmode();
+                getallrankings();
               }
             }}
             className={buttons[index]}
@@ -226,6 +227,7 @@ function Rankingpage() {
               if (index == 0) {
                 makeClickSound();
                 switchmode();
+                getallfriendrankings();
               }
             }}
             className={buttons[1 - index]}
