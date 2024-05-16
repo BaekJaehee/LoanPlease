@@ -137,8 +137,8 @@ export const friendsearchByname = async (input) => {
   return await axios
     .get(url)
     .then((response) => {
-      if (response.data.data) {
-        return response.data.data.friends;
+      if (response.data) {
+        return response.data.dataBody.friends;
       } else console.log(response);
     })
     .catch((e) => console.log(e));
