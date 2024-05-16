@@ -50,6 +50,11 @@ function Game() {
     return String(num).padStart(2, '0');
   }
 
+  function formatNumberWithComma(num) {
+    return num.toLocaleString();
+}
+
+
   const closeModal = () => {
     setShowModal(false); // 모달을 닫는 함수를 사용하여 showModal 상태를 변경함
   };
@@ -74,7 +79,7 @@ function Game() {
     showScore,
     changeScore,
     isShieldActive,
-    isVipActive, 
+    isVipActive,
     isTimeActive,
     useVip,
     useShield,
@@ -83,7 +88,8 @@ function Game() {
     gameInfo,
     updateCustomerState,
     isShield,
-    setIsShield
+    setIsShield,
+    items
   } = useStore();
 
   const { customerInfo } = gameInfo;
@@ -124,8 +130,8 @@ function Game() {
     Customer18
   };
 
-  let customer = "Customer" 
-  
+  let customer = "Customer"
+
   customer += customerInfo && customerInfo.customerImage
 
   const imageKey = `Customer${customerInfo && customerInfo.customerImage}`;
@@ -139,7 +145,7 @@ function Game() {
       isButtonEnabled: false,
       showScore: false
     });
-  
+
     try {
       const scoreResponse = await fetchGetawayRequest(gameInfo); // API 호출
       console.log(scoreResponse)
@@ -152,7 +158,7 @@ function Game() {
         showScore: true,
         score: useStore.getState().score + score
       });
-  
+
       // 1초 후 추가 상태 업데이트
       setTimeout(() => {
         updateCustomerState({
@@ -161,13 +167,13 @@ function Game() {
           showScore: false
         });
       }, 1500);
-  
+
     } catch (error) {
       console.error('Failed to post score:', error);
     }
   }
 
-  async function handleEndCustomer2() {
+  async function handleEndCustomer2(loanId) {
 
     updateCustomerState({
       selectedProduct: null,
@@ -175,9 +181,9 @@ function Game() {
       isButtonEnabled: false,
       showScore: false
     });
-  
+
     try {
-      const scoreResponse = await postScoreRequest(1, gameInfo); // API 호출
+      const scoreResponse = await postScoreRequest(loanId, gameInfo); // API 호출
       console.log(scoreResponse)
       let score = scoreResponse.data.score; // API로부터 받은 점수 데이터
       if (isShield && score < 0) {
@@ -202,7 +208,7 @@ function Game() {
         showScore: true,
         score: useStore.getState().score + score
       });
-  
+
       // 1초 후 추가 상태 업데이트
       setTimeout(() => {
         updateCustomerState({
@@ -211,12 +217,12 @@ function Game() {
           showScore: false
         });
       }, 1500);
-  
+
     } catch (error) {
       console.error('Failed to post score:', error);
     }
   }
-  
+
 
   return (
     <>
@@ -244,29 +250,29 @@ function Game() {
                     </div>
 
                     <div className="absolute left-[265px] top-[5px] bg-white/70 w-[100px] h-[100px] rounded-full">
-                      <button onClick={useVip} disabled={!isVipActive}>
-                        <img src={`${isVipActive ? Vip : VipUsed }`} alt="" className="w-[80%] absolute top-[25px] left-[10px]" />
+                      <button onClick={useVip} disabled={!isVipActive || !items[0]}>
+                        <img src={`${isVipActive && items[0] ? Vip : VipUsed}`} alt="" className="w-[80%] absolute top-[25px] left-[10px]" />
                       </button>
                       <div className="bg-amber-200 w-[50px] h-[30px] absolute top-[80px] left-[60px] rounded-full text-center">
-                        <p className="p-1">1</p>
+                        <p className="p-1">{items[0]}</p>
                       </div>
                     </div>
 
                     <div className="absolute left-[375px] top-[5px] bg-white/70 w-[100px] h-[100px] rounded-full">
-                      <button onClick={useShield} disabled={!isShieldActive}>
-                        <img src={`${isShieldActive ? Shield : ShieldUsed }`} alt="" className="w-[75%] absolute top-[15px] left-[13px]" />
+                      <button onClick={useShield} disabled={!isShieldActive || !items[1]}>
+                        <img src={`${isShieldActive && items[1] ? Shield : ShieldUsed}`} alt="" className="w-[75%] absolute top-[15px] left-[13px]" />
                       </button>
                       <div className="bg-amber-200 w-[50px] h-[30px] absolute top-[80px] left-[60px] rounded-full text-center">
-                        <p className="p-1">1</p>
+                        <p className="p-1">{items[1]}</p>
                       </div>
                     </div>
 
                     <div className="absolute left-[485px] top-[5px] bg-white/70 w-[100px] h-[100px] rounded-full">
-                      <button onClick={useTime} disabled={!isTimeActive}>
-                        <img src={`${isTimeActive ? Time : TimeUsed }`} alt="" className="w-[70%] absolute top-[15px] left-[15px]" />
+                      <button onClick={useTime} disabled={!isTimeActive || !items[2]}>
+                        <img src={`${isTimeActive && items[2] ? Time : TimeUsed}`} alt="" className="w-[70%] absolute top-[15px] left-[15px]" />
                       </button>
                       <div className="bg-amber-200 w-[50px] h-[30px] absolute top-[80px] left-[60px] rounded-full text-center">
-                        <p className="p-1">1</p>
+                        <p className="p-1">{items[2]}</p>
                       </div>
                     </div>
 
@@ -319,10 +325,10 @@ function Game() {
               </div>
 
               <div className="flex h-[62.5%] border-x-[5px] border-b-[5px] mx-5 border-black rounded-b-lg bg-white">
-                {!isCustomer && 
-                <>
-                  <img src={Loader} alt="" className="ml-[70px]" />
-                </>}
+                {!isCustomer &&
+                  <>
+                    <img src={Loader} alt="" className="ml-[70px]" />
+                  </>}
                 {isCustomer && isFinance && < GameInfo />}
                 {isCustomer && !isFinance && < GameInfo2 />}
               </div>
@@ -344,30 +350,35 @@ function Game() {
               {isCustomer && (<div className="flex justify-center items-center w-full h-full">
 
                 <div className="flex w-[70%] h-full justify-center items-center">
-                  <div className={`w-[90%] h-[90%] p-5 flex justify-center items-center ${selectedProduct ? selectedProduct.bgColor : `bg-cusColor4`} text-2xl border-[5px] border-black rounded-lg`}>
+                  <div className={`w-[90%] h-[90%] p-5 flex justify-center items-center ${selectedProduct ? selectedProduct.color : `bg-cusColor4`} text-2xl border-[5px] border-black rounded-lg`}>
                     {!selectedProduct && <p>상품을 선택해주세요!</p>}
                     {selectedProduct &&
                       <div className="w-full">
                         <div className="h-[30%] w-full">
-                          <p className="text-xl">{selectedProduct.name}</p>
+                          <p className="text-xl">{selectedProduct.loanName}</p>
                         </div>
 
-                        <div className="h-[70%] w-full flex flex-col justify-around p-4">
-                          <div className="flex justify-between">
-                            <div className="flex-1 p-2">
-                              <p className="text-base">옵션1: {selectedProduct.option1}</p>
+                        <div className="h-[70%] w-full justify-around p-4">
+                          <div className="flex flex-col">  {/* 수직 배치를 위한 flex-col */}
+                            <div className="text-base mb-2">  {/* content가 맨 위에 위치하며, 아래 요소와의 간격을 위해 mb-2 추가 */}
+                              {selectedProduct.content}
                             </div>
-                            <div className="flex-1 p-2">
-                              <p className="text-base">옵션2: {selectedProduct.option2}</p>
+                            <div className="flex justify-between mb-2">  {/* 금리와 상환 기간을 한 줄에 배치 */}
+                              <div className="flex-1 text-base">
+                                <p>금리: {selectedProduct.interest * 100}%</p>
+                              </div>
+                              <div className="flex-1 text-base">
+                                <p>상환 기간: {selectProduct.period ?`${selectedProduct.period}개월` : "제한 없음"}</p>
+                              </div>
                             </div>
-                          </div>
 
-                          <div className="flex justify-between">
-                            <div className="flex-1 p-2">
-                              <p className="text-base">옵션3: {selectedProduct.option3}</p>
-                            </div>
-                            <div className="flex-1 p-2">
-                              <p className="text-base">옵션4: {selectedProduct.option4}</p>
+                            <div className="flex">  {/* 한도가 맨 아래 줄에 위치 */}
+                              <div className="flex-1">
+                                <p className="text-base">한도: {formatNumberWithComma(selectedProduct.limitAmount)}</p>
+                              </div>
+                              <div className="flex-1">
+                                <p className="text-base"> </p>
+                              </div>
                             </div>
                           </div>
                         </div>
@@ -379,14 +390,14 @@ function Game() {
                 <div className="w-[30%] h-[94%]">
 
                   <div className="h-[50%] w-full flex justify-center items-center">
-                    <button className="w-[90%] h-[90%] bg-red-500 text-white flex justify-center items-center border-[5px] border-black rounded-lg text-xl" onClick={handleEndCustomer1} disabled={!isButtonEnabled}>
+                    <button className="w-[90%] h-[90%] bg-red-500 text-white flex justify-center items-center border-[5px] border-black rounded-lg text-xl" onClick={() => handleEndCustomer1(selectedProduct.loanId)} disabled={!isButtonEnabled}>
                       <p>돌려보내기</p>
                     </button>
                   </div>
 
                   {selectedProduct ?
                     (<div className="h-[50%] w-full flex justify-center items-center">
-                      <button className="w-[90%] h-[90%] bg-cusColor5 text-cusColor4 flex justify-center items-center border-[5px] border-black rounded-lg text-xl" onClick={handleEndCustomer2} disabled={!isButtonEnabled}
+                      <button className="w-[90%] h-[90%] bg-cusColor5 text-cusColor4 flex justify-center items-center border-[5px] border-black rounded-lg text-xl" onClick={() => handleEndCustomer2(selectedProduct.loanId)} disabled={!isButtonEnabled}
                       >
                         <p>추천하기</p>
                       </button>
@@ -409,9 +420,9 @@ function Game() {
                 <div className="flex h-[80%]">
                   <div className="w-full m-1 flex justify-center items-center">
                     {products.map(product => (
-                      <div key={product.name} className={`w-[50%] h-full m-1 flex justify-center items-center ${product.bgColor} rounded-lg shadow-lg border-[5px] border-black`}
+                      <div key={product.loanName} className={`w-[50%] h-full m-1 flex justify-center items-center ${product.color} rounded-lg shadow-lg border-[5px] border-black`}
                         onClick={() => selectProduct(product)}>
-                        <p>{product.name}</p>
+                        <p>{product.loanName}</p>
                       </div>
                     ))}
                   </div>

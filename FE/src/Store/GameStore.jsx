@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { fetchCustomerRequest, patchScoreRequest } from '../API/CustomerAPI.jsx';
+import { fetchCustomerRequest, fetchUserRequest, patchScoreRequest, postUseItem } from '../API/CustomerAPI.jsx';
 
 const useStore = create(set => ({
 
@@ -60,6 +60,14 @@ const useStore = create(set => ({
 
       state.score = state.score + state.changeScore
 
+      postUseItem(state.userItemId[0]).then(() => {
+        console.log("Item used successfully");
+      }).catch(error => {
+        console.error("Failed to use item:", error);
+      });
+
+      state.loadUserInfo()
+
       setTimeout(() => {
         set({ isButtonEnabled: true, isCustomer: false, showScore: false });
       }, 1500);
@@ -68,8 +76,38 @@ const useStore = create(set => ({
   },
 
 
-  useShield: () => set(state => ({ isShieldActive: false, isShield: true })),
-  useTime: () => set(state => ({ isTimeActive: false, time: state.time + 60 })),
+  useShield: () => set(state => {
+    // 우선 상태를 업데이트
+    const newState = { isShieldActive: false, isShield: true };
+    
+    // postUseItem 함수를 호출하고 처리
+    postUseItem(state.userItemId[1]).then(() => {
+      console.log("Item used successfully");
+    }).catch(error => {
+      console.error("Failed to use item:", error);
+    });
+
+    state.loadUserInfo()
+  
+    return newState;
+  }),
+
+  useTime: () => set(state => {
+    // 우선 상태를 업데이트
+    const newState = { isTimeActive: false, time: state.time + 60 };
+    
+    // postUseItem 함수를 호출하고 처리
+    postUseItem(state.userItemId[2]).then(() => {
+      console.log("Item used successfully");
+    }).catch(error => {
+      console.error("Failed to use item:", error);
+    });
+
+    state.loadUserInfo()
+
+    return newState;
+  }),
+
 
   // 금융, 비금융 구분
   isFinance: true,
@@ -96,40 +134,7 @@ const useStore = create(set => ({
   },
 
   // 대출 상품 목록 (지금은 샘플만 넣기)
-  products: [
-    {
-      name: '샘플 상품1',
-      option1: '샘플 옵션1',
-      option2: '샘플 옵션2',
-      option3: '샘플 옵션3',
-      option4: '샘플 옵션4',
-      bgColor: 'bg-blue-300'
-    },
-    {
-      name: '샘플 상품2',
-      option1: '샘플 옵션1',
-      option2: '샘플 옵션2',
-      option3: '샘플 옵션3',
-      option4: '샘플 옵션4',
-      bgColor: 'bg-blue-300'
-    },
-    {
-      name: '샘플 상품3',
-      option1: '샘플 옵션1',
-      option2: '샘플 옵션2',
-      option3: '샘플 옵션3',
-      option4: '샘플 옵션4',
-      bgColor: 'bg-blue-300'
-    },
-    {
-      name: '샘플 상품4',
-      option1: '샘플 옵션1',
-      option2: '샘플 옵션2',
-      option3: '샘플 옵션3',
-      option4: '샘플 옵션4',
-      bgColor: 'bg-red-300'
-    },
-  ],
+  products: [],
 
   //선택된 대출 상품
   selectedProduct: null,
@@ -157,7 +162,36 @@ const useStore = create(set => ({
     }
   },
 
-  updateCustomerState: (newState) => set(newState)
+  updateCustomerState: (newState) => set(newState),
+
+  userInfo: [],
+  items: [0, 0, 0],
+  userItemId: [0, 0, 0],
+
+  loadUserInfo: async () => {
+    try {
+      const data = await fetchUserRequest();
+
+      const newItems = [
+        data.dataBody.userItemList[0].itemCount,
+        data.dataBody.userItemList[1].itemCount,
+        data.dataBody.userItemList[2].itemCount,
+      ];
+
+      const newIds = [
+        data.dataBody.userItemList[0].userItemId,
+        data.dataBody.userItemList[1].userItemId,
+        data.dataBody.userItemList[2].userItemId,
+      ];
+
+      set({ userInfo: data.dataBody, products: data.dataBody.userLoanList, items: newItems, userItemId: newIds });
+
+    } catch (error) {
+      console.error('Failed to load game data:', error);
+    }
+
+    console.log(useStore.getState().userInfo)
+  },
 
 
 }));
