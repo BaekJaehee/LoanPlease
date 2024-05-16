@@ -99,7 +99,7 @@ export const exit = async (token, id) => {
 };
 
 export const rankinglist = async () => {
-  const url = "/api/rank";
+  const url = "/rank";
   return await axios
     .get(url)
     .then((response) => {
@@ -110,7 +110,7 @@ export const rankinglist = async () => {
 };
 
 export const friendrankinglist = async () => {
-  const url = "/api/rank/friends";
+  const url = "/rank/friends";
   return await axios
     .get(url)
     .then((response) => {

@@ -64,7 +64,7 @@ function Rankingdata(props) {
     <div className={rankingdatastyleClass}>
       {/* <div style={rankingimagearea}></div> */}
       <div className={rankingimageareaClass}>
-        <img src={props.data.image} />
+        <img src={props.data.profile} />
       </div>
       {/* <div style={rankinginfoarea}> */}
       <div className={rankinginfoareaClass}>
@@ -72,7 +72,7 @@ function Rankingdata(props) {
         <span className={rankstyleClass}>{props.rank}위</span>
         {/* <div style={rankinfostyle}> */}
         <div className={rankinfostyleClass}>
-          <div>{props.data.nickname}</div>
+          <div>{props.data.name}</div>
           <div>{props.data.score}</div>
         </div>
       </div>

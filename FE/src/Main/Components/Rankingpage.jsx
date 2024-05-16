@@ -1,8 +1,9 @@
-/* eslint-disable react/jsx-key */
+import { useEffect, useState } from "react";
 import { RankingStore } from "../Store";
 import search from "./assets/search_icon.png";
 import Rankingdata from "./Rankingdata";
 import SearchPage from "./SearchPage";
+import { rankinglist, friendrankinglist } from "../../API/API";
 
 const rankingstyleClass = `
 flex justify-center items-center 
@@ -156,6 +157,18 @@ function Rankingpage() {
   const index = RankingStore((state) => state.index);
   const setIndex = RankingStore((state) => state.setIndex);
 
+  const [datalist, setDataList] = useState([]);
+
+  const getallrankings = async () => {
+    const result = await rankinglist();
+    setDataList(result);
+  };
+
+  const getallfriendrankings = async () => {
+    const result = await friendrankinglist();
+    setDataList(result);
+  };
+
   const switchmode = () => {
     setIndex(1 - index);
     setSearchmode(false);
@@ -165,6 +178,10 @@ function Rankingpage() {
     const audio = new Audio("audioes/pop_sound_2.mp3");
     audio.play();
   };
+
+  useEffect(() => {
+    index == 0 ? getallrankings() : getallfriendrankings();
+  }, [index, setIndex]);
 
   return (
     // <div style={rankingstyle}>
@@ -221,8 +238,11 @@ function Rankingpage() {
         ) : (
           // <div style={rankingresultarea}>
           <div className={rankingresultareaClass}>
-            {rankingdummydata.map((value, index) => {
-              return <Rankingdata data={value} rank={index + 1} />;
+            {/* {rankingdummydata.map((value, index) => { */}
+            {datalist.map((value, index) => {
+              return (
+                <Rankingdata key={index + 1} data={value} rank={index + 1} />
+              );
             })}
           </div>
         )}
