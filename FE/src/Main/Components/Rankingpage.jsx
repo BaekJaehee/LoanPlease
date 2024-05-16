@@ -239,11 +239,17 @@ function Rankingpage() {
           // <div style={rankingresultarea}>
           <div className={rankingresultareaClass}>
             {/* {rankingdummydata.map((value, index) => { */}
-            {datalist.map((value, index) => {
-              return (
-                <Rankingdata key={index + 1} data={value} rank={index + 1} />
-              );
-            })}
+            {datalist.length > 0
+              ? datalist.map((value, index) => {
+                  return (
+                    <Rankingdata
+                      key={index + 1}
+                      data={value}
+                      rank={index + 1}
+                    />
+                  );
+                })
+              : null}
           </div>
         )}
       </div>
