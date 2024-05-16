@@ -120,6 +120,11 @@ function Mycredit() {
       <div className={buttonareaClass}>
         <div
           onClick={() => {
+            const cookie = new Cookies();
+            if (cookie) {
+              cookie.remove("Authorization");
+              cookie.remove("RefreshToken");
+            }
             localStorage.clear();
             setIsLogin(false);
           }}
