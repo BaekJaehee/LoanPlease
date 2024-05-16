@@ -161,11 +161,13 @@ function Rankingpage() {
 
   const getallrankings = async () => {
     const result = await rankinglist();
+    console.log(result);
     setDataList(result);
   };
 
   const getallfriendrankings = async () => {
     const result = await friendrankinglist();
+    console.log(result);
     setDataList(result);
   };
 
