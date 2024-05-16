@@ -1,6 +1,8 @@
+/* eslint-disable react/prop-types */
 import { useInfiniteQuery } from "@tanstack/react-query";
 import Userdata from "./Userdata";
-import { Fragment, useEffect } from "react";
+import { Fragment, useEffect, useState } from "react";
+import { friendsearch, friendsearchByname } from "../../API/API";
 
 export const resultdummydata = [
   {
@@ -26,13 +28,13 @@ export const resultdummydata = [
 ];
 
 // 더미 데이터에서 6개씩 조회하는 함수
-function getData(page) {
-  const result = [];
-  for (var i = 6 * page; i < 6 * page + 6; i++) {
-    result.push(resultdummydata[i]);
-  }
-  return result;
-}
+// function getData(page) {
+//   const result = [];
+//   for (var i = 6 * page; i < 6 * page + 6; i++) {
+//     if (i < resultdummydata.length) result.push(resultdummydata[i]);
+//   }
+//   return result;
+// }
 
 export const PageQuery = (props) => {
   const {
@@ -44,13 +46,41 @@ export const PageQuery = (props) => {
     isFetchingNextPage,
   } = useInfiniteQuery({
     queryKey: ["friends"],
-    queryFn: ({ pageParam = 0 }) => getData(pageParam),
+    // queryFn: ({ pageParam = 0 }) => getData(pageParam),
+    queryFn: ({ pageParam = 0 }) => getListData(pageParam),
     getNextPageParam: (_lastPage, pages) => {
       if (pages.length < 6) {
         return pages.length + 1;
       } else return undefined;
     },
   });
+
+  const [resultdata, setResultData] = useState([]);
+
+  const getallfriends = async () => {
+    const data = await friendsearch();
+    setResultData(data);
+  };
+
+  const getInputResult = async (input) => {
+    const data = await friendsearchByname(input);
+    setResultData(data);
+  };
+
+  const getListData = (page) => {
+    const result = [];
+    for (var i = 6 * page; i < 6 * page + 6; i++) {
+      if (i < resultdata.length) {
+        const item = {
+          image: resultdata[i].profileImg,
+          nickname: resultdata[i].nickname,
+          isFollow: true,
+        };
+        result.push(item);
+      }
+    }
+    return result;
+  };
 
   useEffect(() => {
     let searching = false;
@@ -72,10 +102,12 @@ export const PageQuery = (props) => {
   useEffect(() => {
     if (props.inputdata == "") {
       // 검색 화면 진입 시 현재 친구 목록 소환하기
+      getallfriends();
     } else {
       // 입력값 존재할 시 해당 값을 포함하는 유저 목록 검색하기
+      getInputResult();
     }
-  }, []);
+  }, [props.inputdata]);
 
   if (isLoading) return <div>loading...</div>;
 

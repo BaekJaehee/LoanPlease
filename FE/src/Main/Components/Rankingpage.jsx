@@ -150,7 +150,6 @@ const rankingdummydata = [
 function Rankingpage() {
   // const selected = { ...buttonstyle, backgroundColor: "#FFD1E3" };
   const selected = buttonstyleClass + " bg-[#FFD1E3]";
-  // const buttons = [selected, buttonstyle];
   const buttons = [selected, buttonstyleClass];
   const searchmode = RankingStore((state) => state.searchmode);
   const setSearchmode = RankingStore((state) => state.setSearchmode);
@@ -178,11 +177,10 @@ function Rankingpage() {
           <div className="h-[30px] w-[30px]"></div>
           <div>Ranking</div>
           <img
-            className="cursor-pointer"
+            className="h-[30px] w-[30px] cursor-pointer"
             onClick={() => {
               setSearchmode(!searchmode);
             }}
-            sizes={30}
             src={search}
           />
         </div>

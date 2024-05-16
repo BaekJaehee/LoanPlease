@@ -242,7 +242,7 @@ function Main() {
       ) : null}
       <Menubar
         data={{
-          image: mydata.profileImg,
+          image: mydata.profileImage,
           nickname: mydata.nickname,
           rank: "-",
         }}
