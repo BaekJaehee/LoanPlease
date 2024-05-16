@@ -6,18 +6,9 @@ flex justify-around items-center
 w-full h-[35%] 
 `;
 
-const creditareaClass = `
-flex flex-col justify-around items-center h-full 
-`;
-
 const resultareaClass = `
-flex justify-around items-center 
-w-[50%] h-full bg-[#FFD28F] 
-`;
-
-const resultscorestyleClass = `
-flex justify-center items-center 
-w-20 h-20 rounded-[160px] 
+flex flex-col justify-around items-start ps-5 
+w-[80%] h-full bg-cusColor4 font-cusFont2 
 `;
 
 const buttonareaClass = `
@@ -74,57 +65,31 @@ function Mycredit() {
     // <div style={mycreditstyle}>
     <div className={mycreditstyleClass}>
       {/* <div style={creditarea}> */}
-      <div className={creditareaClass}>
-        {/* <div style={{ fontFamily: "비트비트체v2", fontSize: "14px" }}> */}
-        <div className="mt-5 font-cusFont1 text-sm">나의 신용점수는?</div>
-        <div
-          onClick={() => {}}
-          // style={{ fontFamily: "Orbit", fontSize: "12px", cursor: "pointer" }}
-          className="mb-5 cursor-pointer font-cusFont2 text-xs"
-        >
-          서류 제출하고 점수 확인하기
-        </div>
-      </div>
+
       {/* <div style={resultarea}> */}
       <div className={resultareaClass}>
-        {/* <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        > */}
-        <div className="flex flex-col items-center justify-center">
-          {/* <div style={{ fontFamily: "비트비트체v2", fontSize: "12px" }}> */}
-          <div className="font-cusFont1 text-xs">NICE</div>
-          {/* <div style={{ ...resultscorestyle, backgroundColor: "#5DEBD7" }}> */}
-          <div className={resultscorestyleClass + "bg-[#5DEBD7]"}>815점</div>
-        </div>
-        {/* <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        > */}
-        <div className="flex flex-col items-center justify-center">
-          {/* <div style={{ fontFamily: "비트비트체v2", fontSize: "12px" }}> */}
-          <div className="font-cusFont1 text-xs">KCB</div>
-          {/* <div style={{ ...resultscorestyle, backgroundColor: "#C5FF95" }}> */}
-          <div className={resultscorestyleClass + "bg-[#C5FF95]"}>760점</div>
-        </div>
+        <p>
+          게임 내에서 활용하는 신용등급은 실제 등급 산출방식과 다소 차이가 있을
+          수 있습니다.
+        </p>
+        <p>
+          <span className="font-cusFont1 text-base text-cusColor2">
+            {" '게임 시작하기' "}
+          </span>
+          버튼 위의 사람을 클릭하면 소소한 팁을 얻을 수 있습니다.
+        </p>
+        <p>
+          상점에서 아이템을 구매하려면
+          <span className="font-cusFont1 text-base text-cusColor3">
+            {" '마이페이지' "}
+          </span>
+          버튼 위의 아바타를 클릭하세요
+        </p>
       </div>
       {/* <div style={buttonarea}> */}
       <div className={buttonareaClass}>
         <div
           onClick={() => {
-            const cookie = new Cookies();
-            if (cookie) {
-              cookie.remove("Authorization");
-              cookie.remove("RefreshToken");
-            }
             localStorage.clear();
             setIsLogin(false);
           }}

@@ -1,8 +1,9 @@
-/* eslint-disable react/jsx-key */
+import { useEffect, useState } from "react";
 import { RankingStore } from "../Store";
 import search from "./assets/search_icon.png";
 import Rankingdata from "./Rankingdata";
 import SearchPage from "./SearchPage";
+import { rankinglist, friendrankinglist } from "../../API/API";
 
 const rankingstyleClass = `
 flex justify-center items-center 
@@ -84,78 +85,97 @@ w-full h-[200px] my-5 overflow-y-auto
 //   overflowY: "auto",
 // };
 
-const rankingdummydata = [
-  {
-    image: "",
-    nickname: "fdvddfv",
-    score: 10000,
-  },
-  {
-    image: "",
-    nickname: "dfghfgdhsgg",
-    score: 10000,
-  },
-  {
-    image: "",
-    nickname: "4t3gfre",
-    score: 10000,
-  },
-  {
-    image: "",
-    nickname: "aergsrtg",
-    score: 10000,
-  },
-  {
-    image: "",
-    nickname: "aergsrtg",
-    score: 10000,
-  },
-  {
-    image: "",
-    nickname: "aergsrtg",
-    score: 10000,
-  },
-  {
-    image: "",
-    nickname: "aergsrtg",
-    score: 10000,
-  },
-  {
-    image: "",
-    nickname: "aergsrtg",
-    score: 10000,
-  },
-  {
-    image: "",
-    nickname: "aergsrtg",
-    score: 10000,
-  },
-  {
-    image: "",
-    nickname: "aergsrtg",
-    score: 10000,
-  },
-  {
-    image: "",
-    nickname: "aergsrtg",
-    score: 10000,
-  },
-  {
-    image: "",
-    nickname: "aergsrtg",
-    score: 10000,
-  },
-];
+// const rankingdummydata = [
+//   {
+//     image: "",
+//     nickname: "fdvddfv",
+//     score: 10000,
+//   },
+//   {
+//     image: "",
+//     nickname: "dfghfgdhsgg",
+//     score: 10000,
+//   },
+//   {
+//     image: "",
+//     nickname: "4t3gfre",
+//     score: 10000,
+//   },
+//   {
+//     image: "",
+//     nickname: "aergsrtg",
+//     score: 10000,
+//   },
+//   {
+//     image: "",
+//     nickname: "aergsrtg",
+//     score: 10000,
+//   },
+//   {
+//     image: "",
+//     nickname: "aergsrtg",
+//     score: 10000,
+//   },
+//   {
+//     image: "",
+//     nickname: "aergsrtg",
+//     score: 10000,
+//   },
+//   {
+//     image: "",
+//     nickname: "aergsrtg",
+//     score: 10000,
+//   },
+//   {
+//     image: "",
+//     nickname: "aergsrtg",
+//     score: 10000,
+//   },
+//   {
+//     image: "",
+//     nickname: "aergsrtg",
+//     score: 10000,
+//   },
+//   {
+//     image: "",
+//     nickname: "aergsrtg",
+//     score: 10000,
+//   },
+//   {
+//     image: "",
+//     nickname: "aergsrtg",
+//     score: 10000,
+//   },
+// ];
 
 function Rankingpage() {
   // const selected = { ...buttonstyle, backgroundColor: "#FFD1E3" };
   const selected = buttonstyleClass + " bg-[#FFD1E3]";
-  // const buttons = [selected, buttonstyle];
   const buttons = [selected, buttonstyleClass];
   const searchmode = RankingStore((state) => state.searchmode);
   const setSearchmode = RankingStore((state) => state.setSearchmode);
   const index = RankingStore((state) => state.index);
   const setIndex = RankingStore((state) => state.setIndex);
+
+  const [datalist, setDataList] = useState(null);
+
+  const getallrankings = async () => {
+    rankinglist().then((result) => {
+      const resultdata = result.map((value, index) => {
+        return <Rankingdata key={index + 1} data={value} rank={index + 1} />;
+      });
+      setDataList(resultdata);
+    });
+  };
+
+  const getallfriendrankings = async () => {
+    friendrankinglist().then((result) => {
+      const resultdata = result.map((value, index) => {
+        return <Rankingdata key={index + 1} data={value} rank={index + 1} />;
+      });
+      setDataList(resultdata);
+    });
+  };
 
   const switchmode = () => {
     setIndex(1 - index);
@@ -166,6 +186,10 @@ function Rankingpage() {
     const audio = new Audio("audioes/pop_sound_2.mp3");
     audio.play();
   };
+
+  useEffect(() => {
+    getallrankings();
+  }, []);
 
   return (
     // <div style={rankingstyle}>
@@ -178,11 +202,10 @@ function Rankingpage() {
           <div className="h-[30px] w-[30px]"></div>
           <div>Ranking</div>
           <img
-            className="cursor-pointer"
+            className="h-[30px] w-[30px] cursor-pointer"
             onClick={() => {
               setSearchmode(!searchmode);
             }}
-            sizes={30}
             src={search}
           />
         </div>
@@ -196,10 +219,11 @@ function Rankingpage() {
           className={buttonareaClass}
         >
           <div
-            onClick={() => {
+            onClick={async () => {
               if (index == 1) {
                 makeClickSound();
                 switchmode();
+                getallrankings();
               }
             }}
             className={buttons[index]}
@@ -207,10 +231,11 @@ function Rankingpage() {
             전체랭킹
           </div>
           <div
-            onClick={() => {
+            onClick={async () => {
               if (index == 0) {
                 makeClickSound();
                 switchmode();
+                getallfriendrankings();
               }
             }}
             className={buttons[1 - index]}
@@ -222,11 +247,7 @@ function Rankingpage() {
           <SearchPage />
         ) : (
           // <div style={rankingresultarea}>
-          <div className={rankingresultareaClass}>
-            {rankingdummydata.map((value, index) => {
-              return <Rankingdata data={value} rank={index + 1} />;
-            })}
-          </div>
+          <div className={rankingresultareaClass}>{datalist}</div>
         )}
       </div>
     </div>

@@ -1,13 +1,19 @@
 import axios from "axios";
+import { Cookies } from "react-cookie";
+
+// Authorization 토큰값 있을 시 header에 기본값으로 반영함
+const cookie = new Cookies();
+const token = cookie.get("Authorization");
+axios.defaults.headers.Authorization = `Bearer ${token}`;
 
 export const tokenrefresh = async () => {
-  const url = "/api/refresh";
+  const url = "/api/auth/refresh";
   return await axios
     .get(url, {
       withCredentials: true,
     })
     .then((response) => {
-      if (response.status == 200) return response.data;
+      if (response.data.status == 200) return response.data;
       else console.log(response);
     })
     .catch((e) => console.log(e));
@@ -92,6 +98,28 @@ export const exit = async (token, id) => {
     });
 };
 
+export const rankinglist = async () => {
+  const url = "/api/rank";
+  return await axios
+    .get(url)
+    .then((response) => {
+      if (response.status == 200) return response.data;
+      else console.log(response);
+    })
+    .catch((e) => console.log(e));
+};
+
+export const friendrankinglist = async () => {
+  const url = "/api/rank/friends";
+  return await axios
+    .get(url)
+    .then((response) => {
+      if (response.status == 200) return response.data;
+      else console.log(response);
+    })
+    .catch((e) => console.log(e));
+};
+
 export const friendsearch = async () => {
   const url = "/api/friends";
   return await axios
@@ -109,8 +137,8 @@ export const friendsearchByname = async (input) => {
   return await axios
     .get(url)
     .then((response) => {
-      if (response.data.data) {
-        return response.data.data.friends;
+      if (response.data) {
+        return response.data.dataBody.friends;
       } else console.log(response);
     })
     .catch((e) => console.log(e));
