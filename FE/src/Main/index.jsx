@@ -16,6 +16,7 @@ function Home() {
         if (value) {
           localStorage.setItem("mydata", JSON.stringify(value));
           setMyData(value);
+          setIsLogin(true);
         } else {
           tokenrefresh()
             .then((response) => {
@@ -43,7 +44,6 @@ function Home() {
       const cookie = new Cookies();
       const token = cookie.get("Authorization");
       if (token) {
-        setIsLogin(true);
         getmyinfo();
       }
     }
