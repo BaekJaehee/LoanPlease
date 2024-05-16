@@ -157,16 +157,22 @@ function Rankingpage() {
   const index = RankingStore((state) => state.index);
   const setIndex = RankingStore((state) => state.setIndex);
 
-  const [datalist, setDataList] = useState([]);
+  const [datalist, setDataList] = useState(null);
 
   const getallrankings = async () => {
     const result = await rankinglist();
-    setDataList(result);
+    const resultdata = result.map((value, index) => {
+      return <Rankingdata key={index + 1} data={value} rank={index + 1} />;
+    });
+    setDataList(resultdata);
   };
 
   const getallfriendrankings = async () => {
     const result = await friendrankinglist();
-    setDataList(result);
+    const resultdata = result.map((value, index) => {
+      return <Rankingdata key={index + 1} data={value} rank={index + 1} />;
+    });
+    setDataList(resultdata);
   };
 
   const switchmode = () => {
@@ -239,20 +245,7 @@ function Rankingpage() {
           <SearchPage />
         ) : (
           // <div style={rankingresultarea}>
-          <div className={rankingresultareaClass}>
-            {/* {rankingdummydata.map((value, index) => { */}
-            {datalist.length > 0
-              ? datalist.map((value, index) => {
-                  return (
-                    <Rankingdata
-                      key={index + 1}
-                      data={value}
-                      rank={index + 1}
-                    />
-                  );
-                })
-              : null}
-          </div>
+          <div className={rankingresultareaClass}>{datalist}</div>
         )}
       </div>
     </div>
