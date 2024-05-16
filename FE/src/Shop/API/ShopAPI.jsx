@@ -4,6 +4,7 @@ import { Cookies } from "react-cookie";
 // import { useCookies } from "react-cookie";
 
 // 192.168.100.178:8080
+const API_BASE_URL = import.meta.env.VITE_BASE_URL;
 
 const cookies = new Cookies();
 const token = cookies.get('Authorization');
@@ -15,10 +16,9 @@ const token = cookies.get('Authorization');
 
 // 아이템 리스트 조회
 export const itemsList = async () => {
-  // const token = await FromCookie();
-  // const url = `/api/store/items`;
   // const url = `http://localhost:8080/store/items`;
-  const url = `http://192.168.100.53:8080/store/items`;
+  // const url = `http://192.168.100.178:8080/store/items`;
+  const url = `${API_BASE_URL}/store/items`;
   return await axios
     .get(url, {
       headers: {
@@ -27,7 +27,7 @@ export const itemsList = async () => {
       },
     })
     .then((response) => {
-      console.log(token);
+      // console.log(token);
       // console.log(response.data);
       return response.data;
     })
@@ -39,9 +39,8 @@ export const itemsList = async () => {
 // 슬롯 구매
 // 유저 슬롯개수 +1, 포인트 차감
 export const purchaseSlot = async () => {
-  // const token = await FromCookie();
-  // const url = `api/store/items/slot`;
-  const url = `http://localhost:8080/store/items/slot`;
+  // const url = `http://localhost:8080/store/items/slot`;
+  const url = `${API_BASE_URL}/store/items/slot`;
   return await axios
     .post(url, {
       headers: {
@@ -50,6 +49,8 @@ export const purchaseSlot = async () => {
       },
     })
     .then((response) => {
+      console.log(response);
+      console.log(response.data);
       return response.data;
     })
     .catch((e) => {
@@ -59,13 +60,12 @@ export const purchaseSlot = async () => {
 
 // 일회성 게임 아이템 구매
 // 아이템아이디, 개수
-export const purchaseGameItem = async (itemId, number) => {
-  // const token = await FromCookie();
-  // const url = `api/store/items/oneoff`;
-  const url = `http://localhost:8080/store/items/oneoff`;
+export const purchaseGameItem = async (itemId, itemCount) => {
+  // const url = `http://localhost:8080/store/items/oneoff`;
+  const url = `${API_BASE_URL}/store/items/oneoff`;
   return await axios
     // .post(url, {
-    .post(url, { itemId, number }, {
+    .post(url, { itemId, itemCount }, {
       headers: {
         "Content-Type": "application/json",
         "Authorization": `Bearer ${token}`,
@@ -82,7 +82,8 @@ export const purchaseGameItem = async (itemId, number) => {
 // 대출 아이템 구매
 // 대출아이템 아이디
 export const purchaseLoanItem = async (loanId) => {
-  const url = `http://localhost:8080/store/items/loan`;
+  // const url = `http://localhost:8080/store/items/loan`;
+  const url = `${API_BASE_URL}/store/items/loan`;
   return await axios
     // .post(url, {
     .post(url, loanId, {
@@ -100,34 +101,33 @@ export const purchaseLoanItem = async (loanId) => {
 }
 
 // 슬롯 세팅 페이지 들어가면 유저가 보유한 대출 아이템 가져옴
-export const owendLoanItems = async () => {
-  // const token = await FromCookie();
-  const url = `http://localhost:8080/store/setting`;
-  return await axios
-    .get(url, {
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${token}`,
-      },
-    })
-    .then((response) => {
-      // console.log("test", response.data)
-      // const data = response.data.map(item => item.loan);
-      // console.log(data);
-      // return data;
-      return response.data;
-    })
-    .catch((e) => {
-      console.log(e);
-    })
-}
+// export const owendLoanItems = async () => {
+//   // const url = `http://localhost:8080/store/setting`;
+//   const url = `${API_BASE_URL}/store/setting`;
+//   return await axios
+//     .get(url, {
+//       headers: {
+//         "Content-Type": "application/json",
+//         "Authorization": `Bearer ${token}`,
+//       },
+//     })
+//     .then((response) => {
+//       // console.log("test", response.data)
+//       // const data = response.data.map(item => item.loan);
+//       // console.log(data);
+//       // return data;
+//       return response.data;
+//     })
+//     .catch((e) => {
+//       console.log(e);
+//     })
+// }
 
 // 슬롯에 대출 아이템 선택해서 저장
 export const setLoanItems = async (savedSlot) => {
-  // const token = await FromCookie();
 // export const setLoanItems = async (jsonData) => {
-  // const url = `api/store/choose-loan`;
-  const url = `http://localhost:8080/store/choose-loan`;
+  // const url = `http://localhost:8080/store/choose-loan`;
+  const url = `${API_BASE_URL}/store/choose-loan`;
   return await axios
     // .post(url, jsonData, {
     // .post(url, { slotIds: savedSlot }, {
@@ -148,7 +148,8 @@ export const setLoanItems = async (savedSlot) => {
 
 export const getUserInfo = async () => {
   // const token = await FromCookie();
-  const url = `http://192.168.100.178:8080/api/user-info`
+  // const url = `http://192.168.100.178:8080/api/user-info`
+  const url = `${API_BASE_URL}/api/user-info`
   return await axios
     .get(url, {
       headers: {
@@ -157,7 +158,8 @@ export const getUserInfo = async () => {
       },
     })
     .then((response) => {
-      console.log("user-info:", response.data)
+      // console.log("user-info:", response);
+      // console.log("user-info:", response.data);
       return response.data;
     })
     .catch((e) => {

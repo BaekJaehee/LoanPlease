@@ -16,7 +16,7 @@ function ItemModal({ closeItemModal, selectedProduct }) {
       <div ref={modalRef} className="w-[270px] h-[400px] bg-yellow-200 p-4 rounded-md text-center border-2 z-50 border-black flex flex-col justify-center">
         <div className="font-cusFont2 h-[300px] text-left">
           {/* product.description */}
-          <p>이름: {selectedProduct.name}</p>
+          <p>이름: {selectedProduct.loanName}</p>
           <p>설명: {selectedProduct.content}</p>
           <p>이자: {selectedProduct.interest}</p>
           <p>기간: {selectedProduct.period}</p>

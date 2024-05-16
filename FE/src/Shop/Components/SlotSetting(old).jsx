@@ -1,16 +1,14 @@
 import { PropTypes } from "prop-types"; 
 import { useEffect } from "react";
 import useStore from "../../Store/ShopStore";
-// import { owendLoanItems, setLoanItems } from "../API/ShopAPI";
-import { setLoanItems } from "../API/ShopAPI";
+import { owendLoanItems, setLoanItems } from "../API/ShopAPI";
 
 // db에는 1374 순서인데 왜 1347로 찍히는건지?
 
-function SlotSetting({ openItemModal, openSaveSlotModal, products, slotNumber }) {
+function SlotSetting({ openItemModal, openSaveSlotModal }) {
   const { 
-    // products, setProducts, 
-    setProducts,
-    // userSlotNum, 
+    products, setProducts, 
+    userSlotNum, 
     currentPage, setCurrentPage, 
     setSelectedProduct, 
     savedSlot, setSavedSlot, 
@@ -29,18 +27,44 @@ function SlotSetting({ openItemModal, openSaveSlotModal, products, slotNumber })
     setCurrentPage(1); // 페이지가 변경될 때마다 첫 페이지로 초기화
   }, [products, setCurrentPage]);
 
+  useEffect(() => {
+    const fetchItems = async () => {
+      try {
+        // const token = document.cookie // 쿠키 읽기
+        //   .split('; ')  // 항목 분리
+        //   .find(row => row.startsWith('Authorization='))  // Authorization 찾기
+        //   ?.split('=')[1];  // 의 value 값
+        // const token = localStorage.getItem("accessToken");  // 토큰 어떻게 할지는...
+        // const data = await itemsList(token); // itemsList 함수를 사용하여 데이터 호출
+        // const data = await setLoanItems(); // itemsList 함수를 사용하여 데이터 호출
+
+        // 생각해보니 렌더링할 때는 유저 보유 아이템을 가져와야 할 듯
+        // const data = await owendLoanItems(token);
+        const data = await owendLoanItems();
+        // 받은 데이터로 상점 아이템 설정
+        // setSavedSlot(data);
+        setProducts(data);
+        // console.log("보유: ", data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchItems();
+  }, []); // 빈 배열을 전달하여 컴포넌트가 처음 렌더링될 때만 실행되도록 설정
+
   const showDetail = (content) => {
     setSelectedProduct(content);
   };
 
   const setting = (item) => {
     // 이미 배치된건지 검사
-    const isAlreadySelected = selectedSlots.some(selectedSlot => selectedSlot.name === item.loanName);
+    const isAlreadySelected = selectedSlots.some(selectedSlot => selectedSlot.name === item.name);
     // const isAlreadySelected = selectedSlots.findIndex(selectedSlot => selectedSlot.name === item.name);
     // 중복이 아닐 때
     if (!isAlreadySelected) {
       // 선택된 슬롯을 찾아 상태를 업데이트
-      for (let i = 0; i < slotNumber; i++) {
+      for (let i = 0; i < userSlotNum; i++) {
         if (!selectedSlots[i].name) {
           // setSelectedSlots[i](item.name);
           setSelectedSlots[i](item);  // 근데 이러니까 배열 길이는 userSlotNum 고정에 빈게 null로 표시된다
@@ -63,15 +87,15 @@ function SlotSetting({ openItemModal, openSaveSlotModal, products, slotNumber })
     savedSlot[selectedIndex] = 0;
   
     // 앞쪽 슬롯들을 앞으로 당겨오기
-    for (let i = selectedIndex; i < slotNumber - 1; i++) {
+    for (let i = selectedIndex; i < userSlotNum - 1; i++) {
       setSelectedSlots[i](selectedSlots[i + 1]);
       // 슬롯을 비우고 0으로 채움
       savedSlot[i] = savedSlot[i + 1] ? savedSlot[i + 1] : 0;
     }
     // 마지막 슬롯을 비움
-    setSelectedSlots[slotNumber - 1]({ name: null, description: null });
+    setSelectedSlots[userSlotNum - 1]({ name: null, description: null });
     // 마지막 슬롯을 0으로 채움
-    savedSlot[slotNumber - 1] = 0;
+    savedSlot[userSlotNum - 1] = 0;
   
     // savedSlot 상태 업데이트
     setSavedSlot([...savedSlot]);
@@ -131,7 +155,7 @@ function SlotSetting({ openItemModal, openSaveSlotModal, products, slotNumber })
           className="font-cusFont1 flex-grow-1 w-[240px] h-[95%] border-2 px-6 py-4 rounded-lg border-black bg-white text-center"
           // onClick={() => setting({ name: item.name, description: item.description })}
           >
-            <p className="text-2xl mx-3 py-4 my-2 h-[30%] place-content-center">{item.loanName}</p>
+            <p className="text-2xl mx-3 py-4 my-2 h-[30%] place-content-center">{item.name}</p>
             {/* <p className="text-2xl py-4 my-2">{item.loan.name}</p> */}
             {/* <div className="h-[80px] text-xl py-3 my-2"> */}
             <div className="h-[55%] text-xl py-3 my-2 place-content-center">
@@ -150,7 +174,7 @@ function SlotSetting({ openItemModal, openSaveSlotModal, products, slotNumber })
                 className="mx-2 px-4 py-2 bg-blue-300 hover:bg-blue-500 rounded-md border-2 border-b-4 border-black focus:ring-4 shadow-lg transform active:scale-y-75 transition-transform"
                 // onClick={() => setting({ name: item.loan.name })}
                 // onClick={() => setting({ id: item.loan.loanId, name: item.loan.name })}
-                onClick={() => setting({ id: item.loanId, name: item.loanName })}
+                onClick={() => setting({ id: item.loanId, name: item.name })}
               >
                 선택하기
               </button>
@@ -160,7 +184,7 @@ function SlotSetting({ openItemModal, openSaveSlotModal, products, slotNumber })
       </div>
       {/* 소지 슬롯개수(userSlot)만큼 */}
       <div className="flex justify-center gap-4 h-[20%]">
-      {[...Array(slotNumber)].map((_, index) => {
+      {[...Array(userSlotNum)].map((_, index) => {
           const selectedSlot = selectedSlots[index];
           const setSelectedSlot = setSelectedSlots[index];
           return (
@@ -203,8 +227,6 @@ function SlotSetting({ openItemModal, openSaveSlotModal, products, slotNumber })
 SlotSetting.propTypes = {
   openItemModal: PropTypes.func.isRequired,
   openSaveSlotModal: PropTypes.func.isRequired,
-  products: PropTypes.array.isRequired,
-  slotNumber: PropTypes.number.isRequired,
 }
 
 export default SlotSetting;

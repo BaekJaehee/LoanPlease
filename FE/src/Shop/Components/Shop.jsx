@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { useEffect } from "react";
 import useStore from "../../Store/ShopStore";
 import { itemsList } from "../API/ShopAPI";
+import { getUserInfo } from "../API/ShopAPI";
 import GameItem from "./GameItem";
 import LoanItem from "./LoanItem";
 import SlotSetting from "./SlotSetting";
@@ -20,7 +21,13 @@ import SaveSlotModal from "../Modal/SaveSlotModal";
 function Shop() {
   const { 
     setCurrentComponent, currentComponent, 
-    setUserPoint, userPoint,
+    setUserInfo, userInfo,
+    setPoint, point,
+    setSlotNumber, slotNumber,
+    setProducts, products,
+    setSavedSlot, savedSlot,
+    setSelected1, setSelected2, setSelected3, setSelected4, setSelected5, 
+    selected1, selected2, selected3, selected4, selected5, 
     isSetNumberModalOpen, openSetNumberModal, closeSetNumberModal,
     isGameItemModalOpen, openGameItemModal, closeGameItemModal, 
     isLoanItemModalOpen, openLoanItemModal, closeLoanItemModal,
@@ -31,6 +38,9 @@ function Shop() {
     selectedProduct, 
     gameItems, setGameItems, 
     loanItems, setLoanItems } = useStore();
+
+  const selectedSlots = [selected1, selected2, selected3, selected4, selected5];
+  const setSelectedSlots = [setSelected1, setSelected2, setSelected3, setSelected4, setSelected5];
   
   // 아이템 정보 가져오기
   useEffect(() => {
@@ -51,21 +61,101 @@ function Shop() {
   }, []); // 빈 배열을 전달하여 컴포넌트가 처음 렌더링될 때만 실행되도록 설정
 
   // 유저 정보 가져오기
+  // const fetchUserInfo = async () => {
+  //   try {
+  //     console.log("시작?")
+  //     const data = await getUserInfo();
+  //     // console.log("유저정보", data);
+  //     console.log("유저정보", data.dataBody);
+  //     // 유저 포인트
+  //     setPoint(data.dataBody.point);  // 뭐 이런식
+  //     // 슬롯 수
+  //     setSlotNum(data.dataBody.slotNum);
+  //     // 유저가 가진 아이템
+  //     setProducts(data.dataBody.userLoanList)
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // }
+
+  // useEffect(() => {
+  //   fetchUserInfo();
+  // }, [point, slotNum, products])
+
+
+  useEffect(() => {
+    const fetchUserInfo = async () => {
+      try {
+        const data = await getUserInfo();
+        const { point, slotNum, userLoanList, slot_1, slot_2, slot_3, slot_4, slot_5 } = data.dataBody;
+        // console.log("유저정보", data);
+        console.log("유저정보", data.dataBody);
+        // 유저 포인트
+        // setPoint(data.dataBody.point);  // 뭐 이런식
+        setPoint(point);
+        // 슬롯 수
+        // setSlotNum(data.dataBody.slotNum);
+        setSlotNumber(slotNum);
+        // slotNumber = slotNum;
+        // 유저가 가진 아이템
+        // setProducts(data.dataBody.userLoanList)
+        setProducts(userLoanList);
+        // 유저가 배치한 슬롯
+        // setSavedSlot([data.dataBody.slot_1, data.dataBody.slot_2, data.dataBody.slot_3, data.dataBody.slot_4, data.dataBody.slot_5])
+        setSavedSlot([slot_1, slot_2, slot_3, slot_4, slot_5]);
+        // setSelected1(products.loanName[0])
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fetchUserInfo();
+    // 유저 정보 상태에 변화가 있을 때만 실행
+  // }, [point, slotNum, products]);
+  }, []);
+
+  useEffect(() => {
+    // savedSlot에 있는 숫자를 이용하여 해당하는 loanName을 찾아 selectedSlots에 설정
+    const updatedSelectedSlots = savedSlot.map(slotId => {
+      // savedSlot에 있는 각 숫자가 loanId와 일치하는 상품을 찾아 selectedSlots에 설정
+      const selectedProduct = products.find(product => product.loanId === slotId);
+      // 해당하는 상품이 없다면 빈 문자열로 설정
+      return selectedProduct ? selectedProduct.loanName : "";
+    });
+  
+    // SlotSetting 컴포넌트로 selectedSlots를 전달
+    setSelected1(updatedSelectedSlots[0]);
+    setSelected2(updatedSelectedSlots[1]);
+    setSelected3(updatedSelectedSlots[2]);
+    setSelected4(updatedSelectedSlots[3]);
+    setSelected5(updatedSelectedSlots[4]);
+  }, [savedSlot, products]);
+
   // useEffect(() => {
   //   const fetchUserInfo = async () => {
   //     try {
   //       const data = await getUserInfo();
-  //       // 유저 포인트
-  //       // setUserPoint(data.point);  // 뭐 이런식
-  //       // 유저가 가진 아이템
+  //       const { point, slotNum, userLoanList, slot_1, slot_2, slot_3, slot_4, slot_5 } = data.dataBody;
+  //       console.log("유저정보", data.dataBody);
+  //       // 새로운 변수에 유저 정보 할당
+  //       const newPoint = point;
+  //       const newSlotNum = slotNum;
+  //       const newUserLoanList = userLoanList;
+  //       const newSavedSlot = [slot_1, slot_2, slot_3, slot_4, slot_5];
+  
+  //       // 상태 업데이트
+  //       setPoint(newPoint);
+  //       setSlotNumber(newSlotNum);
+  //       setProducts(newUserLoanList);
+  //       setSavedSlot(newSavedSlot);
   //     } catch (error) {
   //       console.error(error);
   //     }
   //   };
-  //   // userInfo 상태에 변화가 있을 때만 실행
-  // }, [userInfo]);
+  //   fetchUserInfo();
+  // }, []); // 의존성 배열이 비어있으므로 컴포넌트가 처음 마운트될 때만 실행
 
-  // console.log(userPoint);
+
+  // console.log("Shop", slotNum);
 
   // const handleUpdatePoint = (updatedPoint) => {
   //   setUserPoint(updatedPoint);
@@ -75,17 +165,17 @@ function Shop() {
   // 유저 포인트 props로 전달하기 -> 포인트 부족 시 warning modal
   if (currentComponent === "gameItem") {
     // currentPage = <GameItem openSetNumberModal={openSetNumberModal} openGameItemModal={openGameItemModal} openWarningModal={openWarningModal} gameItems={gameItems} userPoint={userPoint} setUserPoint={handleUpdatePoint} />;
-    currentPage = <GameItem openSetNumberModal={openSetNumberModal} openGameItemModal={openGameItemModal} openWarningModal={openWarningModal} gameItems={gameItems} userPoint={userPoint} />;
+    currentPage = <GameItem openSetNumberModal={openSetNumberModal} openGameItemModal={openGameItemModal} openWarningModal={openWarningModal} gameItems={gameItems} point={point} slotNumber={slotNumber} />;
   } else if (currentComponent == "loanItem") {
     // currentPage = <LoanItem openLoanItemModal={openLoanItemModal} openWarningModal={openWarningModal} loanItems={loanItems} userPoint={userPoint} setUserPoint={handleUpdatePoint} />;
-    currentPage = <LoanItem openLoanItemModal={openLoanItemModal} openWarningModal={openWarningModal} loanItems={loanItems} userPoint={userPoint} />;
+    currentPage = <LoanItem openLoanItemModal={openLoanItemModal} openWarningModal={openWarningModal} loanItems={loanItems} point={point} />;
   } else {
-    currentPage = <SlotSetting openItemModal={openItemModal} openSaveSlotModal={openSaveSlotModal} />;
+    currentPage = <SlotSetting openItemModal={openItemModal} openSaveSlotModal={openSaveSlotModal} products={products} slotNumber={slotNumber} savedSlot={savedSlot} selectedSlots={selectedSlots} />;
   }
 
   return (
     <>
-      {isSetNumberModalOpen && selectedItem && <SetNumberModal closeSetNumberModal={closeSetNumberModal} openGameItemModal={openGameItemModal} openWarningModal={openWarningModal} userPoint={userPoint} itemId={selectedItem.itemId} price={selectedItem.price} />}
+      {isSetNumberModalOpen && selectedItem && <SetNumberModal closeSetNumberModal={closeSetNumberModal} openGameItemModal={openGameItemModal} openWarningModal={openWarningModal} point={point} itemId={selectedItem.itemId} price={selectedItem.price} />}
       {/* {isSetNumberModalOpen && <SetNumberModal closeSetNumberModal={closeSetNumberModal} openGameItemModal={openGameItemModal} openWarningModal={openWarningModal} userPoint={userPoint} itemId={selectedItem.itemId} price={selectedItem.price} />} */}
       {isGameItemModalOpen && <GameItemModal closeGameItemModal={closeGameItemModal} />}
       {isLoanItemModalOpen && <LoanItemModal closeLoanItemModal={closeLoanItemModal} />}
@@ -142,7 +232,7 @@ function Shop() {
           <div className="border-b-0 p-4 flex justify-end items-center h-[15%]">
             <div className="border-2 rounded-lg bg-white text-right font-cusFont1 text-xl mx-6 pl-2 pr-4 py-2 w-[180px] border-black flex items-center justify-between">
               <img src={won} alt="아이콘" className="w-7 h-7" />
-              <span>{userPoint}</span>
+              <span>{point}</span>
             </div>
           </div>
           {/* 아이템 */}

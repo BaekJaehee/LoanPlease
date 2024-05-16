@@ -9,13 +9,17 @@ const useStore = create((set) => ({
   currentComponent: 'gameItem',
   setCurrentComponent: (component) => set({ currentComponent: component }),
 
+  // 유저 정보
+  userInfo: null,
+  setUserInfo: (item) => set({ userInfo: item }),
+
   // 유저 포인트(임시)
-  userPoint: 20000,
-  setUserPoint: (num) => set({ userPoint: num }),
+  point: 0,
+  setPoint: (num) => set({ point: num }),
 
   // 유저 슬롯 개수(임시)
-  userSlotNum: 3,
-  setUserSlotNum: (num) => set({ userSlotNum: num }), // 구매하면 슬롯 수 변경
+  slotNumber: 0,
+  setSlotNumber: (num) => set({ slotNumber: num }), // 구매하면 슬롯 수 변경
 
   // 슬롯
   slots: [
@@ -71,8 +75,8 @@ const useStore = create((set) => ({
   closeSetNumberModal: () => set({ isSetNumberModalOpen: false }),
 
   // 게임 아이템 개수
-  value: 1, // 기본 1
-  setValue: (num) => set({ value: num }),
+  itemCount: 1, // 기본 1
+  setItemCount: (num) => set({ itemCount: num }),
 
   // 게임 아이템 구매 확인 모달
   isGameItemModalOpen: false,
@@ -152,7 +156,7 @@ const useStore = create((set) => ({
   setSelectedProduct: (description) => set({ selectedProduct: description }),
 
   // 세팅된 슬롯:
-  savedSlot: [1, 2, 3, 0, 0],
+  savedSlot: [0, 0, 0, 0, 0],
   setSavedSlot: (item) => set({ savedSlot: item }),
   
   // 슬롯용 페이지네이션

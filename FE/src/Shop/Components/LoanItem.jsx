@@ -3,9 +3,9 @@ import { useEffect } from "react";
 import { purchaseLoanItem } from "../API/ShopAPI";
 import useStore from "../../Store/ShopStore";
 
-function LoanItem({ openLoanItemModal, openWarningModal, loanItems, userPoint }) {
+function LoanItem({ openLoanItemModal, openWarningModal, loanItems, point }) {
   // const { loanItems, currentPage2, setCurrentPage2 } = useStore();
-  const { currentPage2, setCurrentPage2, setUserPoint } = useStore();
+  const { currentPage2, setCurrentPage2, setPoint } = useStore();
 
   const slicedLoanItems = loanItems.slice(3, 10); // 기본 아이템(인덱스 0~2) 제외
 
@@ -24,16 +24,16 @@ function LoanItem({ openLoanItemModal, openWarningModal, loanItems, userPoint })
   // console.log(loanItems)
 
   const handlePurchaseLoanItem = async (item) => {
-    if (userPoint < item.price) {
+    if (point < item.price) {
       openWarningModal();
       return;
     }
 
     try {
-      await purchaseLoanItem(item.loanId);
+      const data = await purchaseLoanItem(item.loanId);
 
-      const updatedPoint = userPoint - item.price;
-      setUserPoint(updatedPoint);
+      // const updatedPoint = point - item.price;
+      setPoint(data.remainPoint);
 
       openLoanItemModal();
     } catch (error) {
@@ -110,7 +110,7 @@ LoanItem.propTypes = {
   openLoanItemModal: PropTypes.func.isRequired,
   openWarningModal: PropTypes.func.isRequired,
   loanItems: PropTypes.array.isRequired,
-  userPoint: PropTypes.number.isRequired,
+  point: PropTypes.number.isRequired,
 };
 
 export default LoanItem;
