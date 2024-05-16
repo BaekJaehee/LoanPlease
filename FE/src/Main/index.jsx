@@ -18,19 +18,7 @@ function Home() {
           setMyData(value);
           setIsLogin(true);
         } else {
-          tokenrefresh()
-            .then((response) => {
-              if (response) {
-                getUserInfo().then((result) => {
-                  localStorage.setItem("mydata", JSON.stringify(result));
-                  setMyData(result);
-                });
-              } else {
-                localStorage.clear();
-                setIsLogin(false);
-              }
-            })
-            .catch((e) => console.log(e));
+          console.log(value);
         }
       })
       .catch((e) => console.log(e));
