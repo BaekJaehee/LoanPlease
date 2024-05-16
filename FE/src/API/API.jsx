@@ -1,4 +1,9 @@
 import axios from "axios";
+import { Cookies } from "react-cookie";
+
+const cookie = new Cookies();
+const token = cookie.get("Authorization");
+axios.defaults.headers.Authorization = `Bearer ${token}`;
 
 export const tokenrefresh = async () => {
   const url = "/api/refresh";
