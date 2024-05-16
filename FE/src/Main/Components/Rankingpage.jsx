@@ -161,8 +161,7 @@ function Rankingpage() {
 
   const getallrankings = async () => {
     rankinglist().then((result) => {
-      console.log(result);
-      const resultdata = <div>{result && result.map((value, index) => {
+      const resultdata = <div>{result.data && result.data.map((value, index) => {
         return <Rankingdata key={index + 1} data={value} rank={index + 1} />;
       })}</div>;
       setDataList(resultdata);
@@ -171,8 +170,7 @@ function Rankingpage() {
 
   const getallfriendrankings = async () => {
     friendrankinglist().then((result) => {
-      console.log(result);
-      const resultdata = <div>{result && result.map((value, index) => {
+      const resultdata = <div>{result.data && result.data.map((value, index) => {
         return <Rankingdata key={index + 1} data={value} rank={index + 1} />;
       })}</div>;
       setDataList(resultdata);
