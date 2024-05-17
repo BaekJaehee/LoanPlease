@@ -1,5 +1,6 @@
 import useStore from "../../Store/GameStore.jsx"
-import { useState } from "react";
+import { MainStore } from "../../Main/Store.jsx";
+import { useState, useRef } from "react";
 
 import GameStart from "./GameStart.jsx";
 import GameEnd from "./GameEnd.jsx";
@@ -46,13 +47,30 @@ import { useEffect } from "react";
 
 function Game() {
 
+  const [audio, setAudio] = useState(null);
+
+  useEffect(() => {
+    const loadedAudio = new Audio("audioes/store_chime.mp3");
+    setAudio(loadedAudio);
+  }, []);
+
+  const makeClickSound = () => {
+    // 오디오 재생을 시도
+    audio.play()
+      .then(() => {
+      })
+      .catch(e => {
+        console.error("오디오 재생 실패:", e);
+        // 사용자 상호작용 없이 자동 재생이 차단되었을 경우의 처리
+      });}
+
   function formatNumber(num) {
     return String(num).padStart(2, '0');
   }
 
   function formatNumberWithComma(num) {
     return num.toLocaleString();
-}
+  }
 
 
   const closeModal = () => {
@@ -92,6 +110,8 @@ function Game() {
     items
   } = useStore();
 
+  const { isBgm } = MainStore();
+
   const { customerInfo } = gameInfo;
 
   const [message, setMessage] = useState("");
@@ -109,6 +129,27 @@ function Game() {
       ));
     }
   }, [dialogueNum, customerInfo]);
+
+  const [audioLoaded, setAudioLoaded] = useState(false);
+
+  useEffect(() => {
+    window.addEventListener("click", handleFirstInteraction);
+    return () => {
+      window.removeEventListener("click", handleFirstInteraction);
+    };
+  }, []);
+  
+  const handleFirstInteraction = () => {
+    const bgmAudio = new Audio("audioes/intro_main_bgm.mp3");
+    bgmAudio.play()
+      .then(() => {
+        setAudioLoaded(true);
+      })
+      .catch(e => {
+        console.error("배경음악 재생 실패:", e);
+      });
+    window.removeEventListener("click", handleFirstInteraction);
+  };
 
   const customerImages = {
     Customer1,
@@ -148,7 +189,6 @@ function Game() {
 
     try {
       const scoreResponse = await fetchGetawayRequest(gameInfo); // API 호출
-      console.log(scoreResponse)
       let score = scoreResponse.data.score; // API로부터 받은 점수 데이터
       setMessage(scoreResponse.data.message);
 
@@ -173,6 +213,11 @@ function Game() {
     }
   }
 
+  async function handleCallCustomer() {
+    makeClickSound();
+    callCustomer();
+  }
+
   async function handleEndCustomer2(loanId) {
 
     updateCustomerState({
@@ -184,7 +229,6 @@ function Game() {
 
     try {
       const scoreResponse = await postScoreRequest(loanId, gameInfo); // API 호출
-      console.log(scoreResponse)
       let score = scoreResponse.data.score; // API로부터 받은 점수 데이터
       if (isShield && score < 0) {
         score = 0
@@ -226,6 +270,13 @@ function Game() {
 
   return (
     <>
+      {isBgm ? (
+        <audio
+          src="audioes/intro_main_bgm.mp3"
+          autoPlay={true}
+          loop={true}
+        ></audio>
+      ) : null}
       {/* 전체 화면 설정 */}
       <div className="flex items-center min-h-screen w-full overflow-auto">
         {/* 고정 크기의 웹게임 화면, 크기 고정 */}
@@ -342,7 +393,7 @@ function Game() {
             <div className="h-full w-[57.5%]">
 
               {!isCustomer && (<div className="flex items-center justify-center w-full h-full">
-                <button className=" w-[300px] h-[80px] rounded-lg border-[5px] border-black bg-red-500 text-white text-2xl" onClick={callCustomer}>
+                <button className=" w-[300px] h-[80px] rounded-lg border-[5px] border-black bg-red-500 text-white text-2xl" onClick={() => handleCallCustomer()}>
                   <p>다음 고객님 부르기</p>
                 </button>
               </div>)}
@@ -368,7 +419,7 @@ function Game() {
                                 <p>금리: {selectedProduct.interest * 100}%</p>
                               </div>
                               <div className="flex-1 text-base">
-                                <p>상환 기간: {selectProduct.period ?`${selectedProduct.period}개월` : "제한 없음"}</p>
+                                <p>상환 기간: {selectProduct.period ? `${selectedProduct.period}개월` : "제한 없음"}</p>
                               </div>
                             </div>
 
@@ -390,7 +441,7 @@ function Game() {
                 <div className="w-[30%] h-[94%]">
 
                   <div className="h-[50%] w-full flex justify-center items-center">
-                    <button className="w-[90%] h-[90%] bg-red-500 text-white flex justify-center items-center border-[5px] border-black rounded-lg text-xl" onClick={() => handleEndCustomer1(selectedProduct.loanId)} disabled={!isButtonEnabled}>
+                    <button className="w-[90%] h-[90%] bg-red-500 text-white flex justify-center items-center border-[5px] border-black rounded-lg text-xl" onClick={() => handleEndCustomer1()} disabled={!isButtonEnabled}>
                       <p>돌려보내기</p>
                     </button>
                   </div>

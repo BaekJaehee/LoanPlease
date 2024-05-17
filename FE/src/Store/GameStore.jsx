@@ -61,7 +61,6 @@ const useStore = create(set => ({
       state.score = state.score + state.changeScore
 
       postUseItem(state.userItemId[0]).then(() => {
-        console.log("Item used successfully");
       }).catch(error => {
         console.error("Failed to use item:", error);
       });
@@ -82,7 +81,6 @@ const useStore = create(set => ({
     
     // postUseItem 함수를 호출하고 처리
     postUseItem(state.userItemId[1]).then(() => {
-      console.log("Item used successfully");
     }).catch(error => {
       console.error("Failed to use item:", error);
     });
@@ -98,7 +96,6 @@ const useStore = create(set => ({
     
     // postUseItem 함수를 호출하고 처리
     postUseItem(state.userItemId[2]).then(() => {
-      console.log("Item used successfully");
     }).catch(error => {
       console.error("Failed to use item:", error);
     });
@@ -154,9 +151,7 @@ const useStore = create(set => ({
   loadGameInfo: async () => {
     try {
       const data = await fetchCustomerRequest();
-      console.log(data)
       set({ gameInfo: data.data });
-      console.log(useStore.getState().gameInfo);
     } catch (error) {
       console.error('Failed to load game data:', error);
     }
@@ -189,8 +184,6 @@ const useStore = create(set => ({
     } catch (error) {
       console.error('Failed to load game data:', error);
     }
-
-    console.log(useStore.getState().userInfo)
   },
 
 
