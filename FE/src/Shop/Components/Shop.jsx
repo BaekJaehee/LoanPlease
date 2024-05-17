@@ -94,10 +94,10 @@ function Shop() {
         setSelected4({ name: initialSelectedSlots[3] });
         setSelected5({ name: initialSelectedSlots[4] });
 
-        // setIsLoadingUserInfo(false);
+        setIsLoadingUserInfo(false);
       } catch (error) {
         console.error(error);
-        // setIsLoadingUserInfo(false);
+        setIsLoadingUserInfo(false);
       }
     };
     fetchUserInfo();
