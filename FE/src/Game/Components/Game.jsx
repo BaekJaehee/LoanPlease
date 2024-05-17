@@ -193,6 +193,14 @@ function Game() {
   const imageKey = `Customer${customerInfo && customerInfo.customerImage}`;
   const customerImage = customerImages[imageKey] || SampleCustomer;
 
+  
+  
+  url = import.meta.env.VITE_BASE_URL
+
+  function findURL () {
+    console.log(url)
+  }
+
   async function handleEndCustomer1() {
 
     updateCustomerState({
@@ -229,6 +237,7 @@ function Game() {
   }
 
   async function handleCallCustomer() {
+    findURL();
     makeClickSound();
     callCustomer();
   }
