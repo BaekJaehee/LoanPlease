@@ -97,11 +97,12 @@ function Menubar(props) {
         </div>
       </div>
       <div
+        className="cursor-pointer"
         onClick={() => {
           navigate("/shop");
         }}
       >
-        <img width={100} height={50} src={shop} />
+        <img width={100} height={70} src={shop} />
       </div>
       <div
         // style={{ margin: "10px", cursor: "pointer" }}
