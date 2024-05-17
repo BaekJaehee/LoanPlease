@@ -10,7 +10,7 @@ const token = cookies.get('Authorization');
 // 아이템 리스트 조회
 export const itemsList = async () => {
   console.log(url);
-  const url = `${API_BASE_URL}/store/items`;
+  const url = `${API_BASE_URL}/api/store/items`;
   return await axios
     .get(url, {
       headers: {
@@ -29,7 +29,7 @@ export const itemsList = async () => {
 // 슬롯 구매
 // 유저 슬롯개수 +1, 포인트 차감
 export const purchaseSlot = async () => {
-  const url = `${API_BASE_URL}/store/items/slot`;
+  const url = `${API_BASE_URL}/api/store/items/slot`;
   return await axios
     .post(url, {}, {
       headers: {
@@ -50,7 +50,7 @@ export const purchaseSlot = async () => {
 // 일회성 게임 아이템 구매
 // 아이템아이디, 개수
 export const purchaseGameItem = async (itemId, itemCount) => {
-  const url = `${API_BASE_URL}/store/items/oneoff`;
+  const url = `${API_BASE_URL}/api/store/items/oneoff`;
   return await axios
     // .post(url, {
     .post(url, { itemId, itemCount }, {
@@ -71,7 +71,7 @@ export const purchaseGameItem = async (itemId, itemCount) => {
 // 대출 아이템 구매
 // 대출아이템 아이디
 export const purchaseLoanItem = async (loanId) => {
-  const url = `${API_BASE_URL}/store/items/loan`;
+  const url = `${API_BASE_URL}/api/store/items/loan`;
   console.log("token", token);
   return await axios
     // .post(url, {
@@ -92,7 +92,7 @@ export const purchaseLoanItem = async (loanId) => {
 // 슬롯에 대출 아이템 선택해서 저장
 // export const setLoanItems = async (savedSlot) => {
 export const setLoanItems = async (slotObject) => {
-  const url = `${API_BASE_URL}/store/choose-loan`;
+  const url = `${API_BASE_URL}/api/store/choose-loan`;
   return await axios
     .put(url, slotObject, {
       headers: {
