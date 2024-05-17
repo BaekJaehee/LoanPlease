@@ -1,31 +1,32 @@
 /* eslint-disable react/prop-types */
+import loading from "./assets/loading_dots.gif";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import Userdata from "./Userdata";
-import { Fragment, useEffect, useState, useMemo } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { friendsearch, friendsearchByname } from "../../API/API";
 
-export const resultdummydata = [
-  {
-    image: "",
-    nickname: "23456",
-    isFollow: false,
-  },
-  {
-    image: "",
-    nickname: "dsafsgh",
-    isFollow: true,
-  },
-  {
-    image: "",
-    nickname: "5467ujydsghfdsfgdsggfsdbfhrte",
-    isFollow: false,
-  },
-  {
-    image: "",
-    nickname: "5467ujydsghfdsfgdsggfsdbfhrte",
-    isFollow: false,
-  },
-];
+// export const resultdummydata = [
+//   {
+//     image: "",
+//     nickname: "23456",
+//     isFollow: false,
+//   },
+//   {
+//     image: "",
+//     nickname: "dsafsgh",
+//     isFollow: true,
+//   },
+//   {
+//     image: "",
+//     nickname: "5467ujydsghfdsfgdsggfsdbfhrte",
+//     isFollow: false,
+//   },
+//   {
+//     image: "",
+//     nickname: "5467ujydsghfdsfgdsggfsdbfhrte",
+//     isFollow: false,
+//   },
+// ];
 
 // 더미 데이터에서 6개씩 조회하는 함수
 // function getData(page) {
@@ -55,22 +56,28 @@ export const PageQuery = (props) => {
     },
   });
 
-  const [resultdata, setResultData] = useState([]);
+  const [resultdata, setResultData] = useState(null);
 
-  const getallfriends = useMemo(async () => {
-    const data = await friendsearch();
-    setResultData(data);
-  }, [props.inputdata]);
+  const getallfriends = async () => {
+    friendsearch().then((result) => {
+      result.dataBody && setResultData(result.dataBody);
+    });
+  };
 
-  const getInputResult = useMemo(
-    async (input) => {
-      const data = await friendsearchByname(input);
-      setResultData(data);
-    },
-    [props.inputdata],
-  );
+  const getInputResult = async (input) => {
+    friendsearchByname(input).then((result) => {
+      result.dataBody && setResultData(result.dataBody);
+    });
+  };
 
-  const getListData = (page) => {
+  const getListData = async (page) => {
+    if (props.inputdata == "") {
+      // 검색 화면 진입 시 현재 친구 목록 소환하기
+      await getallfriends();
+    } else {
+      // 입력값 존재할 시 해당 값을 포함하는 유저 목록 검색하기
+      await getInputResult();
+    }
     const result = [];
     for (var i = 6 * page; i < 6 * page + 6; i++) {
       if (i < resultdata.length) {
@@ -103,16 +110,15 @@ export const PageQuery = (props) => {
   }, [fetchNextPage, hasNextPage]);
 
   useEffect(() => {
-    if (props.inputdata == "") {
-      // 검색 화면 진입 시 현재 친구 목록 소환하기
-      getallfriends();
-    } else {
-      // 입력값 존재할 시 해당 값을 포함하는 유저 목록 검색하기
-      getInputResult();
-    }
+    getallfriends();
   }, []);
 
-  if (isLoading) return <div>loading...</div>;
+  if (isLoading)
+    return (
+      <div className="flex h-full w-full items-center justify-center">
+        <img width={60} height={60} src={loading} />
+      </div>
+    );
 
   //버튼 눌러서 결과 확장 조회하기
   return (
