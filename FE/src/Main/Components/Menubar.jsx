@@ -101,7 +101,7 @@ function Menubar(props) {
           navigate("/shop");
         }}
       >
-        <img src={shop} />
+        <img height={50} src={shop} />
       </div>
       <div
         // style={{ margin: "10px", cursor: "pointer" }}
