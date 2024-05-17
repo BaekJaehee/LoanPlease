@@ -126,7 +126,7 @@ export const friendsearch = async () => {
     .get(url)
     .then((response) => {
       if (response.data.status == 200) {
-        return response.data.dataBody.friends;
+        return response.data;
       } else console.log(response);
     })
     .catch((e) => console.log(e));
@@ -138,7 +138,7 @@ export const friendsearchByname = async (input) => {
     .get(url)
     .then((response) => {
       if (response.data) {
-        return response.data.dataBody.friends;
+        return response.data;
       } else console.log(response);
     })
     .catch((e) => console.log(e));
