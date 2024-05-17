@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import useStore from "../../Store/ShopStore";
 import { itemsList, getUserInfo } from "../API/ShopAPI";
 import GameItem from "./GameItem";
@@ -10,6 +10,7 @@ import GameItemModal from "../Modal/GameItemModal";
 import LoanItemModal from "../Modal/LoanItemModal";
 import ItemModal from "../Modal/ItemModal";
 import WarningModal from "../Modal/WarningModal";
+import WarningModal2 from "../Modal/WarningModal2";
 import coin from "../Assets/coin.jpg";
 import won from "../Assets/coin_won.png";
 import SaveSlotModal from "../Modal/SaveSlotModal";
@@ -17,7 +18,6 @@ import SaveSlotModal from "../Modal/SaveSlotModal";
 function Shop() {
   const {
     setCurrentComponent, currentComponent,
-    setUserInfo, userInfo,
     setPoint, point,
     setSlotNumber, slotNumber,
     setProducts, products,
@@ -30,11 +30,15 @@ function Shop() {
     isItemModalOpen, openItemModal, closeItemModal,
     isSaveSlotModalOpen, openSaveSlotModal, closeSaveSlotModal,
     isWarningModalOpen, openWarningModal, closeWarningModal,
+    isWarningModal2Open, openWarningModal2, closeWarningModal2,
     selectedItem,
     selectedProduct,
     gameItems, setGameItems,
     loanItems, setLoanItems
   } = useStore();
+
+  const [isLoadingItems, setIsLoadingItems] = useState(true);
+  const [isLoadingUserInfo, setIsLoadingUserInfo] = useState(true);
 
   const selectedSlots = [selected1, selected2, selected3, selected4, selected5];
   const setSelectedSlots = [setSelected1, setSelected2, setSelected3, setSelected4, setSelected5];
@@ -45,8 +49,10 @@ function Shop() {
         const data = await itemsList();
         setGameItems(data.itemList);
         setLoanItems(data.loanList);
+        setIsLoadingItems(false);
       } catch (error) {
         console.log(error);
+        setIsLoadingItems(false);
       }
     };
     fetchItems();
@@ -68,33 +74,41 @@ function Shop() {
           const loan = userLoanList.find(product => product.loanId === slotId);
           return loan ? loan.loanName : null;
         });
-        const initialSelectedSlotsColor = [
-          slot_1, slot_2, slot_3, slot_4, slot_5
-        ].map(slotId => {
-          const loan = userLoanList.find(product => product.loanId === slotId);
-          return loan ? loan.color : null;
-        });
-        setSelected1({ name: initialSelectedSlots[0], color: initialSelectedSlotsColor[0] });
-        setSelected2({ name: initialSelectedSlots[1], color: initialSelectedSlotsColor[1] });
-        setSelected3({ name: initialSelectedSlots[2], color: initialSelectedSlotsColor[2] });
-        setSelected4({ name: initialSelectedSlots[3], color: initialSelectedSlotsColor[3] });
-        setSelected5({ name: initialSelectedSlots[4], color: initialSelectedSlotsColor[4] });
+        // const initialSelectedSlotsColor = [
+        //   slot_1, slot_2, slot_3, slot_4, slot_5
+        // ].map(slotId => {
+        //   const loan = userLoanList.find(product => product.loanId === slotId);
+        //   return loan ? loan.color : null;
+        // });
+        // setSelected1({ name: initialSelectedSlots[0], color: initialSelectedSlotsColor[0] });
+        // setSelected2({ name: initialSelectedSlots[1], color: initialSelectedSlotsColor[1] });
+        // setSelected3({ name: initialSelectedSlots[2], color: initialSelectedSlotsColor[2] });
+        // setSelected4({ name: initialSelectedSlots[3], color: initialSelectedSlotsColor[3] });
+        // setSelected5({ name: initialSelectedSlots[4], color: initialSelectedSlotsColor[4] });
+        setSelected1({ name: initialSelectedSlots[0] });
+        setSelected2({ name: initialSelectedSlots[1] });
+        setSelected3({ name: initialSelectedSlots[2] });
+        setSelected4({ name: initialSelectedSlots[3] });
+        setSelected5({ name: initialSelectedSlots[4] });
+
+        setIsLoadingUserInfo(false);
       } catch (error) {
         console.error(error);
+        setIsLoadingUserInfo(false);
       }
     };
     fetchUserInfo();
   }, []);
 
-  // console.log(selectedSlots);
-
   let currentPage;
-  if (currentComponent === "gameItem") {
+  if (isLoadingItems || isLoadingUserInfo) {
+    return;
+  } else if (currentComponent === "gameItem") {
     currentPage = <GameItem openSetNumberModal={openSetNumberModal} openGameItemModal={openGameItemModal} openWarningModal={openWarningModal} gameItems={gameItems} point={point} slotNumber={slotNumber} />;
   } else if (currentComponent === "loanItem") {
     currentPage = <LoanItem openLoanItemModal={openLoanItemModal} openWarningModal={openWarningModal} loanItems={loanItems} point={point} products={products} />;
   } else {
-    currentPage = <SlotSetting openItemModal={openItemModal} openSaveSlotModal={openSaveSlotModal} products={products} slotNumber={slotNumber} savedSlot={savedSlot} selectedSlots={selectedSlots} setSelectedSlots={setSelectedSlots} />;
+    currentPage = <SlotSetting openItemModal={openItemModal} openSaveSlotModal={openSaveSlotModal} products={products} slotNumber={slotNumber} savedSlot={savedSlot} selectedSlots={selectedSlots} setSelectedSlots={setSelectedSlots} openWarningModal2={openWarningModal2} />;
   }
 
   return (
@@ -105,6 +119,7 @@ function Shop() {
       {isItemModalOpen && <ItemModal closeItemModal={closeItemModal} selectedProduct={selectedProduct} />}
       {isWarningModalOpen && <WarningModal closeWarningModal={closeWarningModal} closeSetNumberModal={closeSetNumberModal} />}
       {isSaveSlotModalOpen && <SaveSlotModal closeSaveSlotModal={closeSaveSlotModal} />}
+      {isWarningModal2Open && <WarningModal2 closeWarningModal2={closeWarningModal2} />}
       <div className="bg-cusColor3 min-h-screen w-full flex">
         <img src={coin} alt="배경" className="absolute w-full h-full object-cover opacity-50 z-0" />
         <div className="w-[250px] border-r-2 font-cusFont1 relative z-10">
