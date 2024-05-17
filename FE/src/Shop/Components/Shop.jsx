@@ -62,6 +62,9 @@ function Shop() {
     const fetchUserInfo = async () => {
       try {
         const data = await getUserInfo();
+        if (!data.dataBody) {
+          return;
+        }
         const { point, slotNum, userLoanList, slot_1, slot_2, slot_3, slot_4, slot_5 } = data.dataBody;
         setPoint(point);
         setSlotNumber(slotNum);
