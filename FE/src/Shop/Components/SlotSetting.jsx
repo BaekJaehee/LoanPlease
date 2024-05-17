@@ -1,5 +1,5 @@
 import { PropTypes } from "prop-types"; 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import useStore from "../../Store/ShopStore";
 // import { owendLoanItems, setLoanItems } from "../API/ShopAPI";
 import { setLoanItems } from "../API/ShopAPI";
