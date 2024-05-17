@@ -33,10 +33,10 @@ function SlotSetting({ openItemModal, openSaveSlotModal, products, slotNumber, s
     setCurrentPage(1); // 페이지가 변경될 때마다 첫 페이지로 초기화
   }, [products, setCurrentPage]);
 
-  useEffect(() => {
-    // 초기 selectedSlots을 originalSelectedSlots에 저장
-    setOriginalSelectedSlots(selectedSlots.map(slot => ({ ...slot }))); // selectedSlots 배열 복사
-  }, [selectedSlots]);
+  // useEffect(() => {
+  //   // 초기 selectedSlots을 originalSelectedSlots에 저장
+  //   setOriginalSelectedSlots(selectedSlots.map(slot => ({ ...slot }))); // selectedSlots 배열 복사
+  // }, [selectedSlots]);
 
   const showDetail = (content) => {
     setSelectedProduct(content);
