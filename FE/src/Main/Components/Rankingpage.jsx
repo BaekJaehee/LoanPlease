@@ -8,7 +8,7 @@ import { rankinglist, friendrankinglist } from "../../API/API";
 const rankingstyleClass = `
 flex justify-center items-center 
 border-4 border-black rounded-[30px] 
-bg-[#ffc436] px-[30px] py-[20px] 
+bg-[#ffc436] px-[30px] py-[20px] min-w-[20%] 
 `;
 
 const rankingboardstyleClass = `
@@ -161,18 +161,32 @@ function Rankingpage() {
 
   const getallrankings = async () => {
     rankinglist().then((result) => {
-      const resultdata = <div>{result.data && result.data.map((value, index) => {
-        return <Rankingdata key={index + 1} data={value} rank={index + 1} />;
-      })}</div>;
+      const resultdata = (
+        <div>
+          {result.data &&
+            result.data.map((value, index) => {
+              return (
+                <Rankingdata key={index + 1} data={value} rank={index + 1} />
+              );
+            })}
+        </div>
+      );
       setDataList(resultdata);
     });
   };
 
   const getallfriendrankings = async () => {
     friendrankinglist().then((result) => {
-      const resultdata = <div>{result.data && result.data.map((value, index) => {
-        return <Rankingdata key={index + 1} data={value} rank={index + 1} />;
-      })}</div>;
+      const resultdata = (
+        <div>
+          {result.data &&
+            result.data.map((value, index) => {
+              return (
+                <Rankingdata key={index + 1} data={value} rank={index + 1} />
+              );
+            })}
+        </div>
+      );
       setDataList(resultdata);
     });
   };
