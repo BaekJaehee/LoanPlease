@@ -77,22 +77,22 @@ function Shop() {
           const loan = userLoanList.find(product => product.loanId === slotId);
           return loan ? loan.loanName : null;
         });
-        // const initialSelectedSlotsColor = [
-        //   slot_1, slot_2, slot_3, slot_4, slot_5
-        // ].map(slotId => {
-        //   const loan = userLoanList.find(product => product.loanId === slotId);
-        //   return loan ? loan.color : null;
-        // });
-        // setSelected1({ name: initialSelectedSlots[0], color: initialSelectedSlotsColor[0] });
-        // setSelected2({ name: initialSelectedSlots[1], color: initialSelectedSlotsColor[1] });
-        // setSelected3({ name: initialSelectedSlots[2], color: initialSelectedSlotsColor[2] });
-        // setSelected4({ name: initialSelectedSlots[3], color: initialSelectedSlotsColor[3] });
-        // setSelected5({ name: initialSelectedSlots[4], color: initialSelectedSlotsColor[4] });
-        setSelected1({ name: initialSelectedSlots[0] });
-        setSelected2({ name: initialSelectedSlots[1] });
-        setSelected3({ name: initialSelectedSlots[2] });
-        setSelected4({ name: initialSelectedSlots[3] });
-        setSelected5({ name: initialSelectedSlots[4] });
+        const initialSelectedSlotsColor = [
+          slot_1, slot_2, slot_3, slot_4, slot_5
+        ].map(slotId => {
+          const loan = userLoanList.find(product => product.loanId === slotId);
+          return loan ? loan.color : null;
+        });
+        setSelected1({ name: initialSelectedSlots[0], color: initialSelectedSlotsColor[0] });
+        setSelected2({ name: initialSelectedSlots[1], color: initialSelectedSlotsColor[1] });
+        setSelected3({ name: initialSelectedSlots[2], color: initialSelectedSlotsColor[2] });
+        setSelected4({ name: initialSelectedSlots[3], color: initialSelectedSlotsColor[3] });
+        setSelected5({ name: initialSelectedSlots[4], color: initialSelectedSlotsColor[4] });
+        // setSelected1({ name: initialSelectedSlots[0] });
+        // setSelected2({ name: initialSelectedSlots[1] });
+        // setSelected3({ name: initialSelectedSlots[2] });
+        // setSelected4({ name: initialSelectedSlots[3] });
+        // setSelected5({ name: initialSelectedSlots[4] });
 
         setIsLoadingUserInfo(false);
       } catch (error) {

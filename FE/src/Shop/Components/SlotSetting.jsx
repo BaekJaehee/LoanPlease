@@ -18,6 +18,7 @@ function SlotSetting({ openItemModal, openSaveSlotModal, products, slotNumber, s
     // selected1, selected2, selected3, selected4, selected5, 
     setSelected1, setSelected2, setSelected3, setSelected4, setSelected5 
   } = useStore();
+  const [originalSelectedSlots, setOriginalSelectedSlots] = useState([]);
 
   // const selectedSlots = [selected1, selected2, selected3, selected4, selected5];
   // const setSelectedSlots = [setSelected1, setSelected2, setSelected3, setSelected4, setSelected5];
@@ -32,6 +33,11 @@ function SlotSetting({ openItemModal, openSaveSlotModal, products, slotNumber, s
   useEffect(() => {
     setCurrentPage(1); // 페이지가 변경될 때마다 첫 페이지로 초기화
   }, [products, setCurrentPage]);
+
+  useEffect(() => {
+    // 초기 selectedSlots을 originalSelectedSlots에 저장
+    setOriginalSelectedSlots(selectedSlots.slice()); // selectedSlots 배열 복사
+  }, [selectedSlots]);
 
   const showDetail = (content) => {
     setSelectedProduct(content);
@@ -126,6 +132,8 @@ function SlotSetting({ openItemModal, openSaveSlotModal, products, slotNumber, s
   const handleSaveSlot = async (savedSlot) => {
     if (savedSlot.filter(slot => slot !== 0).length < 3) {
       openWarningModal2();
+      // 실패 시 원래의 selectedSlots 상태로 복원
+      setSelectedSlots(originalSelectedSlots.slice()); // originalSelectedSlots 배열 복사
       return;
     }
 
@@ -138,6 +146,8 @@ function SlotSetting({ openItemModal, openSaveSlotModal, products, slotNumber, s
         "slot_5": savedSlot[4],
       };
       openSaveSlotModal();
+      // 저장 성공 시 originalSelectedSlots 업데이트
+      setOriginalSelectedSlots(selectedSlots.slice()); // selectedSlots 배열 복사
       await setLoanItems(slotObject)
     } catch (error) {
       console.error(error);
@@ -204,6 +214,7 @@ function SlotSetting({ openItemModal, openSaveSlotModal, products, slotNumber, s
             <div
               key={index}
               className="flex-grow-1 w-[220px] h-[90%] border-2 px-6 py-4 rounded-lg border-black bg-white hover:cursor-pointer text-center place-content-center"
+              style={{ background: selectedSlot.color }}
               onClick={() => clear(selectedSlot, setSelectedSlot)}
             >
               {/* 여기에 클릭해서 넣은거 표시되어야함 */}
