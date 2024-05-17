@@ -2,6 +2,9 @@ import { useEffect } from "react";
 import { PropTypes } from "prop-types"; 
 import { purchaseSlot } from "../API/ShopAPI";
 import useStore from "../../Store/ShopStore";
+import vip from "../Assets/vip.png";
+import timeExtension from "../Assets/timeExtension.png";
+import shield from "../Assets/shield.png";
 
 // 유저의 슬롯개수에따라 슬롯추가1,2 띄우기
 
@@ -127,7 +130,8 @@ function GameItem({ openSetNumberModal, openGameItemModal, openWarningModal, gam
             {/* <img src={item.icon} alt="" className={`w-32 h-32 mx-auto my-5 ${item.purchased === 1 && 'opacity-50'}`} /> */}
             {/* <img src={item.img} alt="" className={`h-28 mx-auto my-5 ${item.purchased === 1 && 'opacity-50'}`} /> */}
             {/* 프론트 내부의 이미지를 쓰기 위해서는 이미지 컬럼 추가 필요 */}
-            <img src={`/src/Shop/Assets/${item.img}.png`} alt={item.img} className={`h-28 mx-auto my-3 ${item.purchased === 1 && 'opacity-50'}`} />
+            {/* <img src={`/src/Shop/Assets/${item.img}.png`} alt={item.img} className={`h-28 mx-auto my-3 ${item.purchased === 1 && 'opacity-50'}`} /> */}
+            <img src={item.img} alt={item.img} className={`h-28 mx-auto my-3 ${item.purchased === 1 && 'opacity-50'}`} />
             <p className="font-cusFont1 py-2 my-5 text-3xl h-[10%]">{item.name}</p>
             {/* <div className="font-cusFont2 py-2 my-5 mx-3 text-lg h-[70px]"> */}
             <div className="font-cusFont2 py-2 my-5 mx-3 text-lg h-[40%]">
