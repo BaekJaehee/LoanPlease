@@ -69,7 +69,7 @@ async function fetchGetawayRequest(data) {
   const token = cookies.get('Authorization');
 
   try {
-    const response = await fetch(import.meta.env.VITE_BASE_URL + 'game/getaway', {
+    const response = await fetch('https://loanplease.kr/game/getaway', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -78,6 +78,7 @@ async function fetchGetawayRequest(data) {
       body: JSON.stringify(data)
     });
     if (!response.ok) {
+      console.error("Failed to fetch data:", error);
       throw new Error('Network response was not ok');
     }
     return await response.json();
