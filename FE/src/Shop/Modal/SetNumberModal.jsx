@@ -5,8 +5,6 @@ import useStore from "../../Store/ShopStore";
 
 function SetNumberModal({ closeSetNumberModal, openGameItemModal, openWarningModal, point, itemId, price }) {
   const { itemCount, setItemCount, setPoint } = useStore();
-  // const { value, setValue, setSelectedItem } = useStore();
-  // const { itemId: itemId, price: itemPrice } = selectedItem;
   const modalRef = useRef();
 
   // 모달 바깥을 클릭하면 모달이 닫히도록
@@ -28,6 +26,8 @@ function SetNumberModal({ closeSetNumberModal, openGameItemModal, openWarningMod
   }
 
   const handlePurchaseItems = async () => {
+    console.log(itemId)
+    console.log(itemCount)
     if (point < price * itemCount) {
       openWarningModal();
       return;
@@ -37,8 +37,6 @@ function SetNumberModal({ closeSetNumberModal, openGameItemModal, openWarningMod
 
         closeSetNumberModal(); 
         // 구매 후 포인트 업데이트
-        // const updatedPoint = userPoint - item.price;
-        // const updatedPoint = point - price * itemCount;
         setPoint(data.remainPoint);
 
         setItemCount(1);  // 구매 후 모달 닫으면 1로 초기화
@@ -80,12 +78,10 @@ function SetNumberModal({ closeSetNumberModal, openGameItemModal, openWarningMod
           </div>
           {/* 여기에 카운터 들어감 */}
           <div className="flex flex-row h-10 w-full rounded-lg relative bg-transparent mt-1">
-            {/* <button data-action="decrement" className=" bg-gray-300 text-gray-600 hover:text-gray-700 hover:bg-gray-400 h-full w-20 rounded-l cursor-pointer outline-none"> */}
             {/* - */}
             <button 
               className="bg-gray-300 text-gray-600 hover:text-gray-700 hover:bg-gray-400 h-full w-20 rounded-l cursor-pointer outline-none focus:outline-none"
               onClick={decrement}
-              // disabled={value === 0}
             >
               <span className="m-auto text-2xl font-thin">-</span>
             </button>
@@ -96,7 +92,6 @@ function SetNumberModal({ closeSetNumberModal, openGameItemModal, openWarningMod
               value={itemCount}
               onChange={(e) => setItemCount(parseInt(e.target.value))}
             ></input>
-            {/* <button data-action="increment" class="bg-gray-300 text-gray-600 hover:text-gray-700 hover:bg-gray-400 h-full w-20 rounded-r cursor-pointer"> */}
             {/* + */}
             <button 
               className="bg-gray-300 text-gray-600 hover:text-gray-700 hover:bg-gray-400 h-full w-20 rounded-r cursor-pointer focus:outline-none"
@@ -110,9 +105,6 @@ function SetNumberModal({ closeSetNumberModal, openGameItemModal, openWarningMod
               className="mx-2 px-4 py-2 bg-blue-300 hover:bg-blue-500 rounded-md border-2 border-b-4 border-black focus:ring-4 shadow-lg transform active:scale-y-75 transition-transform" 
               onClick={() => { 
                 // 구매 함수 실행
-                // purchaseGameItem(itemId, value);
-                // closeSetNumberModal(); 
-                // openGameItemModal(); 
                 handlePurchaseItems();
               }}
               disabled={itemCount === 0}

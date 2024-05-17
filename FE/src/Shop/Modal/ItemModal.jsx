@@ -36,7 +36,6 @@ function ItemModal({ closeItemModal, selectedProduct }) {
 
 ItemModal.propTypes = {
   closeItemModal: PropTypes.func.isRequired,
-  // selectedProduct: PropTypes.string.isRequired,
   selectedProduct: PropTypes.object.isRequired,
 };
 
