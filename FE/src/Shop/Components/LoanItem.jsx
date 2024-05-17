@@ -78,8 +78,8 @@ function LoanItem({ openLoanItemModal, openWarningModal, loanItems, point, produ
             className={`relative flex-grow-1 w-[300px] h-[85%] border-2 ${
               purchasedProducts.includes(item.loanId)
                 ? "bg-stone-300 cursor-not-allowed text-gray-600"
-                : "bg-white"
-            } px-3 py-4 rounded-lg border-black ${item.color}`}
+                : item.color}
+            } px-3 py-4 rounded-lg border-black`}
           >
             <p className="font-cusFont1 text-2xl py-4 my-2 h-[20%]">{item.name}</p>
             <div className="h-[80%] font-cusFont2 py-3 my-2">
