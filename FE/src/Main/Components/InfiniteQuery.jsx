@@ -4,52 +4,20 @@ import Userdata from "./Userdata";
 import { useEffect, useState } from "react";
 import { friendsearch, friendsearchByname } from "../../API/API";
 
-// export const resultdummydata = [
-//   {
-//     image: "",
-//     nickname: "23456",
-//     isFollow: false,
-//   },
-//   {
-//     image: "",
-//     nickname: "dsafsgh",
-//     isFollow: true,
-//   },
-//   {
-//     image: "",
-//     nickname: "5467ujydsghfdsfgdsggfsdbfhrte",
-//     isFollow: false,
-//   },
-//   {
-//     image: "",
-//     nickname: "5467ujydsghfdsfgdsggfsdbfhrte",
-//     isFollow: false,
-//   },
-// ];
-
-// 더미 데이터에서 6개씩 조회하는 함수
-// function getData(page) {
-//   const result = [];
-//   for (var i = 6 * page; i < 6 * page + 6; i++) {
-//     if (i < resultdummydata.length) result.push(resultdummydata[i]);
-//   }
-//   return result;
-// }
-
 export const PageQuery = (props) => {
   const [resultdata, setResultData] = useState(null);
 
   const getallfriends = async () => {
     friendsearch().then((result) => {
       console.log(result);
-      result.dataBody && setResultData(result.dataBody);
+      result.dataBody && setResultData(result.dataBody.friends);
     });
   };
 
   const getInputResult = async (input) => {
     friendsearchByname(input).then((result) => {
       console.log(result);
-      result.dataBody && setResultData(result.dataBody);
+      result.dataBody && setResultData(result.dataBody.friends);
     });
   };
 
