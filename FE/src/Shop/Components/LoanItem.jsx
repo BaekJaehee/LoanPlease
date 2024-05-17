@@ -75,11 +75,12 @@ function LoanItem({ openLoanItemModal, openWarningModal, loanItems, point, produ
         {currentItems.map((item, index) => (
           <div
             key={index}
-            className={`relative flex-grow-1 w-[300px] h-[85%] border-2 ${
-              purchasedProducts.includes(item.loanId)
-                ? "bg-stone-300 cursor-not-allowed text-gray-600"
-                : `${item.color}`}
-            } px-3 py-4 rounded-lg border-black`}
+            className={`relative flex-grow-1 w-[300px] h-[85%] border-2 ${item.color} gipx-3 py-4 rounded-lg border-black`}
+            // className={`relative flex-grow-1 w-[300px] h-[85%] border-2 ${
+            //   purchasedProducts.includes(item.loanId)
+            //     ? "bg-stone-300 cursor-not-allowed text-gray-600"
+            //     : `${item.color}`}
+            // } px-3 py-4 rounded-lg border-black`}
           >
             <p className="font-cusFont1 text-2xl py-4 my-2 h-[20%]">{item.name}</p>
             <div className="h-[80%] font-cusFont2 py-3 my-2">
