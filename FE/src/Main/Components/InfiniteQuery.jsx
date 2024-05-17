@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import { useInfiniteQuery } from "@tanstack/react-query";
 import Userdata from "./Userdata";
-import { Fragment, useEffect, useState, useMemo } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { friendsearch, friendsearchByname } from "../../API/API";
 
 export const resultdummydata = [
@@ -57,18 +57,19 @@ export const PageQuery = (props) => {
 
   const [resultdata, setResultData] = useState([]);
 
-  const getallfriends = useMemo(async () => {
-    const data = await friendsearch();
-    setResultData(data);
-  }, [props.inputdata]);
+  const getallfriends = async () => {
+    friendsearch().then((value) => {
+      console.log(value);
+      setResultData(value);
+    });
+  };
 
-  const getInputResult = useMemo(
-    async (input) => {
-      const data = await friendsearchByname(input);
-      setResultData(data);
-    },
-    [props.inputdata],
-  );
+  const getInputResult = async (input) => {
+    friendsearchByname(input).then((value) => {
+      console.log(value);
+      setResultData(value);
+    });
+  };
 
   const getListData = (page) => {
     const result = [];
