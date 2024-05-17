@@ -60,15 +60,13 @@ export const PageQuery = (props) => {
 
   const getallfriends = async () => {
     friendsearch().then((result) => {
-      console.log(result);
-      result.data && setResultData(result.data);
+      result.dataBody && setResultData(result.dataBody);
     });
   };
 
   const getInputResult = async (input) => {
     friendsearchByname(input).then((result) => {
-      console.log(result);
-      result.data && setResultData(result.data);
+      result.dataBody && setResultData(result.dataBody);
     });
   };
 
