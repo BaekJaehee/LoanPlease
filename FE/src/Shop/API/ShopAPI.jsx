@@ -42,7 +42,7 @@ export const purchaseSlot = async () => {
   // const url = `http://localhost:8080/store/items/slot`;
   const url = `${API_BASE_URL}/store/items/slot`;
   return await axios
-    .post(url, {
+    .post(url, {}, {
       headers: {
         "Content-Type": "application/json",
         "Authorization": `Bearer ${token}`,
@@ -84,9 +84,10 @@ export const purchaseGameItem = async (itemId, itemCount) => {
 export const purchaseLoanItem = async (loanId) => {
   // const url = `http://localhost:8080/store/items/loan`;
   const url = `${API_BASE_URL}/store/items/loan`;
+  console.log("token", token);
   return await axios
     // .post(url, {
-    .post(url, loanId, {
+    .post(url, { loanId }, {
       headers: {
         "Content-Type": "application/json",
         "Authorization": `Bearer ${token}`,
@@ -100,38 +101,20 @@ export const purchaseLoanItem = async (loanId) => {
     });
 }
 
-// 슬롯 세팅 페이지 들어가면 유저가 보유한 대출 아이템 가져옴
-// export const owendLoanItems = async () => {
-//   // const url = `http://localhost:8080/store/setting`;
-//   const url = `${API_BASE_URL}/store/setting`;
-//   return await axios
-//     .get(url, {
-//       headers: {
-//         "Content-Type": "application/json",
-//         "Authorization": `Bearer ${token}`,
-//       },
-//     })
-//     .then((response) => {
-//       // console.log("test", response.data)
-//       // const data = response.data.map(item => item.loan);
-//       // console.log(data);
-//       // return data;
-//       return response.data;
-//     })
-//     .catch((e) => {
-//       console.log(e);
-//     })
-// }
-
 // 슬롯에 대출 아이템 선택해서 저장
-export const setLoanItems = async (savedSlot) => {
-// export const setLoanItems = async (jsonData) => {
+// export const setLoanItems = async (savedSlot) => {
+export const setLoanItems = async (slotObject) => {
+  // const slotObject = {
+  //   "slot_1": savedSlot[0],
+  //   "slot_2": savedSlot[1],
+  //   "slot_3": savedSlot[2],
+  //   "slot_4": savedSlot[3],
+  //   "slot_5": savedSlot[4],
+  // }
   // const url = `http://localhost:8080/store/choose-loan`;
   const url = `${API_BASE_URL}/store/choose-loan`;
   return await axios
-    // .post(url, jsonData, {
-    // .post(url, { slotIds: savedSlot }, {
-    .post(url, savedSlot, {
+    .put(url, { slotObject }, {
       headers: {
         "Content-Type": "application/json",
         "Authorization": `Bearer ${token}`,
@@ -159,7 +142,7 @@ export const getUserInfo = async () => {
     })
     .then((response) => {
       // console.log("user-info:", response);
-      // console.log("user-info:", response.data);
+      console.log("user-info:", response.data);
       return response.data;
     })
     .catch((e) => {

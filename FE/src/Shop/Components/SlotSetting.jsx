@@ -6,20 +6,23 @@ import { setLoanItems } from "../API/ShopAPI";
 
 // db에는 1374 순서인데 왜 1347로 찍히는건지?
 
-function SlotSetting({ openItemModal, openSaveSlotModal, products, slotNumber, savedSlot, selected1, selected2, selected3, selected4, selected5 }) {
+function SlotSetting({ openItemModal, openSaveSlotModal, products, slotNumber, savedSlot, selectedSlots, setSelectedSlots }) {
   const { 
     // products, setProducts, 
-    setProducts,
+    // setProducts,
     // userSlotNum, 
     currentPage, setCurrentPage, 
     setSelectedProduct, 
     // savedSlot, setSavedSlot, 
     setSavedSlot, 
     // selected1, selected2, selected3, selected4, selected5, 
-    setSelected1, setSelected2, setSelected3, setSelected4, setSelected5 } = useStore();
+    setSelected1, setSelected2, setSelected3, setSelected4, setSelected5 
+  } = useStore();
 
-  const selectedSlots = [selected1, selected2, selected3, selected4, selected5];
-  const setSelectedSlots = [setSelected1, setSelected2, setSelected3, setSelected4, setSelected5];
+  // const selectedSlots = [selected1, selected2, selected3, selected4, selected5];
+  // const setSelectedSlots = [setSelected1, setSelected2, setSelected3, setSelected4, setSelected5];
+
+  // console.log(selectedSlots);
 
   const itemsPerPage = 5; // 페이지당 보여줄 아이템 수(임의)
   const indexOfLastItem = currentPage * itemsPerPage;
@@ -34,10 +37,13 @@ function SlotSetting({ openItemModal, openSaveSlotModal, products, slotNumber, s
     setSelectedProduct(content);
   };
 
+  // console.log(selectedSlots)
+  console.log(savedSlot)
+
   const setting = (item) => {
     // 이미 배치된건지 검사
-    const isAlreadySelected = selectedSlots.some(selectedSlot => selectedSlot.name === item.loanName);
-    // const isAlreadySelected = selectedSlots.findIndex(selectedSlot => selectedSlot.name === item.name);
+    const isAlreadySelected = selectedSlots.some(selectedSlot => selectedSlot.name === item.name);
+    console.log(isAlreadySelected);
     // 중복이 아닐 때
     if (!isAlreadySelected) {
       // 선택된 슬롯을 찾아 상태를 업데이트
@@ -47,6 +53,7 @@ function SlotSetting({ openItemModal, openSaveSlotModal, products, slotNumber, s
           setSelectedSlots[i](item);  // 근데 이러니까 배열 길이는 userSlotNum 고정에 빈게 null로 표시된다
           // savedSlot.push(item.id);
           savedSlot[i] = item.id;  // [0, 0, 0, 0, 0]에서 바꾸기
+          // savedSlot[i] = item.loanId;  // [0, 0, 0, 0, 0]에서 바꾸기
           break;
         }
       }
@@ -59,7 +66,8 @@ function SlotSetting({ openItemModal, openSaveSlotModal, products, slotNumber, s
     // 선택된 슬롯의 인덱스를 찾기
     const selectedIndex = selectedSlots.findIndex(slot => slot === selected);
     // 현재 클릭한 슬롯을 비움(화면)
-    clearFunction({ name: null, description: null });
+    // clearFunction({ name: null, description: null });
+    clearFunction({ name: null });
     // 슬롯 데이터 비움(0)
     savedSlot[selectedIndex] = 0;
   
@@ -70,7 +78,7 @@ function SlotSetting({ openItemModal, openSaveSlotModal, products, slotNumber, s
       savedSlot[i] = savedSlot[i + 1] ? savedSlot[i + 1] : 0;
     }
     // 마지막 슬롯을 비움
-    setSelectedSlots[slotNumber - 1]({ name: null, description: null });
+    setSelectedSlots[slotNumber - 1]({ name: null });
     // 마지막 슬롯을 0으로 채움
     savedSlot[slotNumber - 1] = 0;
   
@@ -94,7 +102,16 @@ function SlotSetting({ openItemModal, openSaveSlotModal, products, slotNumber, s
   const save = async () => {
     try {
       console.log(savedSlot);
-      await setLoanItems(savedSlot)
+      const slotObject = {
+        "slot_1": savedSlot[0],
+        "slot_2": savedSlot[1],
+        "slot_3": savedSlot[2],
+        "slot_4": savedSlot[3],
+        "slot_5": savedSlot[4],
+      };
+      console.log("저장", slotObject)
+      // await setLoanItems(savedSlot)
+      await setLoanItems(slotObject)
     } catch (error) {
       console.error(error);
     }
@@ -129,7 +146,8 @@ function SlotSetting({ openItemModal, openSaveSlotModal, products, slotNumber, s
           <div 
           key={index} 
           // className="font-cusFont1 flex-grow-1 w-[200px] h-[250px] border-2 px-6 py-4 rounded-lg border-black bg-white mb-6 text-center"
-          className="font-cusFont1 flex-grow-1 w-[240px] h-[95%] border-2 px-6 py-4 rounded-lg border-black bg-white text-center"
+          // className="font-cusFont1 flex-grow-1 w-[240px] h-[95%] border-2 px-6 py-4 rounded-lg border-black bg-white text-center"
+          className={`font-cusFont1 flex-grow-1 w-[240px] h-[95%] border-2 px-6 py-4 rounded-lg border-black bg-white text-center ${item.color}`}
           // onClick={() => setting({ name: item.name, description: item.description })}
           >
             <p className="text-2xl mx-3 py-4 my-2 h-[30%] place-content-center">{item.loanName}</p>
@@ -152,6 +170,7 @@ function SlotSetting({ openItemModal, openSaveSlotModal, products, slotNumber, s
                 // onClick={() => setting({ name: item.loan.name })}
                 // onClick={() => setting({ id: item.loan.loanId, name: item.loan.name })}
                 onClick={() => setting({ id: item.loanId, name: item.loanName })}
+                // onClick={() => setting(item)}
               >
                 선택하기
               </button>
@@ -169,6 +188,7 @@ function SlotSetting({ openItemModal, openSaveSlotModal, products, slotNumber, s
               key={index}
               // className="mt-12 mb-12 flex-grow-1 w-[200px] h-[100px]  border-2 px-6 py-4 rounded-lg border-black bg-white hover:cursor-pointer text-center"
               className="flex-grow-1 w-[220px] h-[90%] border-2 px-6 py-4 rounded-lg border-black bg-white hover:cursor-pointer text-center place-content-center"
+              // className={`flex-grow-1 w-[220px] h-[90%] border-2 px-6 py-4 rounded-lg border-black bg-white hover:cursor-pointer text-center place-content-center ${selectedSlot.color}`}
               onClick={() => clear(selectedSlot, setSelectedSlot)}
             >
               {/* 여기에 클릭해서 넣은거 표시되어야함 */}
@@ -207,11 +227,8 @@ SlotSetting.propTypes = {
   products: PropTypes.array.isRequired,
   slotNumber: PropTypes.number.isRequired,
   savedSlot: PropTypes.array.isRequired,
-  selected1: PropTypes.object.isRequired,
-  selected2: PropTypes.object.isRequired,
-  selected3: PropTypes.object.isRequired,
-  selected4: PropTypes.object.isRequired,
-  selected5: PropTypes.object.isRequired,
+  selectedSlots: PropTypes.array.isRequired,
+  setSelectedSlots: PropTypes.array.isRequired,
 }
 
 export default SlotSetting;

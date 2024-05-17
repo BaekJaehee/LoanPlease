@@ -3,13 +3,13 @@ import { PropTypes } from "prop-types";
 import useStore from "../../Store/ShopStore";
 
 function WarningModal({ closeWarningModal, closeSetNumberModal }) {
-  const { setValue } = useStore();
+  const { setItemCount } = useStore();
   const modalRef = useRef();
 
   // 모달 바깥을 클릭하면 모달이 닫히도록
   const handleOutsideClick = (e) => {
     if (modalRef.current && !modalRef.current.contains(e.target)) {
-      setValue(0);
+      setItemCount(1);
       closeSetNumberModal();
       closeWarningModal();
     }
@@ -26,7 +26,7 @@ function WarningModal({ closeWarningModal, closeSetNumberModal }) {
             <button 
               className="mx-2 px-4 py-2 bg-red-300 hover:bg-red-500 rounded-md border-2 border-b-4 border-black focus:ring-4 shadow-lg transform active:scale-y-75 transition-transform" 
               onClick={() => {
-                setValue(0)
+                setItemCount(0)
                 closeSetNumberModal();
                 closeWarningModal();
               }}

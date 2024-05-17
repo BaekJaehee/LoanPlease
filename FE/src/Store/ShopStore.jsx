@@ -127,14 +127,21 @@ const useStore = create((set) => ({
   }),
 
   // 화면에 보이는 슬롯 채우기
+  // selected1: {name: null, color: null},
+  // selected2: {name: null, color: null},
+  // selected3: {name: null, color: null},
+  // selected4: {name: null, color: null},
+  // selected5: {name: null, color: null},
   selected1: {name: null},
-  // selected1: {name: '로우 대출'},
   selected2: {name: null},
-  // selected2: {name: '미디 대출'},
   selected3: {name: null},
-  // selected3: {name: '하이 대출'},
   selected4: {name: null},
   selected5: {name: null},
+  // setSelected1: (item) => set({ selected1: {name: item.name, color: item.color} }),
+  // setSelected2: (item) => set({ selected2: {name: item.name, color: item.color} }),
+  // setSelected3: (item) => set({ selected3: {name: item.name, color: item.color} }),
+  // setSelected4: (item) => set({ selected4: {name: item.name, color: item.color} }),
+  // setSelected5: (item) => set({ selected5: {name: item.name, color: item.color} }),
   setSelected1: (item) => set({ selected1: {name: item.name} }),
   setSelected2: (item) => set({ selected2: {name: item.name} }),
   setSelected3: (item) => set({ selected3: {name: item.name} }),
@@ -150,6 +157,9 @@ const useStore = create((set) => ({
     // {name: '상품4', content: '설명1'},
   ],
   setProducts: (item) => set({ products: item }),
+
+  purchasedProducts: [],
+  setPurchasedProducts: (prod) => set({ purchasedProducts: prod }),
 
   // 모달에 뜰 설명
   selectedProduct: '',

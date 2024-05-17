@@ -24,7 +24,7 @@ function GameItem({ openSetNumberModal, openGameItemModal, openWarningModal, gam
 
     try {
       // const data = await purchaseSlot();
-      const data = await purchaseSlot();
+      const data = await purchaseSlot(item);
       
       // 구매 후 포인트 반영되도록(백엔드에서?)
       // const updatedPoint = point - item.price;
