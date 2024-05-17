@@ -72,7 +72,7 @@ overflow-auto text-start
 // };
 
 const isFriend = (value) => {
-  return value == "true" ? (
+  return value? (
     // <div onClick={() => {}} style={followbuttonstyle}>
     <div onClick={() => {}} className={followbuttonstyleClass}>
       #친구
