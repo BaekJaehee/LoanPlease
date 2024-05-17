@@ -121,7 +121,7 @@ function GameItem({ openSetNumberModal, openGameItemModal, openWarningModal, gam
             </div>
           ) : null
         ))}
-        {gameItems.map((item, index) => (
+        {gameItems && gameItems.map((item, index) => (
           // <div key={index} className={`border-2 ${item.purchased === 1 ? 'bg-stone-300' : 'bg-white'} px-6 py-6 rounded-lg w-[280px] h-[500px] border-black cursor-pointer`}>
           <div key={index} className={`relative h-[85%] border-2 ${item.purchased === 1 ? 'bg-stone-300' : 'bg-white'} px-6 py-6 rounded-lg w-[280px] h-[500px] border-black`}>
             {/* <img src={item.icon} alt="" className={`w-32 h-32 mx-auto my-5 ${item.purchased === 1 && 'opacity-50'}`} /> */}
