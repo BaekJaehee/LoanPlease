@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import useStore from "../../Store/ShopStore";
 import { itemsList, getUserInfo } from "../API/ShopAPI";
 import GameItem from "./GameItem";
@@ -37,6 +37,9 @@ function Shop() {
     loanItems, setLoanItems
   } = useStore();
 
+  const [isLoadingItems, setIsLoadingItems] = useState(true);
+  const [isLoadingUserInfo, setIsLoadingUserInfo] = useState(true);
+
   const selectedSlots = [selected1, selected2, selected3, selected4, selected5];
   const setSelectedSlots = [setSelected1, setSelected2, setSelected3, setSelected4, setSelected5];
 
@@ -46,8 +49,10 @@ function Shop() {
         const data = await itemsList();
         setGameItems(data.itemList);
         setLoanItems(data.loanList);
+        setIsLoadingItems(false);
       } catch (error) {
         console.log(error);
+        setIsLoadingItems(false);
       }
     };
     fetchItems();
@@ -69,26 +74,36 @@ function Shop() {
           const loan = userLoanList.find(product => product.loanId === slotId);
           return loan ? loan.loanName : null;
         });
-        const initialSelectedSlotsColor = [
-          slot_1, slot_2, slot_3, slot_4, slot_5
-        ].map(slotId => {
-          const loan = userLoanList.find(product => product.loanId === slotId);
-          return loan ? loan.color : null;
-        });
-        setSelected1({ name: initialSelectedSlots[0], color: initialSelectedSlotsColor[0] });
-        setSelected2({ name: initialSelectedSlots[1], color: initialSelectedSlotsColor[1] });
-        setSelected3({ name: initialSelectedSlots[2], color: initialSelectedSlotsColor[2] });
-        setSelected4({ name: initialSelectedSlots[3], color: initialSelectedSlotsColor[3] });
-        setSelected5({ name: initialSelectedSlots[4], color: initialSelectedSlotsColor[4] });
+        // const initialSelectedSlotsColor = [
+        //   slot_1, slot_2, slot_3, slot_4, slot_5
+        // ].map(slotId => {
+        //   const loan = userLoanList.find(product => product.loanId === slotId);
+        //   return loan ? loan.color : null;
+        // });
+        // setSelected1({ name: initialSelectedSlots[0], color: initialSelectedSlotsColor[0] });
+        // setSelected2({ name: initialSelectedSlots[1], color: initialSelectedSlotsColor[1] });
+        // setSelected3({ name: initialSelectedSlots[2], color: initialSelectedSlotsColor[2] });
+        // setSelected4({ name: initialSelectedSlots[3], color: initialSelectedSlotsColor[3] });
+        // setSelected5({ name: initialSelectedSlots[4], color: initialSelectedSlotsColor[4] });
+        setSelected1({ name: initialSelectedSlots[0] });
+        setSelected2({ name: initialSelectedSlots[1] });
+        setSelected3({ name: initialSelectedSlots[2] });
+        setSelected4({ name: initialSelectedSlots[3] });
+        setSelected5({ name: initialSelectedSlots[4] });
+
+        setIsLoadingUserInfo(false);
       } catch (error) {
         console.error(error);
+        setIsLoadingUserInfo(false);
       }
     };
     fetchUserInfo();
   }, []);
 
   let currentPage;
-  if (currentComponent === "gameItem") {
+  if (isLoadingItems || isLoadingUserInfo) {
+    return;
+  } else if (currentComponent === "gameItem") {
     currentPage = <GameItem openSetNumberModal={openSetNumberModal} openGameItemModal={openGameItemModal} openWarningModal={openWarningModal} gameItems={gameItems} point={point} slotNumber={slotNumber} />;
   } else if (currentComponent === "loanItem") {
     currentPage = <LoanItem openLoanItemModal={openLoanItemModal} openWarningModal={openWarningModal} loanItems={loanItems} point={point} products={products} />;
