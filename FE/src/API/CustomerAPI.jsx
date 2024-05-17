@@ -8,7 +8,10 @@ async function fetchCustomerRequest() {
   const token = cookies.get('Authorization');
   try {
     const response = await fetch(import.meta.env.VITE_BASE_URL + 'game/loanrequest', {
-      headers: {'Authorization': `Bearer ${token}`}
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      }
     });
     if (!response.ok) {
       throw new Error('Network response was not ok');
@@ -24,7 +27,10 @@ async function fetchUserRequest() {
   const token = cookies.get('Authorization');
   try {
     const response = await fetch(import.meta.env.VITE_BASE_URL + 'api/user-info', {
-      headers: {'Authorization': `Bearer ${token}`}
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      }
     });
     if (!response.ok) {
       throw new Error('Network response was not ok');
