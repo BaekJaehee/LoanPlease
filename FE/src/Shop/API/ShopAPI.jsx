@@ -114,7 +114,7 @@ export const setLoanItems = async (slotObject) => {
   // const url = `http://localhost:8080/store/choose-loan`;
   const url = `${API_BASE_URL}/store/choose-loan`;
   return await axios
-    .put(url, { slotObject }, {
+    .put(url, slotObject, {
       headers: {
         "Content-Type": "application/json",
         "Authorization": `Bearer ${token}`,
@@ -122,6 +122,7 @@ export const setLoanItems = async (slotObject) => {
     })
     .then((response) => {
       // console.log("setLoanItems:", response.data)
+      console.log(response.data);
       return response.data;
     })
     .catch((e) => {

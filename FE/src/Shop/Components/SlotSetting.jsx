@@ -38,7 +38,7 @@ function SlotSetting({ openItemModal, openSaveSlotModal, products, slotNumber, s
   };
 
   // console.log(selectedSlots)
-  console.log(savedSlot)
+  // console.log(savedSlot)
 
   const setting = (item) => {
     // 이미 배치된건지 검사
@@ -49,11 +49,18 @@ function SlotSetting({ openItemModal, openSaveSlotModal, products, slotNumber, s
       // 선택된 슬롯을 찾아 상태를 업데이트
       for (let i = 0; i < slotNumber; i++) {
         if (!selectedSlots[i].name) {
-          // setSelectedSlots[i](item.name);
           setSelectedSlots[i](item);  // 근데 이러니까 배열 길이는 userSlotNum 고정에 빈게 null로 표시된다
-          // savedSlot.push(item.id);
           savedSlot[i] = item.id;  // [0, 0, 0, 0, 0]에서 바꾸기
-          // savedSlot[i] = item.loanId;  // [0, 0, 0, 0, 0]에서 바꾸기
+          // setSelectedSlots(prevSlots => {
+          //   const updatedSlots = [...prevSlots];
+          //   updatedSlots[i] = item; // item을 직접 넣어야 함
+          //   return updatedSlots;
+          // });
+          // setSavedSlot(prevSavedSlot => {
+          //   const updatedSavedSlot = [...prevSavedSlot];
+          //   updatedSavedSlot[i] = item.id; // item의 id를 넣어야 함
+          //   return updatedSavedSlot;
+          // });
           break;
         }
       }
@@ -112,6 +119,7 @@ function SlotSetting({ openItemModal, openSaveSlotModal, products, slotNumber, s
       console.log("저장", slotObject)
       // await setLoanItems(savedSlot)
       await setLoanItems(slotObject)
+      console.log(slotObject)
     } catch (error) {
       console.error(error);
     }
