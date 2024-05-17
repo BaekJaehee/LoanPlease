@@ -11,7 +11,7 @@ function GamePause () {
   };
 
   const handleGoHome = () => {
-    navigate('/');
+    window.location.href = '/';
   };
 
   return (
