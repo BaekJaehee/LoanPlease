@@ -5,28 +5,28 @@ import Userdata from "./Userdata";
 import { Fragment, useEffect, useState } from "react";
 import { friendsearch, friendsearchByname } from "../../API/API";
 
-export const resultdummydata = [
-  {
-    image: "",
-    nickname: "23456",
-    isFollow: false,
-  },
-  {
-    image: "",
-    nickname: "dsafsgh",
-    isFollow: true,
-  },
-  {
-    image: "",
-    nickname: "5467ujydsghfdsfgdsggfsdbfhrte",
-    isFollow: false,
-  },
-  {
-    image: "",
-    nickname: "5467ujydsghfdsfgdsggfsdbfhrte",
-    isFollow: false,
-  },
-];
+// export const resultdummydata = [
+//   {
+//     image: "",
+//     nickname: "23456",
+//     isFollow: false,
+//   },
+//   {
+//     image: "",
+//     nickname: "dsafsgh",
+//     isFollow: true,
+//   },
+//   {
+//     image: "",
+//     nickname: "5467ujydsghfdsfgdsggfsdbfhrte",
+//     isFollow: false,
+//   },
+//   {
+//     image: "",
+//     nickname: "5467ujydsghfdsfgdsggfsdbfhrte",
+//     isFollow: false,
+//   },
+// ];
 
 // 더미 데이터에서 6개씩 조회하는 함수
 // function getData(page) {
@@ -70,7 +70,14 @@ export const PageQuery = (props) => {
     });
   };
 
-  const getListData = (page) => {
+  const getListData = async (page) => {
+    if (props.inputdata == "") {
+      // 검색 화면 진입 시 현재 친구 목록 소환하기
+      await getallfriends();
+    } else {
+      // 입력값 존재할 시 해당 값을 포함하는 유저 목록 검색하기
+      await getInputResult();
+    }
     const result = [];
     for (var i = 6 * page; i < 6 * page + 6; i++) {
       if (i < resultdata.length) {
@@ -103,15 +110,8 @@ export const PageQuery = (props) => {
   }, [fetchNextPage, hasNextPage]);
 
   useEffect(() => {
-    if (props.inputdata == "") {
-      // 검색 화면 진입 시 현재 친구 목록 소환하기
-      getallfriends();
-    } else {
-      // 입력값 존재할 시 해당 값을 포함하는 유저 목록 검색하기
-      getInputResult();
-    }
-    getListData()
-  }, [props.inputdata]);
+    getallfriends();
+  }, []);
 
   if (isLoading)
     return (
