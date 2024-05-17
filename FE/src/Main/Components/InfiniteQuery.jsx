@@ -38,6 +38,7 @@ import { friendsearch, friendsearchByname } from "../../API/API";
 // }
 
 export const PageQuery = (props) => {
+
   const {
     isLoading,
     data,
@@ -45,16 +46,18 @@ export const PageQuery = (props) => {
     fetchNextPage,
     hasNextPage,
     isFetchingNextPage,
-  } = useInfiniteQuery({
-    queryKey: ["friends"],
+  } = useInfiniteQuery(
+    ["friends"],
     // queryFn: ({ pageParam = 0 }) => getData(pageParam),
-    queryFn: ({ pageParam = 0 }) => getListData(pageParam),
-    getNextPageParam: (_lastPage, pages) => {
-      if (pages.length < 6) {
-        return pages.length + 1;
-      } else return undefined;
+    (({ pageParam = 0 }) => getListData(pageParam)),
+    {
+      getNextPageParam: (_lastPage, pages) => {
+        if (pages.length < 6) {
+          return pages.length + 1;
+        } else return undefined;
+      },
     },
-  });
+  );
 
   const [resultdata, setResultData] = useState(null);
 
@@ -133,7 +136,7 @@ export const PageQuery = (props) => {
         <button onClick={fetchNextPage} disabled={!hasNextPage}>
           {hasNextPage ? "친구 소환하기" : "모든 친구를 소환했어요!"}
         </button>
-        {isFetching && !isFetchingNextPage ? "소환 중입니다..." : null}
+        {isFetching && isFetchingNextPage ? "소환 중입니다..." : null}
       </div>
     </div>
   );
