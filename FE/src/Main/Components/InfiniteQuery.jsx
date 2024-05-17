@@ -16,6 +16,7 @@ export const PageQuery = (props) => {
 
   const getInputResult = async (input) => {
     friendsearchByname(input).then((result) => {
+      console.log(input);
       console.log(result);
       result.dataBody && setResultData(result.dataBody.friends);
     });
