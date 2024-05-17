@@ -55,19 +55,17 @@ export const PageQuery = (props) => {
     },
   });
 
-  const [resultdata, setResultData] = useState([]);
+  const [resultdata, setResultData] = useState(null);
 
   const getallfriends = async () => {
-    friendsearch().then((value) => {
-      console.log(value);
-      setResultData(value);
+    friendsearch().then((result) => {
+      result.data && setResultData(result.data);
     });
   };
 
   const getInputResult = async (input) => {
-    friendsearchByname(input).then((value) => {
-      console.log(value);
-      setResultData(value);
+    friendsearchByname(input).then((result) => {
+      result.data && setResultData(result.data);
     });
   };
 
