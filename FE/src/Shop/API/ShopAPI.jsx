@@ -9,6 +9,7 @@ const token = cookies.get('Authorization');
 
 // 아이템 리스트 조회
 export const itemsList = async () => {
+  console.log(url);
   const url = `${API_BASE_URL}/store/items`;
   return await axios
     .get(url, {
@@ -110,6 +111,7 @@ export const setLoanItems = async (slotObject) => {
 
 export const getUserInfo = async () => {
   const url = `${API_BASE_URL}/api/user-info`
+  console.log(url);
   return await axios
     .get(url, {
       headers: {
