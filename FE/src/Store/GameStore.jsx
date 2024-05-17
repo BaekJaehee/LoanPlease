@@ -55,7 +55,7 @@ const useStore = create(set => ({
       // 버튼 비활성화
       state.isButtonEnabled = false;
       // 1초 후 재활성화 및 고객 상태 업데이트
-      state.changeScore = +10000;
+      state.changeScore = +1000;
       state.showScore = true
 
       state.score = state.score + state.changeScore

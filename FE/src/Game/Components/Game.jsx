@@ -158,7 +158,6 @@ function Game() {
   const location = useLocation();
 
   useEffect(() => {
-
     return () => {
       bgmAudio.pause(); // 페이지를 떠날 때 음악을 정지합니다.
       bgmAudio.currentTime = 0; // 음악 재생 위치를 초기화합니다.

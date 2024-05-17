@@ -11,7 +11,7 @@ function GameEnd () {
   };
 
   const handleGoHome = () => {
-    navigate('/');
+    window.location.href = '/';
   };
 
   return (
