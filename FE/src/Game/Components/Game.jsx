@@ -195,7 +195,7 @@ function Game() {
 
   
   
-  url = import.meta.env.VITE_BASE_URL
+  const url = import.meta.env.VITE_BASE_URL
 
   function findURL () {
     console.log(url)
