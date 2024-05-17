@@ -106,7 +106,7 @@ function Userdata(props) {
       >
         {props.data.nickname}
       </div>
-      {isFriend(props.data.isFollow)}
+      {isFriend(props.data.isFriend)}
     </div>
   );
 }
