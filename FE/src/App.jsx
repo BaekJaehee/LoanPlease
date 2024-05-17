@@ -1,5 +1,4 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 import Home from "./Main/index.jsx";
 import Game from "./Game/Components/Game.jsx";
