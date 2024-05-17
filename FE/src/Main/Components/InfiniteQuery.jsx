@@ -1,4 +1,5 @@
 /* eslint-disable react/prop-types */
+import loading from "./assets/loading_dots.gif";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import Userdata from "./Userdata";
 import { Fragment, useEffect, useState } from "react";
@@ -111,7 +112,12 @@ export const PageQuery = (props) => {
     }
   }, []);
 
-  if (isLoading) return <div>loading...</div>;
+  if (isLoading)
+    return (
+      <div className="flex h-[200px] w-[200px] items-center justify-center">
+        <img width={60} height={60} src={loading} />
+      </div>
+    );
 
   //버튼 눌러서 결과 확장 조회하기
   return (
