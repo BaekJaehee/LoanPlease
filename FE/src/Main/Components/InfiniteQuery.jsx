@@ -38,6 +38,7 @@ import { friendsearch, friendsearchByname } from "../../API/API";
 // }
 
 export const PageQuery = (props) => {
+
   const {
     isLoading,
     data,
@@ -48,7 +49,7 @@ export const PageQuery = (props) => {
   } = useInfiniteQuery(
     ["friends"],
     // queryFn: ({ pageParam = 0 }) => getData(pageParam),
-    ({ pageParam = 0 }) => getListData(pageParam),
+    (({ pageParam = 0 }) => getListData(pageParam)),
     {
       getNextPageParam: (_lastPage, pages) => {
         if (pages.length < 6) {
