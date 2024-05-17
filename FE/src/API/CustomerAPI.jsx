@@ -7,7 +7,7 @@ const cookies = new Cookies();
 async function fetchCustomerRequest() {
   const token = cookies.get('Authorization');
   try {
-    const response = await fetch('https://loanplease.kr/game/loanrequest', {
+    const response = await fetch(import.meta.env.VITE_BASE_URL + 'game/loanrequest', {
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${token}`
@@ -26,7 +26,7 @@ async function fetchCustomerRequest() {
 async function fetchUserRequest() {
   const token = cookies.get('Authorization');
   try {
-    const response = await fetch('https://loanplease.kr/api/user-info', {
+    const response = await fetch(import.meta.env.VITE_BASE_URL + 'api/user-info', {
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${token}`
@@ -69,7 +69,7 @@ async function fetchGetawayRequest(data) {
   const token = cookies.get('Authorization');
 
   try {
-    const response = await fetch('https://loanplease.kr/game/getaway', {
+    const response = await fetch(import.meta.env.VITE_BASE_URL + `game/getaway`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -78,7 +78,6 @@ async function fetchGetawayRequest(data) {
       body: JSON.stringify(data)
     });
     if (!response.ok) {
-      console.error("Failed to fetch data:", error);
       throw new Error('Network response was not ok');
     }
     return await response.json();
