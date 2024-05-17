@@ -36,7 +36,7 @@ function SlotSetting({ openItemModal, openSaveSlotModal, products, slotNumber, s
 
   useEffect(() => {
     // 초기 selectedSlots을 originalSelectedSlots에 저장
-    setOriginalSelectedSlots(selectedSlots.slice()); // selectedSlots 배열 복사
+    setOriginalSelectedSlots(selectedSlots.map(slot => ({ ...slot }))); // selectedSlots 배열 복사
   }, [selectedSlots]);
 
   const showDetail = (content) => {
@@ -133,7 +133,7 @@ function SlotSetting({ openItemModal, openSaveSlotModal, products, slotNumber, s
     if (savedSlot.filter(slot => slot !== 0).length < 3) {
       openWarningModal2();
       // 실패 시 원래의 selectedSlots 상태로 복원
-      setSelectedSlots(originalSelectedSlots.slice()); // originalSelectedSlots 배열 복사
+      setSelectedSlots(originalSelectedSlots.map(slot => ({ ...slot })));
       return;
     }
 
@@ -147,7 +147,7 @@ function SlotSetting({ openItemModal, openSaveSlotModal, products, slotNumber, s
       };
       openSaveSlotModal();
       // 저장 성공 시 originalSelectedSlots 업데이트
-      setOriginalSelectedSlots(selectedSlots.slice()); // selectedSlots 배열 복사
+      setOriginalSelectedSlots(selectedSlots.map(slot => ({ ...slot })));
       await setLoanItems(slotObject)
     } catch (error) {
       console.error(error);
