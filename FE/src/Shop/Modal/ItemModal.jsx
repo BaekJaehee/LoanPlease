@@ -13,13 +13,13 @@ function ItemModal({ closeItemModal, selectedProduct }) {
 
   return(
     <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-gray-800 bg-opacity-50 z-20" onClick={handleOutsideClick}>
-      <div ref={modalRef} className="w-[270px] h-[400px] bg-yellow-200 p-4 rounded-md text-center border-2 z-50 border-black flex flex-col justify-center">
-        <div className="font-cusFont2 h-[300px] text-left">
+      <div ref={modalRef} className="w-[360px] h-[250px] bg-yellow-200 p-4 rounded-md text-center border-2 z-50 border-black flex flex-col justify-center">
+        <div className="font-cusFont2 h-[130px] text-left text-lg">
           {/* product.description */}
-          <p>이름: {selectedProduct.name}</p>
+          <p>상품 이름: {selectedProduct.loanName}</p>
           <p>설명: {selectedProduct.content}</p>
           <p>이자: {selectedProduct.interest}</p>
-          <p>기간: {selectedProduct.period}</p>
+          <p>기한: {selectedProduct.period}</p>
         </div>
         <div className="flex justify-center mt-4">
           <button 

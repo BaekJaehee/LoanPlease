@@ -9,13 +9,17 @@ const useStore = create((set) => ({
   currentComponent: 'gameItem',
   setCurrentComponent: (component) => set({ currentComponent: component }),
 
+  // 유저 정보
+  userInfo: null,
+  setUserInfo: (item) => set({ userInfo: item }),
+
   // 유저 포인트(임시)
-  userPoint: 10,
-  setUserPoint: (num) => set({ userPoint: num }),
+  point: 0,
+  setPoint: (num) => set({ point: num }),
 
   // 유저 슬롯 개수(임시)
-  userSlotNum: 5,
-  setUserSlotNum: (num) => set({ userSlotNum: num }), // 구매하면 슬롯 수 변경
+  slotNumber: 0,
+  setSlotNumber: (num) => set({ slotNumber: num }), // 구매하면 슬롯 수 변경
 
   // 슬롯
   slots: [
@@ -71,8 +75,8 @@ const useStore = create((set) => ({
   closeSetNumberModal: () => set({ isSetNumberModalOpen: false }),
 
   // 게임 아이템 개수
-  value: 0,
-  setValue: (num) => set({ value: num }),
+  itemCount: 1, // 기본 1
+  setItemCount: (num) => set({ itemCount: num }),
 
   // 게임 아이템 구매 확인 모달
   isGameItemModalOpen: false,
@@ -123,11 +127,21 @@ const useStore = create((set) => ({
   }),
 
   // 화면에 보이는 슬롯 채우기
+  // selected1: {name: null, color: null},
+  // selected2: {name: null, color: null},
+  // selected3: {name: null, color: null},
+  // selected4: {name: null, color: null},
+  // selected5: {name: null, color: null},
   selected1: {name: null},
   selected2: {name: null},
   selected3: {name: null},
   selected4: {name: null},
   selected5: {name: null},
+  // setSelected1: (item) => set({ selected1: {name: item.name, color: item.color} }),
+  // setSelected2: (item) => set({ selected2: {name: item.name, color: item.color} }),
+  // setSelected3: (item) => set({ selected3: {name: item.name, color: item.color} }),
+  // setSelected4: (item) => set({ selected4: {name: item.name, color: item.color} }),
+  // setSelected5: (item) => set({ selected5: {name: item.name, color: item.color} }),
   setSelected1: (item) => set({ selected1: {name: item.name} }),
   setSelected2: (item) => set({ selected2: {name: item.name} }),
   setSelected3: (item) => set({ selected3: {name: item.name} }),
@@ -143,6 +157,9 @@ const useStore = create((set) => ({
     // {name: '상품4', content: '설명1'},
   ],
   setProducts: (item) => set({ products: item }),
+
+  purchasedProducts: [],
+  setPurchasedProducts: (prod) => set({ purchasedProducts: prod }),
 
   // 모달에 뜰 설명
   selectedProduct: '',

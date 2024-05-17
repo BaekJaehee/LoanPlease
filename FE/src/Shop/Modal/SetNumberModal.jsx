@@ -3,8 +3,8 @@ import { purchaseGameItem } from "../API/ShopAPI";
 import { PropTypes } from "prop-types"; 
 import useStore from "../../Store/ShopStore";
 
-function SetNumberModal({ closeSetNumberModal, openGameItemModal, openWarningModal, userPoint, itemId, price }) {
-  const { value, setValue } = useStore();
+function SetNumberModal({ closeSetNumberModal, openGameItemModal, openWarningModal, point, itemId, price }) {
+  const { itemCount, setItemCount, setPoint } = useStore();
   // const { value, setValue, setSelectedItem } = useStore();
   // const { itemId: itemId, price: itemPrice } = selectedItem;
   const modalRef = useRef();
@@ -13,28 +13,36 @@ function SetNumberModal({ closeSetNumberModal, openGameItemModal, openWarningMod
   const handleOutsideClick = (e) => {
     if (modalRef.current && !modalRef.current.contains(e.target)) {
       closeSetNumberModal();
-      setValue(0);
+      setItemCount(1);
     }
   };
 
   const decrement = () => {
-    if (value > 0) {
-      setValue(value - 1);
+    if (itemCount > 0) {
+      setItemCount(itemCount - 1);
     }
   }
 
   const increment = () => {
-    setValue(value + 1);
+    setItemCount(itemCount + 1);
   }
 
   const handlePurchaseItems = async () => {
-    if (userPoint < price * value) {
+    if (point < price * itemCount) {
       openWarningModal();
       return;
     } else {
       try {
-        await purchaseGameItem(itemId, value);
+        const data = await purchaseGameItem(itemId, itemCount);
+
         closeSetNumberModal(); 
+        // 구매 후 포인트 업데이트
+        // const updatedPoint = userPoint - item.price;
+        // const updatedPoint = point - price * itemCount;
+        setPoint(data.remainPoint);
+
+        setItemCount(1);  // 구매 후 모달 닫으면 1로 초기화
+        
         openGameItemModal(); 
       } catch (error) {
         console.error(error)
@@ -85,8 +93,8 @@ function SetNumberModal({ closeSetNumberModal, openGameItemModal, openWarningMod
             <input 
               type="number" 
               className="outline-none focus:outline-none text-center w-full bg-gray-300 font-semibold text-md hover:text-black focus:text-black md:text-basecursor-default flex items-center text-gray-700 outline-none focus:outline-none" 
-              value={value}
-              onChange={(e) => setValue(parseInt(e.target.value))}
+              value={itemCount}
+              onChange={(e) => setItemCount(parseInt(e.target.value))}
             ></input>
             {/* <button data-action="increment" class="bg-gray-300 text-gray-600 hover:text-gray-700 hover:bg-gray-400 h-full w-20 rounded-r cursor-pointer"> */}
             {/* + */}
@@ -107,7 +115,7 @@ function SetNumberModal({ closeSetNumberModal, openGameItemModal, openWarningMod
                 // openGameItemModal(); 
                 handlePurchaseItems();
               }}
-              disabled={value === 0}
+              disabled={itemCount === 0}
             >
               확인
             </button>
@@ -126,7 +134,7 @@ SetNumberModal.propTypes = {
   openWarningModal: PropTypes.func.isRequired,
   itemId: PropTypes.number.isRequired,
   price: PropTypes.number.isRequired,
-  userPoint: PropTypes.number.isRequired,
+  point: PropTypes.number.isRequired,
 };
 
 export default SetNumberModal;
