@@ -91,7 +91,7 @@ function Userdata(props) {
     <div className={userdatastyleClass}>
       {/* <div style={userimagestyle}> */}
       <div className={userimagestyleClass}>
-        <img src={props.data.image} />
+        <img src={props.data.profileImg} />
       </div>
       <div
         // style={{
