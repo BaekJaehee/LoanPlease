@@ -42,89 +42,55 @@ function SlotSetting({ openItemModal, openSaveSlotModal, products, slotNumber, s
     setSelectedProduct(content);
   };
 
-  // const setting = (item) => {
-  //   // 이미 배치된건지 검사
-  //   const isAlreadySelected = selectedSlots.some(selectedSlot => selectedSlot.name === item.name);
-  //   console.log(isAlreadySelected);
-  //   // 중복이 아닐 때
-  //   if (!isAlreadySelected) {
-  //     // 선택된 슬롯을 찾아 상태를 업데이트
-  //     for (let i = 0; i < slotNumber; i++) {
-  //       if (!selectedSlots[i].name) {
-  //         setSelectedSlots[i](item);  // 근데 이러니까 배열 길이는 userSlotNum 고정에 빈게 null로 표시된다
-  //         savedSlot[i] = item.id;  // [0, 0, 0, 0, 0]에서 바꾸기
-  //         // setSelectedSlots(prevSlots => {
-  //         //   const updatedSlots = [...prevSlots];
-  //         //   updatedSlots[i] = item; // item을 직접 넣어야 함
-  //         //   return updatedSlots;
-  //         // });
-  //         // setSavedSlot(prevSavedSlot => {
-  //         //   const updatedSavedSlot = [...prevSavedSlot];
-  //         //   updatedSavedSlot[i] = item.id; // item의 id를 넣어야 함
-  //         //   return updatedSavedSlot;
-  //         // });
-  //         break;
-  //       }
-  //     }
-  //   }
-  // };
-
   const setting = (item) => {
+    // 이미 배치된건지 검사
     const isAlreadySelected = selectedSlots.some(selectedSlot => selectedSlot.name === item.name);
+    console.log(isAlreadySelected);
+    // 중복이 아닐 때
     if (!isAlreadySelected) {
-      const updatedSelectedSlots = [...selectedSlots];
+      // 선택된 슬롯을 찾아 상태를 업데이트
       for (let i = 0; i < slotNumber; i++) {
-        if (!updatedSelectedSlots[i].name) {
-          updatedSelectedSlots[i] = item;
-          setSelectedSlots(updatedSelectedSlots);  // 배열 전체를 업데이트
-          savedSlot[i] = item.id;
-          setSavedSlot([...savedSlot]);
+        if (!selectedSlots[i].name) {
+          setSelectedSlots[i](item);  // 근데 이러니까 배열 길이는 userSlotNum 고정에 빈게 null로 표시된다
+          savedSlot[i] = item.id;  // [0, 0, 0, 0, 0]에서 바꾸기
+          // setSelectedSlots(prevSlots => {
+          //   const updatedSlots = [...prevSlots];
+          //   updatedSlots[i] = item; // item을 직접 넣어야 함
+          //   return updatedSlots;
+          // });
+          // setSavedSlot(prevSavedSlot => {
+          //   const updatedSavedSlot = [...prevSavedSlot];
+          //   updatedSavedSlot[i] = item.id; // item의 id를 넣어야 함
+          //   return updatedSavedSlot;
+          // });
           break;
         }
       }
     }
   };
   
-  // const clear = (selected, clearFunction) => {
-  //   // 선택된 슬롯의 인덱스를 찾기
-  //   const selectedIndex = selectedSlots.findIndex(slot => slot === selected);
-  //   // 현재 클릭한 슬롯을 비움(화면)
-  //   // clearFunction({ name: null, description: null });
-  //   clearFunction({ name: null });
-  //   // 슬롯 데이터 비움(0)
-  //   savedSlot[selectedIndex] = 0;
-  
-  //   // 앞쪽 슬롯들을 앞으로 당겨오기
-  //   for (let i = selectedIndex; i < slotNumber - 1; i++) {
-  //     setSelectedSlots[i](selectedSlots[i + 1]);
-  //     // 슬롯을 비우고 0으로 채움
-  //     savedSlot[i] = savedSlot[i + 1] ? savedSlot[i + 1] : 0;
-  //   }
-  //   // 마지막 슬롯을 비움
-  //   setSelectedSlots[slotNumber - 1]({ name: null });
-  //   // 마지막 슬롯을 0으로 채움
-  //   savedSlot[slotNumber - 1] = 0;
-  
-  //   // savedSlot 상태 업데이트
-  //   setSavedSlot([...savedSlot]);
-  // };
-
-  const clear = (selected) => {
+  const clear = (selected, clearFunction) => {
+    // 선택된 슬롯의 인덱스를 찾기
     const selectedIndex = selectedSlots.findIndex(slot => slot === selected);
-    if (selectedIndex !== -1) {
-      const updatedSelectedSlots = [...selectedSlots];
-      updatedSelectedSlots[selectedIndex] = { name: null };
+    // 현재 클릭한 슬롯을 비움(화면)
+    // clearFunction({ name: null, description: null });
+    clearFunction({ name: null });
+    // 슬롯 데이터 비움(0)
+    savedSlot[selectedIndex] = 0;
   
-      for (let i = selectedIndex; i < slotNumber - 1; i++) {
-        updatedSelectedSlots[i] = updatedSelectedSlots[i + 1];
-        savedSlot[i] = savedSlot[i + 1];
-      }
-      updatedSelectedSlots[slotNumber - 1] = { name: null };
-      savedSlot[slotNumber - 1] = 0;
-  
-      setSelectedSlots(updatedSelectedSlots);  // 배열 전체를 업데이트
-      setSavedSlot([...savedSlot]);
+    // 앞쪽 슬롯들을 앞으로 당겨오기
+    for (let i = selectedIndex; i < slotNumber - 1; i++) {
+      setSelectedSlots[i](selectedSlots[i + 1]);
+      // 슬롯을 비우고 0으로 채움
+      savedSlot[i] = savedSlot[i + 1] ? savedSlot[i + 1] : 0;
     }
+    // 마지막 슬롯을 비움
+    setSelectedSlots[slotNumber - 1]({ name: null });
+    // 마지막 슬롯을 0으로 채움
+    savedSlot[slotNumber - 1] = 0;
+  
+    // savedSlot 상태 업데이트
+    setSavedSlot([...savedSlot]);
   };
 
   // 슬롯 리셋
