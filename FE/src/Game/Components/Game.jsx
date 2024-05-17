@@ -139,9 +139,10 @@ function Game() {
       window.removeEventListener("click", handleFirstInteraction);
     };
   }, []);
+
+  const bgmAudio = new Audio("audioes/intro_main_bgm.mp3");
   
   const handleFirstInteraction = () => {
-    const bgmAudio = new Audio("audioes/intro_main_bgm.mp3");
     if (isBgm) {
       bgmAudio.play()
       .then(() => {
@@ -154,8 +155,9 @@ function Game() {
     window.removeEventListener("click", handleFirstInteraction);
   } ;
 
+  const location = useLocation();
+
   useEffect(() => {
-    const location = useLocation();
 
     return () => {
       bgmAudio.pause(); // 페이지를 떠날 때 음악을 정지합니다.
