@@ -20,6 +20,7 @@ export const itemsList = async () => {
       },
     })
     .then((response) => {
+      console.log("item-data", response.data);
       return response.data;
     })
     .catch((e) => {
@@ -39,8 +40,8 @@ export const purchaseSlot = async () => {
       },
     })
     .then((response) => {
-      console.log(response);
-      console.log(response.data);
+      // console.log(response);
+      console.log("purchase-slot", response.data);
       return response.data;
     })
     .catch((e) => {
@@ -61,7 +62,7 @@ export const purchaseGameItem = async (itemId, itemCount) => {
       },
     })
     .then((response) => {
-      console.log(response.data);
+      console.log("purchase-game", response.data);
       return response.data;
     })
     .catch((e) => {
@@ -83,6 +84,7 @@ export const purchaseLoanItem = async (loanId) => {
       },
     })
     .then((response) => {
+      console.log("purchase-loan", response.data);
       return response.data;
     })
     .catch((e) => {
@@ -102,7 +104,7 @@ export const setLoanItems = async (slotObject) => {
       },
     })
     .then((response) => {
-      console.log(response.data);
+      console.log("saved-slot", response.data);
       return response.data;
     })
     .catch((e) => {
@@ -121,7 +123,7 @@ export const getUserInfo = async () => {
       },
     })
     .then((response) => {
-      // console.log("user-info:", response.data);
+      console.log("user-info:", response.data);
       return response.data;
     })
     .catch((e) => {
