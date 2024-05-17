@@ -131,7 +131,8 @@ function GameItem({ openSetNumberModal, openGameItemModal, openWarningModal, gam
             {/* <img src={item.img} alt="" className={`h-28 mx-auto my-5 ${item.purchased === 1 && 'opacity-50'}`} /> */}
             {/* 프론트 내부의 이미지를 쓰기 위해서는 이미지 컬럼 추가 필요 */}
             {/* <img src={`/src/Shop/Assets/${item.img}.png`} alt={item.img} className={`h-28 mx-auto my-3 ${item.purchased === 1 && 'opacity-50'}`} /> */}
-            <img src={`${process.env.PUBLIC_URL}/item/${item.img}.png`} alt={item.img} className="h-28 mx-auto my-3" />
+            {/* <img src={`${process.env.PUBLIC_URL}/item/${item.img}.png`} alt={item.img} className="h-28 mx-auto my-3" /> */}
+            <img src={`/item/${item.img}.png`} alt={item.img} className="h-28 mx-auto my-3" />
             <p className="font-cusFont1 py-2 my-5 text-3xl h-[10%]">{item.name}</p>
             {/* <div className="font-cusFont2 py-2 my-5 mx-3 text-lg h-[70px]"> */}
             <div className="font-cusFont2 py-2 my-5 mx-3 text-lg h-[40%]">
