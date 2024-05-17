@@ -11,6 +11,7 @@ async function fetchCustomerRequest() {
       headers: {
         'Authorization': `Bearer ${token}`
       }
+    
     });
     if (!response.ok) {
       throw new Error('Network response was not ok');
@@ -31,6 +32,7 @@ async function fetchUserRequest() {
       }
     });
     if (!response.ok) {
+      console.log(response)
       throw new Error('Network response was not ok');
     }
     return await response.json();
