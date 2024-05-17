@@ -1,6 +1,7 @@
 import useStore from "../../Store/GameStore.jsx"
 import { MainStore } from "../../Main/Store.jsx";
 import { useState, useRef } from "react";
+import { useLocation } from "react-router-dom";
 
 import GameStart from "./GameStart.jsx";
 import GameEnd from "./GameEnd.jsx";
@@ -138,18 +139,32 @@ function Game() {
       window.removeEventListener("click", handleFirstInteraction);
     };
   }, []);
+
+  const bgmAudio = new Audio("audioes/intro_main_bgm.mp3");
   
   const handleFirstInteraction = () => {
-    const bgmAudio = new Audio("audioes/intro_main_bgm.mp3");
-    bgmAudio.play()
+    if (isBgm) {
+      bgmAudio.play()
       .then(() => {
         setAudioLoaded(true);
       })
       .catch(e => {
         console.error("배경음악 재생 실패:", e);
       });
+    } 
     window.removeEventListener("click", handleFirstInteraction);
-  };
+  } ;
+
+  const location = useLocation();
+
+  useEffect(() => {
+
+    return () => {
+      bgmAudio.pause(); // 페이지를 떠날 때 음악을 정지합니다.
+      bgmAudio.currentTime = 0; // 음악 재생 위치를 초기화합니다.
+    };
+  }, [location.pathname])
+
 
   const customerImages = {
     Customer1,
