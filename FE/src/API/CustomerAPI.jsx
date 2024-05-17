@@ -14,6 +14,7 @@ async function fetchCustomerRequest() {
     
     });
     if (!response.ok) {
+      console.log(response)
       throw new Error('Network response was not ok');
     }
     return await response.json();
@@ -32,7 +33,6 @@ async function fetchUserRequest() {
       }
     });
     if (!response.ok) {
-      console.log(response)
       throw new Error('Network response was not ok');
     }
     return await response.json();
