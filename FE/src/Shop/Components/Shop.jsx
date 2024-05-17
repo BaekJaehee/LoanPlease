@@ -10,6 +10,7 @@ import GameItemModal from "../Modal/GameItemModal";
 import LoanItemModal from "../Modal/LoanItemModal";
 import ItemModal from "../Modal/ItemModal";
 import WarningModal from "../Modal/WarningModal";
+import WarningModal2 from "../Modal/WarningModal2";
 import coin from "../Assets/coin.jpg";
 import won from "../Assets/coin_won.png";
 import SaveSlotModal from "../Modal/SaveSlotModal";
@@ -17,7 +18,6 @@ import SaveSlotModal from "../Modal/SaveSlotModal";
 function Shop() {
   const {
     setCurrentComponent, currentComponent,
-    setUserInfo, userInfo,
     setPoint, point,
     setSlotNumber, slotNumber,
     setProducts, products,
@@ -30,6 +30,7 @@ function Shop() {
     isItemModalOpen, openItemModal, closeItemModal,
     isSaveSlotModalOpen, openSaveSlotModal, closeSaveSlotModal,
     isWarningModalOpen, openWarningModal, closeWarningModal,
+    isWarningModal2Open, openWarningModal2, closeWarningModal2,
     selectedItem,
     selectedProduct,
     gameItems, setGameItems,
@@ -86,15 +87,13 @@ function Shop() {
     fetchUserInfo();
   }, []);
 
-  // console.log(selectedSlots);
-
   let currentPage;
   if (currentComponent === "gameItem") {
     currentPage = <GameItem openSetNumberModal={openSetNumberModal} openGameItemModal={openGameItemModal} openWarningModal={openWarningModal} gameItems={gameItems} point={point} slotNumber={slotNumber} />;
   } else if (currentComponent === "loanItem") {
     currentPage = <LoanItem openLoanItemModal={openLoanItemModal} openWarningModal={openWarningModal} loanItems={loanItems} point={point} products={products} />;
   } else {
-    currentPage = <SlotSetting openItemModal={openItemModal} openSaveSlotModal={openSaveSlotModal} products={products} slotNumber={slotNumber} savedSlot={savedSlot} selectedSlots={selectedSlots} setSelectedSlots={setSelectedSlots} />;
+    currentPage = <SlotSetting openItemModal={openItemModal} openSaveSlotModal={openSaveSlotModal} products={products} slotNumber={slotNumber} savedSlot={savedSlot} selectedSlots={selectedSlots} setSelectedSlots={setSelectedSlots} openWarningModal2={openWarningModal2} />;
   }
 
   return (
@@ -105,6 +104,7 @@ function Shop() {
       {isItemModalOpen && <ItemModal closeItemModal={closeItemModal} selectedProduct={selectedProduct} />}
       {isWarningModalOpen && <WarningModal closeWarningModal={closeWarningModal} closeSetNumberModal={closeSetNumberModal} />}
       {isSaveSlotModalOpen && <SaveSlotModal closeSaveSlotModal={closeSaveSlotModal} />}
+      {isWarningModal2Open && <WarningModal2 closeWarningModal2={closeWarningModal2} />}
       <div className="bg-cusColor3 min-h-screen w-full flex">
         <img src={coin} alt="배경" className="absolute w-full h-full object-cover opacity-50 z-0" />
         <div className="w-[250px] border-r-2 font-cusFont1 relative z-10">

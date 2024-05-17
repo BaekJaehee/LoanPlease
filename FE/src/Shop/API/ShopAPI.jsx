@@ -72,6 +72,7 @@ export const purchaseGameItem = async (itemId, itemCount) => {
       },
     })
     .then((response) => {
+      console.log(response.data);
       return response.data;
     })
     .catch((e) => {

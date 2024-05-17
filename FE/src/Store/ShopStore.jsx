@@ -103,6 +103,11 @@ const useStore = create((set) => ({
   openSaveSlotModal: () => set({ isSaveSlotModalOpen: true }),
   closeSaveSlotModal: () => set({ isSaveSlotModalOpen: false }),
 
+  // 슬롯 저장 경고 모달
+  isWarningModal2Open: false,
+  openWarningModal2: () => set({ isWarningModal2Open: true }),
+  closeWarningModal2: () => set({ isWarningModal2Open: false }),
+
   // 구매확정 모달로 전환
   isPurchasing: false,
   setIsPurchasing: () => set({ isPurchasing: true }),

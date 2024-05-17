@@ -6,7 +6,7 @@ import { setLoanItems } from "../API/ShopAPI";
 
 // db에는 1374 순서인데 왜 1347로 찍히는건지?
 
-function SlotSetting({ openItemModal, openSaveSlotModal, products, slotNumber, savedSlot, selectedSlots, setSelectedSlots }) {
+function SlotSetting({ openItemModal, openSaveSlotModal, products, slotNumber, savedSlot, selectedSlots, setSelectedSlots, openWarningModal2 }) {
   const { 
     // products, setProducts, 
     // setProducts,
@@ -36,9 +36,6 @@ function SlotSetting({ openItemModal, openSaveSlotModal, products, slotNumber, s
   const showDetail = (content) => {
     setSelectedProduct(content);
   };
-
-  // console.log(selectedSlots)
-  // console.log(savedSlot)
 
   const setting = (item) => {
     // 이미 배치된건지 검사
@@ -106,9 +103,33 @@ function SlotSetting({ openItemModal, openSaveSlotModal, products, slotNumber, s
   }
 
   // 슬롯 저장
-  const save = async () => {
+  // const save = async () => {
+  //   try {
+  //     console.log(savedSlot);
+  //     const slotObject = {
+  //       "slot_1": savedSlot[0],
+  //       "slot_2": savedSlot[1],
+  //       "slot_3": savedSlot[2],
+  //       "slot_4": savedSlot[3],
+  //       "slot_5": savedSlot[4],
+  //     };
+  //     console.log("저장", slotObject)
+  //     // await setLoanItems(savedSlot)
+  //     await setLoanItems(slotObject)
+  //     console.log(slotObject)
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // }
+
+  // 슬롯 저장
+  const handleSaveSlot = async (savedSlot) => {
+    if (savedSlot.filter(slot => slot !== 0).length < 3) {
+      openWarningModal2();
+      return;
+    }
+
     try {
-      console.log(savedSlot);
       const slotObject = {
         "slot_1": savedSlot[0],
         "slot_2": savedSlot[1],
@@ -116,10 +137,8 @@ function SlotSetting({ openItemModal, openSaveSlotModal, products, slotNumber, s
         "slot_4": savedSlot[3],
         "slot_5": savedSlot[4],
       };
-      console.log("저장", slotObject)
-      // await setLoanItems(savedSlot)
+      openSaveSlotModal();
       await setLoanItems(slotObject)
-      console.log(slotObject)
     } catch (error) {
       console.error(error);
     }
@@ -146,27 +165,18 @@ function SlotSetting({ openItemModal, openSaveSlotModal, products, slotNumber, s
         </button>
       </div>
       {/* 사용자가 가지고 있는 아이템(products) */}
-      {/* <div className="flex justify-evenly"> */}
-      {/* <div className="flex justify-stretch gap-3 h-[60%]"> */}
       <div className="flex justify-stretch gap-3 h-[50%]">
         {/* {products.map((item, index) => ( */}
         {currentItems.map((item, index) => (
           <div 
           key={index} 
-          // className="font-cusFont1 flex-grow-1 w-[200px] h-[250px] border-2 px-6 py-4 rounded-lg border-black bg-white mb-6 text-center"
-          // className="font-cusFont1 flex-grow-1 w-[240px] h-[95%] border-2 px-6 py-4 rounded-lg border-black bg-white text-center"
           className={`font-cusFont1 flex-grow-1 w-[240px] h-[95%] border-2 px-6 py-4 rounded-lg border-black bg-white text-center ${item.color}`}
-          // onClick={() => setting({ name: item.name, description: item.description })}
           >
             <p className="text-2xl mx-3 py-4 my-2 h-[30%] place-content-center">{item.loanName}</p>
-            {/* <p className="text-2xl py-4 my-2">{item.loan.name}</p> */}
-            {/* <div className="h-[80px] text-xl py-3 my-2"> */}
             <div className="h-[55%] text-xl py-3 my-2 place-content-center">
               <button 
                 className="mx-2 px-4 py-2 bg-amber-300 hover:bg-amber-500 rounded-md border-2 border-b-4 border-black focus:ring-4 shadow-lg transform active:scale-y-75 transition-transform"
                 onClick={() => {
-                  // showDescription(item.description);
-                  // showDetail(item.loan);
                   showDetail(item);
                   openItemModal();
                 }}
@@ -175,10 +185,7 @@ function SlotSetting({ openItemModal, openSaveSlotModal, products, slotNumber, s
               </button>
               <button 
                 className="mx-2 px-4 py-2 bg-blue-300 hover:bg-blue-500 rounded-md border-2 border-b-4 border-black focus:ring-4 shadow-lg transform active:scale-y-75 transition-transform"
-                // onClick={() => setting({ name: item.loan.name })}
-                // onClick={() => setting({ id: item.loan.loanId, name: item.loan.name })}
                 onClick={() => setting({ id: item.loanId, name: item.loanName })}
-                // onClick={() => setting(item)}
               >
                 선택하기
               </button>
@@ -194,14 +201,11 @@ function SlotSetting({ openItemModal, openSaveSlotModal, products, slotNumber, s
           return (
             <div
               key={index}
-              // className="mt-12 mb-12 flex-grow-1 w-[200px] h-[100px]  border-2 px-6 py-4 rounded-lg border-black bg-white hover:cursor-pointer text-center"
               className="flex-grow-1 w-[220px] h-[90%] border-2 px-6 py-4 rounded-lg border-black bg-white hover:cursor-pointer text-center place-content-center"
-              // className={`flex-grow-1 w-[220px] h-[90%] border-2 px-6 py-4 rounded-lg border-black bg-white hover:cursor-pointer text-center place-content-center ${selectedSlot.color}`}
               onClick={() => clear(selectedSlot, setSelectedSlot)}
             >
               {/* 여기에 클릭해서 넣은거 표시되어야함 */}
               <p className="font-cusFont1 text-2xl py-2 my-2">{selectedSlot.name}</p>
-              {/* <p className="font-cusFont1 text-2xl py-2 my-2">{selectedSlot ? selectedSlot.name : `Slot ${index + 1}`}</p> */}
             </div>
           );
         })}
@@ -210,8 +214,7 @@ function SlotSetting({ openItemModal, openSaveSlotModal, products, slotNumber, s
         {/* 슬롯 저장 */}
         <button 
           onClick={() => {
-            openSaveSlotModal();
-            save(savedSlot);
+            handleSaveSlot(savedSlot);
           }} 
           className="w-[100px] h-[50px] transform -translate-x-1/2 font-cusFont1 mx-2 px-4 py-2 bg-blue-300 hover:bg-blue-500 rounded-md border-2 border-b-4 border-black focus:ring-4 shadow-lg transform active:scale-y-75 transition-transform"
         >
@@ -237,6 +240,7 @@ SlotSetting.propTypes = {
   savedSlot: PropTypes.array.isRequired,
   selectedSlots: PropTypes.array.isRequired,
   setSelectedSlots: PropTypes.array.isRequired,
+  openWarningModal2: PropTypes.func.isRequired,
 }
 
 export default SlotSetting;
