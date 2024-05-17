@@ -110,11 +110,11 @@ export const PageQuery = (props) => {
       // 입력값 존재할 시 해당 값을 포함하는 유저 목록 검색하기
       getInputResult();
     }
-  }, []);
+  }, [props.inputdata]);
 
   if (isLoading)
     return (
-      <div className="flex h-[200px] w-[200px] items-center justify-center">
+      <div className="flex h-full w-full items-center justify-center">
         <img width={60} height={60} src={loading} />
       </div>
     );
