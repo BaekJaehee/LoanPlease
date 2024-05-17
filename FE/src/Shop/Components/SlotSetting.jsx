@@ -1,7 +1,6 @@
 import { PropTypes } from "prop-types"; 
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import useStore from "../../Store/ShopStore";
-// import { owendLoanItems, setLoanItems } from "../API/ShopAPI";
 import { setLoanItems } from "../API/ShopAPI";
 
 // db에는 1374 순서인데 왜 1347로 찍히는건지?
@@ -18,7 +17,7 @@ function SlotSetting({ openItemModal, openSaveSlotModal, products, slotNumber, s
     // selected1, selected2, selected3, selected4, selected5, 
     setSelected1, setSelected2, setSelected3, setSelected4, setSelected5 
   } = useStore();
-  const [originalSelectedSlots, setOriginalSelectedSlots] = useState([]);
+  // const [originalSelectedSlots, setOriginalSelectedSlots] = useState([]);
 
   // const selectedSlots = [selected1, selected2, selected3, selected4, selected5];
   // const setSelectedSlots = [setSelected1, setSelected2, setSelected3, setSelected4, setSelected5];
@@ -133,7 +132,7 @@ function SlotSetting({ openItemModal, openSaveSlotModal, products, slotNumber, s
     if (savedSlot.filter(slot => slot !== 0).length < 3) {
       openWarningModal2();
       // 실패 시 원래의 selectedSlots 상태로 복원
-      setSelectedSlots(originalSelectedSlots.map(slot => ({ ...slot })));
+      // setSelectedSlots(originalSelectedSlots.map(slot => ({ ...slot })));
       return;
     }
 
@@ -147,7 +146,7 @@ function SlotSetting({ openItemModal, openSaveSlotModal, products, slotNumber, s
       };
       openSaveSlotModal();
       // 저장 성공 시 originalSelectedSlots 업데이트
-      setOriginalSelectedSlots(selectedSlots.map(slot => ({ ...slot })));
+      // setOriginalSelectedSlots(selectedSlots.map(slot => ({ ...slot })));
       await setLoanItems(slotObject)
     } catch (error) {
       console.error(error);
