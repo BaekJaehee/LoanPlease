@@ -1,7 +1,9 @@
 /* eslint-disable react/prop-types */
+import shop from "./assets/shop.png";
 import musicon from "./assets/bgm_on.png";
 import musicoff from "./assets/bgm_off.png";
 import { LoginStore, MainStore } from "../Store";
+import { useNavigate } from "react-router-dom";
 
 const menubarstyleClass = `
 z-[1] flex flex-wrap justify-around items-center 
@@ -65,6 +67,8 @@ function Menubar(props) {
   const isBgm = MainStore((state) => state.isBgm);
   const setIsBgm = MainStore((state) => state.setIsBgm);
 
+  const navigate = useNavigate();
+
   const makeClickSound = () => {
     const audio = new Audio("audioes/pop_sound.mp3");
     audio.play();
@@ -91,6 +95,13 @@ function Menubar(props) {
         <div className="font-cusFont2 text-2xl text-white">
           {isLogin ? `${props.data.rank}위` : ""}
         </div>
+      </div>
+      <div
+        onClick={() => {
+          navigate("/shop");
+        }}
+      >
+        <img src={shop} />
       </div>
       <div
         // style={{ margin: "10px", cursor: "pointer" }}
