@@ -8,7 +8,7 @@ import { rankinglist, friendrankinglist } from "../../API/API";
 const rankingstyleClass = `
 flex justify-center items-center 
 border-4 border-black rounded-[30px] 
-bg-[#ffc436] px-[30px] py-[20px] min-w-[20%] 
+bg-[#ffc436] px-[30px] py-[20px] min-w-[300px] 
 `;
 
 const rankingboardstyleClass = `
