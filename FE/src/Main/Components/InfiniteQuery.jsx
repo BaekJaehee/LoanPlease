@@ -9,14 +9,13 @@ export const PageQuery = (props) => {
 
   const getallfriends = async () => {
     friendsearch().then((result) => {
-      result.data.dataBody && setResultData(result.data.dataBody.friends);
+      result.dataBody && setResultData(result.dataBody.friends);
     });
   };
 
   const getInputResult = async (input) => {
     friendsearchByname(input).then((result) => {
-      console.log(result);
-      result.data.dataBody && setResultData(result.data.dataBody.friends);
+      result.dataBody && setResultData(result.dataBody.friends);
     });
   };
 
