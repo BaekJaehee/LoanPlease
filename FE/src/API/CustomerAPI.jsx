@@ -9,6 +9,7 @@ async function fetchCustomerRequest() {
   try {
     const response = await fetch('https://loanplease.kr/api/game/loanrequest', {
       headers: {
+        'Content-Type': 'application/json',
         'Authorization': `Bearer ${token}`
       }
     
@@ -29,6 +30,7 @@ async function fetchUserRequest() {
   try {
     const response = await fetch('https://loanplease.kr/api/user-info', {
       headers: {
+        'Content-Type': 'application/json',
         'Authorization': `Bearer ${token}`
       }
     });
@@ -50,6 +52,7 @@ async function postScoreRequest(num, data) {
     const response = await fetch(`https://loanplease.kr/api/game/score/${num}`, {
       method: 'POST',
       headers: {
+        'Content-Type': 'application/json',
         'Authorization': `Bearer ${token}`
       },
       body: JSON.stringify(data)
@@ -71,6 +74,7 @@ async function fetchGetawayRequest(data) {
     const response = await fetch(`https://loanplease.kr/api/game/getaway`, {
       method: 'POST',
       headers: {
+        'Content-Type': 'application/json',
         'Authorization': `Bearer ${token}`
       },
       body: JSON.stringify(data)
@@ -92,6 +96,7 @@ async function patchScoreRequest(score) {
     const response = await fetch(`https://loanplease.kr/api/game/score?score=${score}`, {
       method: 'PATCH',
       headers: {
+        'Content-Type': 'application/json',
         'Authorization': `Bearer ${token}`
       },
       body: score
@@ -113,6 +118,7 @@ async function postUseItem(num) {
     const response = await fetch(`https://loanplease.kr/api/game/use-item`, {
       method: 'POST',
       headers: {
+        'Content-Type': 'application/json',
         'Authorization': `Bearer ${token}`
       },
       body: JSON.stringify({
