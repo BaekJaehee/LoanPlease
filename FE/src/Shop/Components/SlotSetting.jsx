@@ -170,7 +170,9 @@ function SlotSetting({ openItemModal, openSaveSlotModal, products, slotNumber, s
         {currentItems.map((item, index) => (
           <div 
           key={index} 
-          className={`font-cusFont1 flex-grow-1 w-[240px] h-[95%] border-2 px-6 py-4 rounded-lg border-black bg-white text-center ${item.color}`}
+          // className={`font-cusFont1 flex-grow-1 w-[240px] h-[95%] border-2 px-6 py-4 rounded-lg border-black bg-white text-center ${item.color}`}
+          className="font-cusFont1 flex-grow-1 w-[240px] h-[95%] border-2 px-6 py-4 rounded-lg border-black bg-white text-center"
+          style={{ backgroundColor: item.color }}
           >
             <p className="text-2xl mx-3 py-4 my-2 h-[30%] place-content-center">{item.loanName}</p>
             <div className="h-[55%] text-xl py-3 my-2 place-content-center">
