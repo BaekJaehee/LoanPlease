@@ -102,7 +102,7 @@ function Myprofile() {
 
   useEffect(() => {
     if (localStorage.getItem("mydata")) {
-      setImg(JSON.parse(localStorage.getItem("mydata")).profileImg);
+      setImg(JSON.parse(localStorage.getItem("mydata")).profileImage);
       setNickname(JSON.parse(localStorage.getItem("mydata")).nickname);
       setEmail(JSON.parse(localStorage.getItem("mydata")).email);
     }
