@@ -94,19 +94,22 @@ function Shop() {
         setSelected4({ name: initialSelectedSlots[3] });
         setSelected5({ name: initialSelectedSlots[4] });
 
-        setIsLoadingUserInfo(false);
+        // setIsLoadingUserInfo(false);
       } catch (error) {
         console.error(error);
-        setIsLoadingUserInfo(false);
+        // setIsLoadingUserInfo(false);
       }
     };
     fetchUserInfo();
   }, []);
 
-  let currentPage;
+  
   if (isLoadingItems || isLoadingUserInfo) {
-    return;
-  } else if (currentComponent === "gameItem") {
+    return null;
+  }
+  
+  let currentPage;
+  if (currentComponent === "gameItem") {
     currentPage = <GameItem openSetNumberModal={openSetNumberModal} openGameItemModal={openGameItemModal} openWarningModal={openWarningModal} gameItems={gameItems} point={point} slotNumber={slotNumber} />;
   } else if (currentComponent === "loanItem") {
     currentPage = <LoanItem openLoanItemModal={openLoanItemModal} openWarningModal={openWarningModal} loanItems={loanItems} point={point} products={products} />;
@@ -116,7 +119,7 @@ function Shop() {
 
   return (
     <>
-      {isSetNumberModalOpen && selectedItem && <SetNumberModal closeSetNumberModal={closeSetNumberModal} openGameItemModal={openGameItemModal} openWarningModal={openWarningModal} point={point} itemId={selectedItem.itemId} price={selectedItem.price} />}
+      {isSetNumberModalOpen && selectedItem && (<SetNumberModal closeSetNumberModal={closeSetNumberModal} openGameItemModal={openGameItemModal} openWarningModal={openWarningModal} point={point} itemId={selectedItem.itemId} price={selectedItem.price} />)}
       {isGameItemModalOpen && <GameItemModal closeGameItemModal={closeGameItemModal} />}
       {isLoanItemModalOpen && <LoanItemModal closeLoanItemModal={closeLoanItemModal} />}
       {isItemModalOpen && <ItemModal closeItemModal={closeItemModal} selectedProduct={selectedProduct} />}
