@@ -7,7 +7,7 @@ const cookies = new Cookies();
 async function fetchCustomerRequest() {
   const token = cookies.get('Authorization');
   try {
-    const response = await fetch(import.meta.env.VITE_BASE_URL + 'game/loanrequest', {
+    const response = await fetch('https://loanplease.kr/game/loanrequest', {
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${token}`
@@ -26,7 +26,7 @@ async function fetchCustomerRequest() {
 async function fetchUserRequest() {
   const token = cookies.get('Authorization');
   try {
-    const response = await fetch(import.meta.env.VITE_BASE_URL + 'api/user-info', {
+    const response = await fetch('https://loanplease.kr/api/user-info', {
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${token}`
@@ -47,7 +47,7 @@ async function postScoreRequest(num, data) {
   const token = cookies.get('Authorization');
 
   try {
-    const response = await fetch(import.meta.env.VITE_BASE_URL + `game/score/${num}`, {
+    const response = await fetch(`https://loanplease.kr/game/score/${num}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -69,7 +69,7 @@ async function fetchGetawayRequest(data) {
   const token = cookies.get('Authorization');
 
   try {
-    const response = await fetch(import.meta.env.VITE_BASE_URL + `game/getaway`, {
+    const response = await fetch(`https://loanplease.kr/game/getaway`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -91,7 +91,7 @@ async function patchScoreRequest(score) {
   const token = cookies.get('Authorization');
 
   try {
-    const response = await fetch(import.meta.env.VITE_BASE_URL + `game/score?score=${score}`, {
+    const response = await fetch(`https://loanplease.kr/game/score?score=${score}`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
@@ -113,7 +113,7 @@ async function postUseItem(num) {
   const token = cookies.get('Authorization');
 
   try {
-    const response = await fetch(import.meta.env.VITE_BASE_URL + `game/use-item`, {
+    const response = await fetch(`https://loanplease.kr/game/use-item`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
