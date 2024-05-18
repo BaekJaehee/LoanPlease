@@ -4,6 +4,7 @@ import musicon from "./assets/bgm_on.png";
 import musicoff from "./assets/bgm_off.png";
 import { LoginStore, MainStore } from "../Store";
 import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
 const menubarstyleClass = `
 z-[1] flex flex-wrap justify-around items-center 
@@ -74,6 +75,10 @@ function Menubar(props) {
     audio.play();
   };
 
+  useEffect(() => {
+    setIsBgm(isBgm)
+  }, [])
+
   return (
     // <div style={menubarstyle}>
     <div className={menubarstyleClass}>
@@ -93,7 +98,7 @@ function Menubar(props) {
         </div>
         {/* <div style={{ fontFamily: "Orbit", color: "white", fontSize: "24px" }}> */}
         <div className="font-cusFont2 text-2xl text-white">
-          {isLogin ? `${props.data.rank}위` : ""}
+          {/* {isLogin ? `${props.data.rank}위` : ""} */}
         </div>
       </div>
       <div
