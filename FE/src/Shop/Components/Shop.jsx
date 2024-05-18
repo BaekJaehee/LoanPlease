@@ -60,38 +60,38 @@ function Shop() {
   useEffect(() => {
     const bgmAudio = bgmAudioRef.current;
 
-    const handleFirstInteraction = () => {
-      if (isBgm && bgmAudio.paused) {
-        bgmAudio.loop = true;
-        bgmAudio.play().catch((e) => {
-          console.error("배경음악 재생 실패:", e);
-        });
-      }
-      window.removeEventListener("click", handleFirstInteraction);
-    };
+    // const handleFirstInteraction = () => {
+    //   if (isBgm && bgmAudio.paused) {
+    //     bgmAudio.loop = true;
+    //     bgmAudio.play().catch((e) => {
+    //       console.error("배경음악 재생 실패:", e);
+    //     });
+    //   }
+    //   window.removeEventListener("click", handleFirstInteraction);
+    // };
 
-    if (isBgm && bgmAudio.paused) {
-      // 첫 마운트 시 또는 새로고침 후 음악이 멈춘 상태에서 아무곳이나 클릭하면 음악이 재생되도록 처리
-      handleFirstInteraction();
-      window.addEventListener("click", handleFirstInteraction);
-    }
-
-    return () => {
-      window.removeEventListener("click", handleFirstInteraction);
-    };
-    // if (isBgm) {
-    //   bgmAudio.loop = true;
-    //   bgmAudio.play();
-    //   setIsBgmPlaying(true);
-    // } else {
-    //   bgmAudio.pause();
-    //   bgmAudio.currentTime = 0;
-    //   setIsBgmPlaying(false);
+    // if (isBgm && bgmAudio.paused) {
+    //   // 첫 마운트 시 또는 새로고침 후 음악이 멈춘 상태에서 아무곳이나 클릭하면 음악이 재생되도록 처리
+    //   handleFirstInteraction();
+    //   window.addEventListener("click", handleFirstInteraction);
     // }
+
     // return () => {
-    //   bgmAudio.pause();
-    //   bgmAudio.currentTime = 0;
-    // }
+    //   window.removeEventListener("click", handleFirstInteraction);
+    // };
+    if (isBgm) {
+      bgmAudio.loop = true;
+      bgmAudio.play();
+      // setIsBgmPlaying(true);
+    } else {
+      bgmAudio.pause();
+      bgmAudio.currentTime = 0;
+      // setIsBgmPlaying(false);
+    }
+    return () => {
+      bgmAudio.pause();
+      bgmAudio.currentTime = 0;
+    }
   }, [isBgm]);
 
   // useEffect(() => {
@@ -178,9 +178,9 @@ function Shop() {
 
   return (
     <> 
-      {isBgm && (
+      {/* {isBgm && (
         <audio src="audioes/intro_main_bgm_2.mp3" audioPlay loop></audio>
-      )}
+      )} */}
       {isSetNumberModalOpen && selectedItem && (<SetNumberModal closeSetNumberModal={closeSetNumberModal} openGameItemModal={openGameItemModal} openWarningModal={openWarningModal} point={point} itemId={selectedItem.itemId} price={selectedItem.price} />)}
       {isGameItemModalOpen && <GameItemModal closeGameItemModal={closeGameItemModal} />}
       {isLoanItemModalOpen && <LoanItemModal closeLoanItemModal={closeLoanItemModal} />}
