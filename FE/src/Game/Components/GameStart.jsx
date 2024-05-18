@@ -14,7 +14,7 @@ function GameStart() {
     navigate('/');
   };
 
-  const { startTimer, showModal, setShowModal, loadUserInfo } = useStore();
+  const { startTimer, showModal, setShowModal, loadUserInfo, userInfo } = useStore();
   const [count, setCount] = useState(null);
 
   useEffect(() => {
@@ -28,6 +28,7 @@ function GameStart() {
       // 카운트다운이 0에 도달하면 타이머 시작
       startTimer();
       loadUserInfo();
+      console.log(userInfo)
     }
     return () => clearTimeout(timerId); // 컴포넌트 언마운트 시 타이머 정리
   }, [count, startTimer]);
