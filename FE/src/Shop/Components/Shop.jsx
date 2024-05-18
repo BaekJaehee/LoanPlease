@@ -179,7 +179,7 @@ function Shop() {
   return (
     <> 
       {isBgm && (
-        <audio src={BgmAudio} audioPlay loop></audio>
+        <audio src="audioes/intro_main_bgm_2.mp3" audioPlay loop></audio>
       )}
       {isSetNumberModalOpen && selectedItem && (<SetNumberModal closeSetNumberModal={closeSetNumberModal} openGameItemModal={openGameItemModal} openWarningModal={openWarningModal} point={point} itemId={selectedItem.itemId} price={selectedItem.price} />)}
       {isGameItemModalOpen && <GameItemModal closeGameItemModal={closeGameItemModal} />}
