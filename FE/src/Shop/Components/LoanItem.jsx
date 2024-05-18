@@ -85,7 +85,7 @@ function LoanItem({ openLoanItemModal, openWarningModal, loanItems, point, produ
               <p className="text-lg">
                 금리: {item.interest * 100}%
                 <br />
-                상환 기간: {item.period ? `${item.preiod}개월` : "제한 없음"}
+                상환 기간: {item.period ? `${item.period}개월` : "제한 없음"}
                 <br />
                 한도: {item.limitAmount.toLocaleString()}
               </p>
