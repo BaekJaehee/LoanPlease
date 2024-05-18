@@ -108,6 +108,7 @@ function Buttonbar() {
   const setMypagepopup = MainStore((state) => state.setMypagepopup);
   const setSearchmode = RankingStore((state) => state.setSearchmode);
   const setEditmode = MypageStore((state) => state.setEditmode);
+  const setIsBgm = MainStore((state) => state.setIsBgm)
 
   const makeClickSound = () => {
     const audio = new Audio("audioes/pop_sound.mp3");
@@ -134,6 +135,7 @@ function Buttonbar() {
       <div
         onClick={() => {
           makeClickSound();
+          setIsBgm(false);
           navigate("/game");
         }}
         // style={starticonstyle}

@@ -128,6 +128,8 @@ function Main() {
   const setMypagepopup = MainStore((state) => state.setMypagepopup);
   const mydata = LoginStore((state) => state.mydata);
   const setMyData = LoginStore((state) => state.setMyData);
+  const isBgm = MainStore((state) => state.isBgm);
+  const setIsBgm = MainStore((state) => state.setIsBgm);
   const dialogs = MainStore((state) => state.dialogs);
 
   const makedialog = () => {
@@ -200,6 +202,7 @@ function Main() {
   }, []);
 
   useEffect(() => {
+    isBgm && setIsBgm(true)
     setRankingpopup(false);
     setMypagepopup(false);
   }, []);
