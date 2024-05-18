@@ -181,6 +181,8 @@ const useStore = create(set => ({
 
       set({ userInfo: data.dataBody, products: data.dataBody.userLoanList, items: newItems, userItemId: newIds });
 
+      console.log(userInfo)
+
     } catch (error) {
       console.error('Failed to load game data:', error);
     }
