@@ -1,7 +1,7 @@
 import useStore from "../../Store/GameStore.jsx"
 import { MainStore } from "../../Main/Store.jsx";
 import { useState, useRef } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 import GameStart from "./GameStart.jsx";
 import GameEnd from "./GameEnd.jsx";
@@ -156,6 +156,7 @@ function Game() {
     window.removeEventListener("click", handleFirstInteraction);
   } ;
 
+  const navigate = useNavigate();
   const location = useLocation();
 
   useEffect(() => {
