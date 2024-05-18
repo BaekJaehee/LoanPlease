@@ -77,22 +77,11 @@ function Shop() {
           const loan = userLoanList.find(product => product.loanId === slotId);
           return loan ? loan.loanName : null;
         });
-        const initialSelectedSlotsColor = [
-          slot_1, slot_2, slot_3, slot_4, slot_5
-        ].map(slotId => {
-          const loan = userLoanList.find(product => product.loanId === slotId);
-          return loan ? loan.color : null;
-        });
-        setSelected1({ name: initialSelectedSlots[0], color: initialSelectedSlotsColor[0] });
-        setSelected2({ name: initialSelectedSlots[1], color: initialSelectedSlotsColor[1] });
-        setSelected3({ name: initialSelectedSlots[2], color: initialSelectedSlotsColor[2] });
-        setSelected4({ name: initialSelectedSlots[3], color: initialSelectedSlotsColor[3] });
-        setSelected5({ name: initialSelectedSlots[4], color: initialSelectedSlotsColor[4] });
-        // setSelected1({ name: initialSelectedSlots[0] });
-        // setSelected2({ name: initialSelectedSlots[1] });
-        // setSelected3({ name: initialSelectedSlots[2] });
-        // setSelected4({ name: initialSelectedSlots[3] });
-        // setSelected5({ name: initialSelectedSlots[4] });
+        setSelected1({ name: initialSelectedSlots[0] });
+        setSelected2({ name: initialSelectedSlots[1] });
+        setSelected3({ name: initialSelectedSlots[2] });
+        setSelected4({ name: initialSelectedSlots[3] });
+        setSelected5({ name: initialSelectedSlots[4] });
 
         setIsLoadingUserInfo(false);
       } catch (error) {
@@ -128,6 +117,7 @@ function Shop() {
       {isWarningModal2Open && <WarningModal2 closeWarningModal2={closeWarningModal2} />}
       <div className="bg-cusColor3 min-h-screen w-full flex">
         <img src={coin} alt="배경" className="absolute w-full h-full object-cover opacity-50 z-0" />
+        {/* 사이드바 */}
         <div className="w-[250px] border-r-2 font-cusFont1 relative z-10">
           <div className="h-[15%]"></div>
           <div className="p-4 flex-1">
@@ -158,8 +148,10 @@ function Shop() {
             </Link>
           </div>
         </div>
+        {/* 우측 */}
         <div className="flex-1 z-10">
           <div className="border-b-0 p-4 flex justify-end items-center h-[15%]">
+            {/* 포인트 */}
             <div className="border-2 rounded-lg bg-white text-right font-cusFont1 text-xl mx-6 pl-2 pr-4 py-2 w-[180px] border-black flex items-center justify-between">
               <img src={won} alt="아이콘" className="w-7 h-7" />
               <span>{point}</span>

@@ -7,22 +7,15 @@ import { setLoanItems } from "../API/ShopAPI";
 
 function SlotSetting({ openItemModal, openSaveSlotModal, products, slotNumber, savedSlot, selectedSlots, setSelectedSlots, openWarningModal2 }) {
   const { 
-    // products, setProducts, 
-    // setProducts,
-    // userSlotNum, 
     currentPage, setCurrentPage, 
     setSelectedProduct, 
-    // savedSlot, setSavedSlot, 
     setSavedSlot, 
-    // selected1, selected2, selected3, selected4, selected5, 
     setSelected1, setSelected2, setSelected3, setSelected4, setSelected5 
   } = useStore();
   // const [originalSelectedSlots, setOriginalSelectedSlots] = useState([]);
 
   // const selectedSlots = [selected1, selected2, selected3, selected4, selected5];
   // const setSelectedSlots = [setSelected1, setSelected2, setSelected3, setSelected4, setSelected5];
-
-  // console.log(selectedSlots);
 
   const itemsPerPage = 5; // 페이지당 보여줄 아이템 수(임의)
   const indexOfLastItem = currentPage * itemsPerPage;
@@ -51,7 +44,7 @@ function SlotSetting({ openItemModal, openSaveSlotModal, products, slotNumber, s
       // 선택된 슬롯을 찾아 상태를 업데이트
       for (let i = 0; i < slotNumber; i++) {
         if (!selectedSlots[i].name) {
-          setSelectedSlots[i](item);  // 근데 이러니까 배열 길이는 userSlotNum 고정에 빈게 null로 표시된다
+          setSelectedSlots[i](item);
           savedSlot[i] = item.id;  // [0, 0, 0, 0, 0]에서 바꾸기
           // setSelectedSlots(prevSlots => {
           //   const updatedSlots = [...prevSlots];
@@ -202,7 +195,7 @@ function SlotSetting({ openItemModal, openSaveSlotModal, products, slotNumber, s
           </div>
         ))}
       </div>
-      {/* 소지 슬롯개수(userSlot)만큼 */}
+      {/* 소지 슬롯개수(slotNumber)만큼 */}
       <div className="flex justify-center gap-4 h-[20%]">
       {[...Array(slotNumber)].map((_, index) => {
           const selectedSlot = selectedSlots[index];
@@ -211,7 +204,6 @@ function SlotSetting({ openItemModal, openSaveSlotModal, products, slotNumber, s
             <div
               key={index}
               className="flex-grow-1 w-[220px] h-[90%] border-2 px-6 py-4 rounded-lg border-black bg-white hover:cursor-pointer text-center place-content-center"
-              style={{ backgroundColor: selectedSlot.color }}
               onClick={() => clear(selectedSlot, setSelectedSlot)}
             >
               {/* 여기에 클릭해서 넣은거 표시되어야함 */}
