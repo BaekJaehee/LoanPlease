@@ -75,10 +75,6 @@ function Menubar(props) {
     audio.play();
   };
 
-  useEffect(() => {
-    setIsBgm(isBgm)
-  }, [])
-
   return (
     // <div style={menubarstyle}>
     <div className={menubarstyleClass}>
@@ -121,7 +117,7 @@ function Menubar(props) {
         {isBgm ? (
           <audio
             src="audioes/intro_main_bgm.mp3"
-            autoPlay={true}
+            autoPlay={isBgm}
             loop={true}
           ></audio>
         ) : null}
