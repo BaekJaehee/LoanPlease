@@ -20,6 +20,7 @@ import SaveSlotModal from "../Modal/SaveSlotModal";
 
 import coin from "../Assets/coin.jpg";
 import won from "../Assets/coin_won.png";
+import question from "../Assets/question.png";
 
 // import BackgroundMusic from "../../../public/audioes/intro_main_bgm_2.mp3";
 
@@ -48,7 +49,7 @@ function Shop() {
 
   const [isLoadingItems, setIsLoadingItems] = useState(true);
   const [isLoadingUserInfo, setIsLoadingUserInfo] = useState(true);
-  // const [isBgmPlaying, setIsBgmPlaying] = useState(false);
+  const [isBgmPlaying, setIsBgmPlaying] = useState(false);
 
   const selectedSlots = [selected1, selected2, selected3, selected4, selected5];
   const setSelectedSlots = [setSelected1, setSelected2, setSelected3, setSelected4, setSelected5];
@@ -58,17 +59,23 @@ function Shop() {
   
   useEffect(() => {
     const bgmAudio = bgmAudioRef.current;
-    if (isBgm) {
+    const storedBgmState = localStorage.getItem("ShopBgmPlaying"); // LocalStorage에서 상태 불러오기
+    const initialBgmState = storedBgmState ? JSON.parse(storedBgmState) : false;
+
+    if (isBgm && initialBgmState) {
       bgmAudio.loop = true;
       bgmAudio.play();
+      setIsBgmPlaying(true);
     } else {
       bgmAudio.pause();
       bgmAudio.currentTime = 0;
+      setIsBgmPlaying(false);
     }
 
     return () => {
       bgmAudio.pause();
       bgmAudio.currentTime = 0;
+      localStorage.setItem("ShopBgmPlaying", JSON.stringify(isBgmPlaying));
     }
   }, [isBgm]);
 
@@ -202,6 +209,9 @@ function Shop() {
         {/* 우측 */}
         <div className="flex-1 z-10">
           <div className="border-b-0 p-4 flex justify-end items-center h-[15%]">
+            <div>
+              <img src={question} className="w-7 h-7" />
+            </div>
             {/* 포인트 */}
             <div className="border-2 rounded-lg bg-white text-right font-cusFont1 text-xl mx-6 pl-2 pr-4 py-2 w-[180px] border-black flex items-center justify-between">
               <img src={won} alt="아이콘" className="w-7 h-7" />
