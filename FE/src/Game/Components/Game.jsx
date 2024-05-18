@@ -109,7 +109,8 @@ function Game() {
     isShield,
     setIsShield,
     items,
-    resetGame
+    resetGame,
+    userInfo
   } = useStore();
 
   const { isBgm } = MainStore();
@@ -117,6 +118,10 @@ function Game() {
   const { customerInfo } = gameInfo;
 
   const [message, setMessage] = useState("");
+
+  useEffect(() => {
+    console.log(userInfo)
+  }, [userInfo])
 
   useEffect(() => {
     if (dialogueNum === 0) {
