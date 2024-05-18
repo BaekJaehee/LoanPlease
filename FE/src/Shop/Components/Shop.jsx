@@ -53,9 +53,11 @@ function Shop() {
   const selectedSlots = [selected1, selected2, selected3, selected4, selected5];
   const setSelectedSlots = [setSelected1, setSelected2, setSelected3, setSelected4, setSelected5];
 
-  const bgmAudio = new Audio("audioes/intro_main_bgm_2.mp3")
+  // const bgmAudio = new Audio("audioes/intro_main_bgm_2.mp3")
+  const bgmAudioRef = useRef(new Audio("audioes/intro_main_bgm_2.mp3")); // useRef를 사용하여 audio 객체를 저장
   
   useEffect(() => {
+    const bgmAudio = bgmAudioRef.current;
     if (isBgm) {
       bgmAudio.loop = true;
       bgmAudio.play();
@@ -81,6 +83,13 @@ function Shop() {
   //     bgmAudio.currentTime = 0;
   //   };
   // }, []);
+
+  useEffect(() => {
+    setCurrentComponent("gameItem"); // 기본 컴포넌트 설정
+    return () => {
+      setCurrentComponent("gameItem"); // Shop 컴포넌트가 unmount될 때 초기화(뒤로갔다가 다시 들어오면 마지막으로 띄웠던 컴포넌트가 안 뜨도록)
+    };
+  }, []);
 
   useEffect(() => {
     const fetchItems = async () => {
