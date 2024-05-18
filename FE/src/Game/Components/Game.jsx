@@ -121,7 +121,8 @@ function Game() {
 
   useEffect(() => {
     console.log(userInfo)
-  }, [userInfo])
+    console.log(products)
+  }, [userInfo, products])
 
   useEffect(() => {
     if (dialogueNum === 0) {

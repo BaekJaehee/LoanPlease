@@ -166,20 +166,29 @@ const useStore = create(set => ({
   loadUserInfo: async () => {
     try {
       const data = await fetchUserRequest();
+      const userInfo = data.dataBody;
 
       const newItems = [
-        data.dataBody.userItemList[0].itemCount,
-        data.dataBody.userItemList[1].itemCount,
-        data.dataBody.userItemList[2].itemCount,
+        userInfo.userItemList[0].itemCount,
+        userInfo.userItemList[1].itemCount,
+        userInfo.userItemList[2].itemCount,
       ];
 
       const newIds = [
-        data.dataBody.userItemList[0].userItemId,
-        data.dataBody.userItemList[1].userItemId,
-        data.dataBody.userItemList[2].userItemId,
+        userInfo.userItemList[0].userItemId,
+        userInfo.userItemList[1].userItemId,
+        userInfo.userItemList[2].userItemId,
       ];
 
-      set({ userInfo: data.dataBody, products: data.dataBody.userLoanList, items: newItems, userItemId: newIds });
+      const slots = [userInfo.slot_1, userInfo.slot_2, userInfo.slot_3, userInfo.slot_4, userInfo.slot_5];
+      const newProducts = userInfo.userLoanList.filter(loan => slots.includes(loan.loanId));
+
+      set({
+        userInfo: userInfo,
+        items: newItems,
+        userItemId: newIds,
+        products: newProducts
+      });
 
     } catch (error) {
       console.error('Failed to load game data:', error);
