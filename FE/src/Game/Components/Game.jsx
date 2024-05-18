@@ -160,16 +160,16 @@ function Game() {
   const location = useLocation();
 
   useEffect(() => {
-    const unblock = navigate((location, action) => {
-      if (action === 'POP') {
-        resetGame(); // Reset the game state when navigating back
-      }
-    });
+    const handlePopState = () => {
+      resetGame();
+    };
+
+    window.addEventListener("popstate", handlePopState);
 
     return () => {
-      unblock();
+      window.removeEventListener("popstate", handlePopState);
     };
-  }, [navigate]);
+  }, []);
 
   useEffect(() => {
     return () => {
