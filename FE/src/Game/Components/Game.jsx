@@ -122,7 +122,8 @@ function Game() {
   useEffect(() => {
     console.log(userInfo)
     console.log(products)
-  }, [userInfo, products])
+    console.log(selectedProduct)
+  }, [userInfo, products, selectedProduct])
 
   useEffect(() => {
     if (dialogueNum === 0) {
