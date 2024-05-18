@@ -1,6 +1,7 @@
 /* eslint-disable react/jsx-key */
 import { useState } from "react";
 import { PageQuery } from "./InfiniteQuery.jsx";
+import { RankingStore } from "../Store.jsx";
 
 const searchpagestyleClass = `
 flex flex-col justify-between 
@@ -45,7 +46,8 @@ overflow-x-hidden overflow-y-auto
 // };
 
 function SearchPage() {
-  const [inputdata, setInputData] = useState("");
+  const inputdata = RankingStore((state) => state.inputdata);
+  const setInputdata = RankingStore((state) => state.setInputdata);
 
   return (
     // <div style={searchpagestyle}>
@@ -55,12 +57,12 @@ function SearchPage() {
         className={searchlinestyleClass}
         value={inputdata}
         onChange={(e) => {
-          setInputData(e.target.value);
+          setInputdata(e.target.value);
         }}
       />
       {/* <div style={searchresultarea}> */}
       <div className={searchresultareaClass}>
-        {<PageQuery inputdata={inputdata} />}
+        <PageQuery />
       </div>
     </div>
   );

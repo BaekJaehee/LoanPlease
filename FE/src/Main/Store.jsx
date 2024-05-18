@@ -44,6 +44,8 @@ export const RankingStore = create((set) => ({
   setIndex: (value) => set({ index: value }),
   searchmode: false,
   setSearchmode: (value) => set({ searchmode: value }),
+  inputdata: '',
+  setInputdata: (value) => set({ inputdata: value }),
 }));
 
 export const MypageStore = create((set) => ({
