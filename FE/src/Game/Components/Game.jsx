@@ -494,8 +494,9 @@ function Game() {
                 <div className="flex h-[80%]">
                   <div className="w-full m-1 flex justify-center items-center">
                     {products.map(product => (
-                      <div key={product.loanName} className={`w-[50%] h-full m-1 flex justify-center items-center ${product.color} rounded-lg shadow-lg border-[5px] border-black`}
-                        onClick={() => selectProduct(product)}>
+                      <div key={product.loanName} className={`w-[50%] h-full m-1 flex justify-center items-center rounded-lg shadow-lg border-[5px] border-black`}
+                        onClick={() => selectProduct(product)}
+                        style={{ backgroundColor: product.color }}>
                         <p>{product.loanName}</p>
                       </div>
                     ))}
