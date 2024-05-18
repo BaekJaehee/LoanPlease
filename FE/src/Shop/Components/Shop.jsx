@@ -1,19 +1,25 @@
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
+
 import useStore from "../../Store/ShopStore";
+import { MainStore } from "../../Main/Store";
+
 import { itemsList, getUserInfo } from "../API/ShopAPI";
+
 import GameItem from "./GameItem";
 import LoanItem from "./LoanItem";
 import SlotSetting from "./SlotSetting";
+
 import SetNumberModal from "../Modal/SetNumberModal";
 import GameItemModal from "../Modal/GameItemModal";
 import LoanItemModal from "../Modal/LoanItemModal";
 import ItemModal from "../Modal/ItemModal";
 import WarningModal from "../Modal/WarningModal";
 import WarningModal2 from "../Modal/WarningModal2";
+import SaveSlotModal from "../Modal/SaveSlotModal";
+
 import coin from "../Assets/coin.jpg";
 import won from "../Assets/coin_won.png";
-import SaveSlotModal from "../Modal/SaveSlotModal";
 
 function Shop() {
   const {
@@ -36,12 +42,25 @@ function Shop() {
     gameItems, setGameItems,
     loanItems, setLoanItems
   } = useStore();
+  const { isBgm } = MainStore();
 
   const [isLoadingItems, setIsLoadingItems] = useState(true);
   const [isLoadingUserInfo, setIsLoadingUserInfo] = useState(true);
 
   const selectedSlots = [selected1, selected2, selected3, selected4, selected5];
   const setSelectedSlots = [setSelected1, setSelected2, setSelected3, setSelected4, setSelected5];
+
+  const bgmAudio = new Audio("audioes/intro_main_bgm_2.mp3")
+  
+  useEffect(() => {
+    if (isBgm) {
+      bgmAudio.loop = true;
+      bgmAudio.play();
+    } else {
+      bgmAudio.pause();
+      bgmAudio.currentTime = 0;
+    }
+  }, [isBgm]);
 
   useEffect(() => {
     const fetchItems = async () => {
@@ -107,7 +126,7 @@ function Shop() {
   }
 
   return (
-    <>
+    <> 
       {isSetNumberModalOpen && selectedItem && (<SetNumberModal closeSetNumberModal={closeSetNumberModal} openGameItemModal={openGameItemModal} openWarningModal={openWarningModal} point={point} itemId={selectedItem.itemId} price={selectedItem.price} />)}
       {isGameItemModalOpen && <GameItemModal closeGameItemModal={closeGameItemModal} />}
       {isLoanItemModalOpen && <LoanItemModal closeLoanItemModal={closeLoanItemModal} />}
