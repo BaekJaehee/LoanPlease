@@ -4,13 +4,14 @@ import { useNavigate } from 'react-router-dom';
 function GamePause () {
 
   const navigate = useNavigate();
-  const { score, isGamePause, setGamePause } = useStore();
+  const { score, isGamePause, setGamePause, resetGame } = useStore();
 
   const handleRestart = () => {
     window.location.reload();
   };
 
   const handleGoHome = () => {
+    resetGame()
     window.location.href = '/';
   };
 

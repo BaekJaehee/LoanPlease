@@ -108,7 +108,8 @@ function Game() {
     updateCustomerState,
     isShield,
     setIsShield,
-    items
+    items,
+    resetGame
   } = useStore();
 
   const { isBgm } = MainStore();
@@ -156,6 +157,14 @@ function Game() {
   } ;
 
   const location = useLocation();
+
+  useEffect(() => {
+    return history.listen((location) => {
+      if (location.action === 'POP') {
+        resetGame(); // Reset the game state when navigating back
+      }
+    });
+  }, [history]);
 
   useEffect(() => {
     return () => {

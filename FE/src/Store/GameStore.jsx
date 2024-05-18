@@ -186,6 +186,32 @@ const useStore = create(set => ({
     }
   },
 
+  resetGame: () => set({
+    showModal: false,
+    time: 180,
+    timerActive: false,
+    score: 0,
+    credit: 0,
+    isGameEnd: false,
+    showScore: false,
+    changeScore: 0,
+    isVipActive: true,
+    isShieldActive: true,
+    isTimeActive: true,
+    isShield: false,
+    isFinance: true,
+    isCustomer: false,
+    dialogueNum: 0,
+    isButtonEnabled: true,
+    products: [],
+    selectedProduct: null,
+    isGamePause: false,
+    gameInfo: [],
+    userInfo: [],
+    items: [0, 0, 0],
+    userItemId: [0, 0, 0],
+  }),
+
 
 }));
 
