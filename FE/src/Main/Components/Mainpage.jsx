@@ -224,7 +224,6 @@ function Main() {
     // );
     setRankingpopup(false);
     setMypagepopup(false);
-    setIsBgm(true);
     // return () => {
     //   source.close();
     // };
