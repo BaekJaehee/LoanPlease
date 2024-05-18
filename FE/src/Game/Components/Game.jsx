@@ -166,15 +166,8 @@ function Game() {
   const location = useLocation();
 
   useEffect(() => {
-    const handlePopState = () => {
-      resetGame();
-      window.location.reload();  // 페이지를 새로고침하여 초기 상태로 만듦
-    };
-
-    window.addEventListener("popstate", handlePopState);
-
     return () => {
-      window.removeEventListener("popstate", handlePopState);
+      resetGame();
     };
   }, []);
 
