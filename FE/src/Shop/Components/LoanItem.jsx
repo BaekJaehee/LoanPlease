@@ -87,7 +87,7 @@ function LoanItem({ openLoanItemModal, openWarningModal, loanItems, point, produ
                 <br />
                 상환 기간: {item.period ? `${item.preiod}개월` : "제한 없음"}
                 <br />
-                한도: {item.limitAmount.toLocalString()}
+                한도: {item.limitAmount.toLocaleString()}
               </p>
             </div>
             <button
