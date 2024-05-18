@@ -34,7 +34,6 @@ function GameItemModal({ closeGameItemModal }) {
 
 GameItemModal.propTypes = {
   closeGameItemModal: PropTypes.func.isRequired,
-  // selectedItem: PropTypes.object.isRequired,
 };
 
 export default GameItemModal;

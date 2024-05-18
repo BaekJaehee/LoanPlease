@@ -2,9 +2,6 @@ import { useEffect } from "react";
 import { PropTypes } from "prop-types"; 
 import { purchaseSlot } from "../API/ShopAPI";
 import useStore from "../../Store/ShopStore";
-import vip from "../Assets/vip.png";
-import timeExtension from "../Assets/timeExtension.png";
-import shield from "../Assets/shield.png";
 
 // 유저의 슬롯개수에따라 슬롯추가1,2 띄우기
 
@@ -22,9 +19,8 @@ function GameItem({ openSetNumberModal, openGameItemModal, openWarningModal, gam
       
       // 구매 후 포인트 반영
       setPoint(data.remainPoint);
-      // setPoint(remainPoint);
 
-      // 구매 후 슬롯 개수 반영(백엔드에서 response.data.slotNum 이런거 가져와야함)
+      // 구매 후 슬롯 개수 반영
       setSlotNumber(data.slotNum);
       
       openGameItemModal();
@@ -38,7 +34,6 @@ function GameItem({ openSetNumberModal, openGameItemModal, openWarningModal, gam
       setSelectedItem(item);
       openSetNumberModal(item.itemId, item.price);
     }
-    // console.log("selected:", selectedItem);
   }
 
   useEffect(() => {
@@ -49,9 +44,7 @@ function GameItem({ openSetNumberModal, openGameItemModal, openWarningModal, gam
 
   return (
     <div className="h-full">
-      {/* <div className="h-[45.6px] my-2"></div> */}
       <div className="h-[8%] my-2"></div>
-      {/* <div className="flex justify-evenly my-2 w-full h-full text-center"> */}
       <div className="flex justify-evenly my-2 w-full h-[90%] text-center">
         {/* 슬롯은 따로 표시 */}
         {slots.map((item, index) => (
@@ -59,7 +52,6 @@ function GameItem({ openSetNumberModal, openGameItemModal, openWarningModal, gam
             <div key={index} className={`relative h-[85%] border-2 ${item.purchased === 1 ? 'bg-stone-300' : 'bg-white'} px-6 py-6 rounded-lg w-[280px] h-[500px] border-black`}>
               <img src={item.icon} alt="" className={`h-28 mx-auto my-5 ${item.purchased === 1 && 'opacity-50'}`} />
               <p className="font-cusFont1 py-2 my-5 text-3xl h-[10%]">{item.name}</p>
-              {/* <div className="font-cusFont2 py-2 my-5 mx-3 text-lg h-[70px]"> */}
               <div className="font-cusFont2 py-2 my-5 mx-3 text-lg h-[40%]">
                 <p>{item.description}</p>
               </div>
@@ -67,8 +59,6 @@ function GameItem({ openSetNumberModal, openGameItemModal, openWarningModal, gam
                 className={`absolute bottom-5 left-1/2 transform -translate-x-1/2 font-cusFont1 my-4 ${item.purchased === 1 ? 'bg-gray-300 border-gray-500' : 'bg-orange-400 hover:bg-orange-600 border-black'} border-2 border-b-4 rounded-lg px-3 py-2 text-xl w-[130px] focus:ring-4 shadow-lg transform active:scale-y-75 transition-transform`}
                 onClick={() => {
                   handlePurchaseSlot(item);
-                  // purchaseSlot();
-                  // openGameItemModal();
                 }}
                 disabled={item.purchased === 1}
               >
@@ -79,7 +69,6 @@ function GameItem({ openSetNumberModal, openGameItemModal, openWarningModal, gam
             <div key={index} className="relative h-[85%] border-2 bg-stone-300 px-6 py-6 rounded-lg w-[280px] h-[500px] border-black cursor-not-allowed">
               <img src={item.icon} alt="" className={`h-28 mx-auto my-5 ${item.purchased === 1 && 'opacity-50'}`} />
               <p className="font-cusFont1 py-2 my-5 text-3xl h-[10%]">{item.name}</p>
-              {/* <div className="font-cusFont2 py-2 my-5 mx-3 text-lg h-[70px]"> */}
               <div className="font-cusFont2 py-2 my-5 mx-3 text-lg h-[40%]">
                 <p>{item.description}</p>
               </div>
@@ -93,13 +82,11 @@ function GameItem({ openSetNumberModal, openGameItemModal, openWarningModal, gam
           ) : null
         ))}
         {gameItems && gameItems.map((item, index) => (
-          // <div key={index} className={`border-2 ${item.purchased === 1 ? 'bg-stone-300' : 'bg-white'} px-6 py-6 rounded-lg w-[280px] h-[500px] border-black cursor-pointer`}>
           <div key={index} className={`relative h-[85%] border-2 ${item.purchased === 1 ? 'bg-stone-300' : 'bg-white'} px-6 py-6 rounded-lg w-[280px] h-[500px] border-black`}>
             {/* 프론트 내부의 이미지를 쓰기 위해서는 이미지 컬럼 추가 필요 */}
             {/* <img src={`${process.env.PUBLIC_URL}/item/${item.img}.png`} alt={item.img} className="h-28 mx-auto my-3" /> */}
             <img src={`/item/${item.img}.png`} alt={item.img} className="h-28 mx-auto my-3" />
             <p className="font-cusFont1 py-2 my-5 text-3xl h-[10%]">{item.name}</p>
-            {/* <div className="font-cusFont2 py-2 my-5 mx-3 text-lg h-[70px]"> */}
             <div className="font-cusFont2 py-2 my-5 mx-3 text-lg h-[40%]">
               <p>{item.content}</p>
             </div>

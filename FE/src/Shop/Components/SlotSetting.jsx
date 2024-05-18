@@ -3,8 +3,6 @@ import { useEffect } from "react";
 import useStore from "../../Store/ShopStore";
 import { setLoanItems } from "../API/ShopAPI";
 
-// db에는 1374 순서인데 왜 1347로 찍히는건지?
-
 function SlotSetting({ openItemModal, openSaveSlotModal, products, slotNumber, savedSlot, selectedSlots, setSelectedSlots, openWarningModal2 }) {
   const { 
     currentPage, setCurrentPage, 
@@ -170,7 +168,6 @@ function SlotSetting({ openItemModal, openSaveSlotModal, products, slotNumber, s
         {currentItems.map((item, index) => (
           <div 
           key={index} 
-          // className={`font-cusFont1 flex-grow-1 w-[240px] h-[95%] border-2 px-6 py-4 rounded-lg border-black bg-white text-center ${item.color}`}
           className="font-cusFont1 flex-grow-1 w-[240px] h-[95%] border-2 px-6 py-4 rounded-lg border-black bg-white text-center"
           style={{ backgroundColor: item.color }}
           >
