@@ -16,11 +16,11 @@ function ItemModal({ closeItemModal, selectedProduct }) {
       <div ref={modalRef} className="w-[360px] h-[300px] bg-yellow-200 p-4 rounded-md text-center border-2 z-50 border-black flex flex-col justify-center">
         <div className="font-cusFont2 h-[250px] text-left text-lg">
           {/* product.description */}
-          <p>상품 이름: {selectedProduct.loanName}</p>
-          <p>설명: {selectedProduct.content}</p>
-          <p>금리: {selectedProduct.interest * 100}%</p>
-          <p>상환 기간: {selectedProduct.period ? `${selectedProduct.period}개월` : "제한 없음"}</p>
-          <p>한도: {selectedProduct.limitAmount.toLocaleString()}</p>
+          <p><b>상품 이름:</b> {selectedProduct.loanName}</p>
+          <p><b>설명:</b> {selectedProduct.content}</p>
+          <p><b>금리:</b> {selectedProduct.interest * 100}%</p>
+          <p><b>상환 기간:</b> {selectedProduct.period ? `${selectedProduct.period}개월` : "제한 없음"}</p>
+          <p><b>한도:</b> {selectedProduct.limitAmount.toLocaleString()}</p>
         </div>
         <div className="flex justify-center mt-4">
           <button 
