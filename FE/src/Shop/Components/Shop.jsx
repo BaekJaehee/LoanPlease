@@ -49,7 +49,7 @@ function Shop() {
 
   const [isLoadingItems, setIsLoadingItems] = useState(true);
   const [isLoadingUserInfo, setIsLoadingUserInfo] = useState(true);
-  const [isBgmPlaying, setIsBgmPlaying] = useState(false);
+  // const [isBgmPlaying, setIsBgmPlaying] = useState(false);
 
   const selectedSlots = [selected1, selected2, selected3, selected4, selected5];
   const setSelectedSlots = [setSelected1, setSelected2, setSelected3, setSelected4, setSelected5];
@@ -59,24 +59,39 @@ function Shop() {
   
   useEffect(() => {
     const bgmAudio = bgmAudioRef.current;
-    const storedBgmState = localStorage.getItem("ShopBgmPlaying"); // LocalStorage에서 상태 불러오기
-    const initialBgmState = storedBgmState ? JSON.parse(storedBgmState) : false;
 
-    if (isBgm && initialBgmState) {
-      bgmAudio.loop = true;
-      bgmAudio.play();
-      setIsBgmPlaying(true);
-    } else {
-      bgmAudio.pause();
-      bgmAudio.currentTime = 0;
-      setIsBgmPlaying(false);
+    const handleFirstInteraction = () => {
+      if (isBgm && bgmAudio.paused) {
+        bgmAudio.loop = true;
+        bgmAudio.play().catch((e) => {
+          console.error("배경음악 재생 실패:", e);
+        });
+      }
+      window.removeEventListener("click", handleFirstInteraction);
+    };
+
+    if (isBgm && bgmAudio.paused) {
+      // 첫 마운트 시 또는 새로고침 후 음악이 멈춘 상태에서 아무곳이나 클릭하면 음악이 재생되도록 처리
+      handleFirstInteraction();
+      window.addEventListener("click", handleFirstInteraction);
     }
 
     return () => {
-      bgmAudio.pause();
-      bgmAudio.currentTime = 0;
-      localStorage.setItem("ShopBgmPlaying", JSON.stringify(isBgmPlaying));
-    }
+      window.removeEventListener("click", handleFirstInteraction);
+    };
+    // if (isBgm) {
+    //   bgmAudio.loop = true;
+    //   bgmAudio.play();
+    //   setIsBgmPlaying(true);
+    // } else {
+    //   bgmAudio.pause();
+    //   bgmAudio.currentTime = 0;
+    //   setIsBgmPlaying(false);
+    // }
+    // return () => {
+    //   bgmAudio.pause();
+    //   bgmAudio.currentTime = 0;
+    // }
   }, [isBgm]);
 
   // useEffect(() => {
@@ -163,9 +178,9 @@ function Shop() {
 
   return (
     <> 
-      {/* {isBgm && (
+      {isBgm && (
         <audio src={BgmAudio} audioPlay loop></audio>
-      )} */}
+      )}
       {isSetNumberModalOpen && selectedItem && (<SetNumberModal closeSetNumberModal={closeSetNumberModal} openGameItemModal={openGameItemModal} openWarningModal={openWarningModal} point={point} itemId={selectedItem.itemId} price={selectedItem.price} />)}
       {isGameItemModalOpen && <GameItemModal closeGameItemModal={closeGameItemModal} />}
       {isLoanItemModalOpen && <LoanItemModal closeLoanItemModal={closeLoanItemModal} />}
@@ -209,9 +224,10 @@ function Shop() {
         {/* 우측 */}
         <div className="flex-1 z-10">
           <div className="border-b-0 p-4 flex justify-end items-center h-[15%]">
-            <div>
+            {/* 클릭 시 음악 재생 */}
+            {/* <div>
               <img src={question} className="w-7 h-7" />
-            </div>
+            </div> */}
             {/* 포인트 */}
             <div className="border-2 rounded-lg bg-white text-right font-cusFont1 text-xl mx-6 pl-2 pr-4 py-2 w-[180px] border-black flex items-center justify-between">
               <img src={won} alt="아이콘" className="w-7 h-7" />
