@@ -250,12 +250,6 @@ function Game() {
     }
   }
 
-  async function handleCallCustomer() {
-    findURL();
-    makeClickSound();
-    callCustomer();
-  }
-
   async function handleEndCustomer2(loanId) {
 
     updateCustomerState({
@@ -439,7 +433,8 @@ function Game() {
               {isCustomer && (<div className="flex justify-center items-center w-full h-full">
 
                 <div className="flex w-[70%] h-full justify-center items-center">
-                  <div className={`w-[90%] h-[90%] p-5 flex justify-center items-center ${selectedProduct ? selectedProduct.color : `bg-cusColor4`} text-2xl border-[5px] border-black rounded-lg`}>
+                  <div className={`w-[90%] h-[90%] p-5 flex justify-center items-center ${selectedProduct ? '' : `bg-cusColor4`} text-2xl border-[5px] border-black rounded-lg`}
+                    style={selectedProduct ? { backgroundColor: selectedProduct.color } : {}}>
                     {!selectedProduct && <p>상품을 선택해주세요!</p>}
                     {selectedProduct &&
                       <div className="w-full">
