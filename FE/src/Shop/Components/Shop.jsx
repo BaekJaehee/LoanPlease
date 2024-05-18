@@ -1,8 +1,8 @@
 import { Link } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 
 import useStore from "../../Store/ShopStore";
-// import { MainStore } from "../../Main/Store";
+import { MainStore } from "../../Main/Store";
 
 import { itemsList, getUserInfo } from "../API/ShopAPI";
 
@@ -20,8 +20,9 @@ import SaveSlotModal from "../Modal/SaveSlotModal";
 
 import coin from "../Assets/coin.jpg";
 import won from "../Assets/coin_won.png";
+import question from "../Assets/question.png";
 
-import BackgroundMusic from "../../../public/audioes/intro_main_bgm_2.mp3";
+// import BackgroundMusic from "../../../public/audioes/intro_main_bgm_2.mp3";
 
 function Shop() {
   const {
@@ -44,7 +45,7 @@ function Shop() {
     gameItems, setGameItems,
     loanItems, setLoanItems
   } = useStore();
-  // const { isBgm } = MainStore();
+  const { isBgm } = MainStore();
 
   const [isLoadingItems, setIsLoadingItems] = useState(true);
   const [isLoadingUserInfo, setIsLoadingUserInfo] = useState(true);
@@ -54,26 +55,61 @@ function Shop() {
   const setSelectedSlots = [setSelected1, setSelected2, setSelected3, setSelected4, setSelected5];
 
   // const bgmAudio = new Audio("audioes/intro_main_bgm_2.mp3")
+  const bgmAudioRef = useRef(new Audio("audioes/intro_main_bgm_2.mp3")); // useRef를 사용하여 audio 객체를 저장
   
-  // useEffect(() => {
-  //   if (isBgm) {
-  //     bgmAudio.loop = true;
-  //     bgmAudio.play();
-  //   } else {
-  //     bgmAudio.pause();
-  //     bgmAudio.currentTime = 0;
-  //   }
-  // }, [isBgm]);
-
   useEffect(() => {
-    const bgmAudio = new Audio(BackgroundMusic);
-    bgmAudio.loop = true;
+    const bgmAudio = bgmAudioRef.current;
 
-    bgmAudio.play();
+    // const handleFirstInteraction = () => {
+    //   if (isBgm && bgmAudio.paused) {
+    //     bgmAudio.loop = true;
+    //     bgmAudio.play().catch((e) => {
+    //       console.error("배경음악 재생 실패:", e);
+    //     });
+    //   }
+    //   window.removeEventListener("click", handleFirstInteraction);
+    // };
 
+    // if (isBgm && bgmAudio.paused) {
+    //   // 첫 마운트 시 또는 새로고침 후 음악이 멈춘 상태에서 아무곳이나 클릭하면 음악이 재생되도록 처리
+    //   handleFirstInteraction();
+    //   window.addEventListener("click", handleFirstInteraction);
+    // }
+
+    // return () => {
+    //   window.removeEventListener("click", handleFirstInteraction);
+    // };
+    if (isBgm) {
+      bgmAudio.loop = true;
+      bgmAudio.play();
+      // setIsBgmPlaying(true);
+    } else {
+      bgmAudio.pause();
+      bgmAudio.currentTime = 0;
+      // setIsBgmPlaying(false);
+    }
     return () => {
       bgmAudio.pause();
       bgmAudio.currentTime = 0;
+    }
+  }, [isBgm]);
+
+  // useEffect(() => {
+  //   const bgmAudio = new Audio(BackgroundMusic);
+  //   bgmAudio.loop = true;
+
+  //   bgmAudio.play();
+
+  //   return () => {
+  //     bgmAudio.pause();
+  //     bgmAudio.currentTime = 0;
+  //   };
+  // }, []);
+
+  useEffect(() => {
+    setCurrentComponent("gameItem"); // 기본 컴포넌트 설정
+    return () => {
+      setCurrentComponent("gameItem"); // Shop 컴포넌트가 unmount될 때 초기화(뒤로갔다가 다시 들어오면 마지막으로 띄웠던 컴포넌트가 안 뜨도록)
     };
   }, []);
 
@@ -143,7 +179,7 @@ function Shop() {
   return (
     <> 
       {/* {isBgm && (
-        <audio src={BgmAudio} audioPlay loop></audio>
+        <audio src="audioes/intro_main_bgm_2.mp3" audioPlay loop></audio>
       )} */}
       {isSetNumberModalOpen && selectedItem && (<SetNumberModal closeSetNumberModal={closeSetNumberModal} openGameItemModal={openGameItemModal} openWarningModal={openWarningModal} point={point} itemId={selectedItem.itemId} price={selectedItem.price} />)}
       {isGameItemModalOpen && <GameItemModal closeGameItemModal={closeGameItemModal} />}
@@ -188,6 +224,10 @@ function Shop() {
         {/* 우측 */}
         <div className="flex-1 z-10">
           <div className="border-b-0 p-4 flex justify-end items-center h-[15%]">
+            {/* 클릭 시 음악 재생 */}
+            {/* <div>
+              <img src={question} className="w-7 h-7" />
+            </div> */}
             {/* 포인트 */}
             <div className="border-2 rounded-lg bg-white text-right font-cusFont1 text-xl mx-6 pl-2 pr-4 py-2 w-[180px] border-black flex items-center justify-between">
               <img src={won} alt="아이콘" className="w-7 h-7" />
