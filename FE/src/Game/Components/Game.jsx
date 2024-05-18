@@ -159,12 +159,16 @@ function Game() {
   const location = useLocation();
 
   useEffect(() => {
-    return history.listen((location) => {
-      if (location.action === 'POP') {
+    const unblock = navigate((location, action) => {
+      if (action === 'POP') {
         resetGame(); // Reset the game state when navigating back
       }
     });
-  }, [history]);
+
+    return () => {
+      unblock();
+    };
+  }, [navigate]);
 
   useEffect(() => {
     return () => {
