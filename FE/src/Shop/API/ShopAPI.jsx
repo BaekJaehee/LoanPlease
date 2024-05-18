@@ -1,7 +1,6 @@
 import axios from "axios";
 import { Cookies } from "react-cookie";
 
-// 192.168.100.178:8080
 // https://loanplease.kr/
 // const API_BASE_URL = import.meta.env.VITE_BASE_URL;
 
@@ -19,7 +18,6 @@ export const itemsList = async () => {
       },
     })
     .then((response) => {
-      console.log("item-data", response.data);
       return response.data;
     })
     .catch((e) => {
@@ -39,8 +37,6 @@ export const purchaseSlot = async () => {
       },
     })
     .then((response) => {
-      // console.log(response);
-      console.log("purchase-slot", response.data);
       return response.data;
     })
     .catch((e) => {
@@ -53,7 +49,6 @@ export const purchaseSlot = async () => {
 export const purchaseGameItem = async (itemId, itemCount) => {
   const url = `/api/store/items/oneoff`;
   return await axios
-    // .post(url, {
     .post(url, { itemId, itemCount }, {
       headers: {
         "Content-Type": "application/json",
@@ -61,7 +56,6 @@ export const purchaseGameItem = async (itemId, itemCount) => {
       },
     })
     .then((response) => {
-      console.log("purchase-game", response.data);
       return response.data;
     })
     .catch((e) => {
@@ -75,7 +69,6 @@ export const purchaseLoanItem = async (loanId) => {
   const url = `/api/store/items/loan`;
   console.log("token", token);
   return await axios
-    // .post(url, {
     .post(url, { loanId }, {
       headers: {
         "Content-Type": "application/json",
@@ -83,7 +76,6 @@ export const purchaseLoanItem = async (loanId) => {
       },
     })
     .then((response) => {
-      console.log("purchase-loan", response.data);
       return response.data;
     })
     .catch((e) => {
@@ -92,7 +84,6 @@ export const purchaseLoanItem = async (loanId) => {
 }
 
 // 슬롯에 대출 아이템 선택해서 저장
-// export const setLoanItems = async (savedSlot) => {
 export const setLoanItems = async (slotObject) => {
   const url = `/api/store/choose-loan`;
   return await axios
@@ -103,7 +94,6 @@ export const setLoanItems = async (slotObject) => {
       },
     })
     .then((response) => {
-      console.log("saved-slot", response.data);
       return response.data;
     })
     .catch((e) => {
@@ -113,7 +103,6 @@ export const setLoanItems = async (slotObject) => {
 
 export const getUserInfo = async () => {
   const url = `/api/user-info`
-  console.log(url);
   return await axios
     .get(url, {
       headers: {
@@ -122,7 +111,6 @@ export const getUserInfo = async () => {
       },
     })
     .then((response) => {
-      console.log("user-info:", response.data);
       return response.data;
     })
     .catch((e) => {

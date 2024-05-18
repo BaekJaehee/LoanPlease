@@ -34,7 +34,6 @@ function LoanItem({ openLoanItemModal, openWarningModal, loanItems, point, produ
       setPoint(data.remainPoint);
 
       // 상품 구매 후 products 상태 업데이트
-      // const updatedProducts = [...products, item];
       const updatedProducts = [...products, { ...item, loanName: item.name }];
       setProducts(updatedProducts);
 
@@ -75,7 +74,6 @@ function LoanItem({ openLoanItemModal, openWarningModal, loanItems, point, produ
         {currentItems.map((item, index) => (
           <div
             key={index}
-            // className={`relative flex-grow-1 w-[300px] h-[85%] border-2 ${item.color} px-3 py-4 rounded-lg border-black`}
             className={`relative flex-grow-1 w-[300px] h-[85%] border-2 px-3 py-4 rounded-lg border-black`}
             style={{ backgroundColor: item.color }}
           >

@@ -100,25 +100,6 @@ const useStore = create((set) => ({
   isPurchasing: false,
   setIsPurchasing: () => set({ isPurchasing: true }),
 
-  // 아이템 구매 상태 변경
-  setIsPurchased: (itemName, value) => set((state) => {
-    const updatedGameItems = state.gameItems.map(item => {
-      if (item.name === itemName) {
-        return { ...item, purchased: value };
-      }
-      return item;
-    });
-
-    const updatedLoanItems = state.loanItems.map(item => {
-      if (item.name === itemName) {
-        return { ...item, purchased: value };
-      }
-      return item;
-    });
-
-    return { gameItems: updatedGameItems, loanItems: updatedLoanItems };
-  }),
-
   // 화면에 보이는 슬롯 채우기
   selected1: {name: null},
   selected2: {name: null},
