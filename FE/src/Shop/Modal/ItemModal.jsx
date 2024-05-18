@@ -13,8 +13,8 @@ function ItemModal({ closeItemModal, selectedProduct }) {
 
   return(
     <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-gray-800 bg-opacity-50 z-20" onClick={handleOutsideClick}>
-      <div ref={modalRef} className="w-[360px] h-[250px] bg-yellow-200 p-4 rounded-md text-center border-2 z-50 border-black flex flex-col justify-center">
-        <div className="font-cusFont2 h-[130px] text-left text-lg">
+      <div ref={modalRef} className="w-[360px] h-[300px] bg-yellow-200 p-4 rounded-md text-center border-2 z-50 border-black flex flex-col justify-center">
+        <div className="font-cusFont2 h-[250px] text-left text-lg">
           {/* product.description */}
           <p>상품 이름: {selectedProduct.loanName}</p>
           <p>설명: {selectedProduct.content}</p>
