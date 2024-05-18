@@ -36,7 +36,6 @@ function SlotSetting({ openItemModal, openSaveSlotModal, products, slotNumber, s
   const setting = (item) => {
     // 이미 배치된건지 검사
     const isAlreadySelected = selectedSlots.some(selectedSlot => selectedSlot.name === item.name);
-    console.log(isAlreadySelected);
     // 중복이 아닐 때
     if (!isAlreadySelected) {
       // 선택된 슬롯을 찾아 상태를 업데이트

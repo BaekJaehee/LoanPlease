@@ -103,7 +103,6 @@ export const setLoanItems = async (slotObject) => {
 
 export const getUserInfo = async () => {
   const url = `/api/user-info`
-  console.log(url);
   return await axios
     .get(url, {
       headers: {

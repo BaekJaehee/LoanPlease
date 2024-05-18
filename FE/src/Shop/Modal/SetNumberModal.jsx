@@ -26,8 +26,6 @@ function SetNumberModal({ closeSetNumberModal, openGameItemModal, openWarningMod
   }
 
   const handlePurchaseItems = async () => {
-    console.log(itemId)
-    console.log(itemCount)
     if (point < price * itemCount) {
       openWarningModal();
       return;
