@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 
 import useStore from "../../Store/ShopStore";
-// import { MainStore } from "../../Main/Store";
+import { MainStore } from "../../Main/Store";
 
 import { itemsList, getUserInfo } from "../API/ShopAPI";
 
@@ -21,7 +21,7 @@ import SaveSlotModal from "../Modal/SaveSlotModal";
 import coin from "../Assets/coin.jpg";
 import won from "../Assets/coin_won.png";
 
-import BackgroundMusic from "../../../public/audioes/intro_main_bgm_2.mp3";
+// import BackgroundMusic from "../../../public/audioes/intro_main_bgm_2.mp3";
 
 function Shop() {
   const {
@@ -44,7 +44,7 @@ function Shop() {
     gameItems, setGameItems,
     loanItems, setLoanItems
   } = useStore();
-  // const { isBgm } = MainStore();
+  const { isBgm } = MainStore();
 
   const [isLoadingItems, setIsLoadingItems] = useState(true);
   const [isLoadingUserInfo, setIsLoadingUserInfo] = useState(true);
@@ -53,29 +53,34 @@ function Shop() {
   const selectedSlots = [selected1, selected2, selected3, selected4, selected5];
   const setSelectedSlots = [setSelected1, setSelected2, setSelected3, setSelected4, setSelected5];
 
-  // const bgmAudio = new Audio("audioes/intro_main_bgm_2.mp3")
+  const bgmAudio = new Audio("audioes/intro_main_bgm_2.mp3")
   
-  // useEffect(() => {
-  //   if (isBgm) {
-  //     bgmAudio.loop = true;
-  //     bgmAudio.play();
-  //   } else {
-  //     bgmAudio.pause();
-  //     bgmAudio.currentTime = 0;
-  //   }
-  // }, [isBgm]);
-
   useEffect(() => {
-    const bgmAudio = new Audio(BackgroundMusic);
-    bgmAudio.loop = true;
-
-    bgmAudio.play();
+    if (isBgm) {
+      bgmAudio.loop = true;
+      bgmAudio.play();
+    } else {
+      bgmAudio.pause();
+      bgmAudio.currentTime = 0;
+    }
 
     return () => {
       bgmAudio.pause();
       bgmAudio.currentTime = 0;
-    };
-  }, []);
+    }
+  }, [isBgm]);
+
+  // useEffect(() => {
+  //   const bgmAudio = new Audio(BackgroundMusic);
+  //   bgmAudio.loop = true;
+
+  //   bgmAudio.play();
+
+  //   return () => {
+  //     bgmAudio.pause();
+  //     bgmAudio.currentTime = 0;
+  //   };
+  // }, []);
 
   useEffect(() => {
     const fetchItems = async () => {
