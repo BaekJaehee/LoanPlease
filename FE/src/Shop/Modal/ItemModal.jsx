@@ -18,8 +18,9 @@ function ItemModal({ closeItemModal, selectedProduct }) {
           {/* product.description */}
           <p>상품 이름: {selectedProduct.loanName}</p>
           <p>설명: {selectedProduct.content}</p>
-          <p>이자: {selectedProduct.interest}</p>
-          <p>기한: {selectedProduct.period}</p>
+          <p>금리: {selectedProduct.interest * 100}%</p>
+          <p>상환 기간: {selectedProduct.period ? `${selectedProduct.period}개월` : "제한 없음"}</p>
+          <p>한도: {selectedProduct.limitAmount.toLocalString()}</p>
         </div>
         <div className="flex justify-center mt-4">
           <button 

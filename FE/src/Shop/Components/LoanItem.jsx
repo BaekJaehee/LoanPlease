@@ -83,11 +83,11 @@ function LoanItem({ openLoanItemModal, openWarningModal, loanItems, point, produ
             <div className="h-[80%] font-cusFont2 py-3 my-2">
               <p className="mb-6 text-xl">{item.content}</p>
               <p className="text-lg">
-                금리: {item.interest}
+                금리: {item.interest * 100}%
                 <br />
-                기간: {item.period}
+                상환 기간: {item.period ? `${item.preiod}개월` : "제한 없음"}
                 <br />
-                한도액: {item.limitAmount}
+                한도: {item.limitAmount.toLocalString()}
               </p>
             </div>
             <button
