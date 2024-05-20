@@ -5,9 +5,9 @@ import org.springframework.security.crypto.bcrypt.BCrypt;
 public class HashUtil {
     // 단방향 암호화
     // 암호화
-    private static final int LOG_ROUNDS = Integer.parseInt(System.getenv("HASH_UTIL_KEYS"));
+//    private static final int LOG_ROUNDS = Integer.parseInt(System.getenv("HASH_UTIL_KEYS"));
     public static String hash(String value) {
-        String customSalt = BCrypt.gensalt(LOG_ROUNDS);
+        String customSalt = BCrypt.gensalt();
         return BCrypt.hashpw(value, customSalt);
     }
 
