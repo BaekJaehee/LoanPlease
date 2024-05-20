@@ -1,0 +1,13 @@
+server:
+  port: 8080
+
+spring:
+  profiles:
+    include:
+      - secret
+
+jasypt:
+  encryptor:
+    bean: jasyptConfigScript
+
+# git ignore test
