@@ -1,9 +1,20 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import useStore from "../../Store/GameStore.jsx"
+
+import Exit from "../Assets/exit.png"
+import Help from "../Assets/help.png"
+
 
 function GameStart() {
 
-  const { startTimer } = useStore();
+  const navigate = useNavigate()
+
+  const handleGoHome = () => {
+    navigate('/');
+  };
+
+  const { startTimer, showModal, setShowModal, loadUserInfo, userInfo } = useStore();
   const [count, setCount] = useState(null);
 
   useEffect(() => {
@@ -16,6 +27,8 @@ function GameStart() {
     } else if (count === 0) {
       // 카운트다운이 0에 도달하면 타이머 시작
       startTimer();
+      loadUserInfo();
+      console.log(userInfo)
     }
     return () => clearTimeout(timerId); // 컴포넌트 언마운트 시 타이머 정리
   }, [count, startTimer]);
@@ -33,9 +46,17 @@ function GameStart() {
           <p className="text-[80px] text-white">{count}</p>
         </div>
       ) : (
-        <button onClick={handleStartClick} className="mt-4 bg-blue-500 text-white rounded-lg p-4 hover:bg-blue-700 text-4xl">
-          게임 시작하기
-        </button>
+        <>
+          <button className='absolute top-[14px] right-[100px] w-[78px] h-[60px]' onClick={setShowModal}>
+            <img src={Help} alt="" />
+          </button>
+          <button className='absolute top-7 right-3 w-[60px] h-[60px]' onClick={handleGoHome}>
+            <img src={Exit} alt="" />
+          </button>
+          <button onClick={handleStartClick} className="mt-4 bg-blue-500 text-white rounded-lg p-4 hover:bg-blue-700 text-4xl">
+            게임 시작하기
+          </button>
+        </>
       )}
     </div>
   );

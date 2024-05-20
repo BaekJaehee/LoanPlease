@@ -1,9 +1,14 @@
-import create from 'zustand';
+import { create } from 'zustand';
+import { fetchCustomerRequest, fetchUserRequest, patchScoreRequest, postUseItem } from '../API/CustomerAPI.jsx';
 
 const useStore = create(set => ({
 
+  // 시작 시 모달
+  showModal: false,
+  setShowModal: () => set(state => ({ showModal: !state.showModal })),
+
   // 시간 및 스코어
-  time: 180,
+  time: 60,
   timerActive: false,
 
   // 타이머 시작 함수
@@ -18,7 +23,11 @@ const useStore = create(set => ({
             return { time: state.time - 1 };
           } else {
             clearInterval(state.timerId); // 타이머 중지
-            return { isGameEnd: true, timerActive: false }; // 게임 종료 상태 업데이트
+            patchScoreRequest(state.score) // 스코어 업데이트 API 호출
+              .then(response => set({ credit: response.data }))
+              .catch(error => console.error('Failed to update score:', error));
+            set({ isGameEnd: true, timerActive: false }); // 게임 종료 상태 업데이트
+            return {};
           }
         });
       }, 1000);
@@ -27,7 +36,75 @@ const useStore = create(set => ({
   },
 
   score: 0,
+  credit: 0,
   isGameEnd: false,
+  showScore: false,
+  changeScore: 0,
+
+  isVipActive: true,
+  isShieldActive: true,
+  isTimeActive: true,
+  isShield: false,
+  setIsShield: () => set(state => ({ isShield: false })),
+
+  useVip: () => {
+    set(state => {
+      state.selectedProduct = null;
+      state.isVipActive = false,
+        state.dialogueNum = 3;
+      // 버튼 비활성화
+      state.isButtonEnabled = false;
+      // 1초 후 재활성화 및 고객 상태 업데이트
+      state.changeScore = +1000;
+      state.showScore = true
+
+      state.score = state.score + state.changeScore
+
+      postUseItem(state.userItemId[0]).then(() => {
+      }).catch(error => {
+        console.error("Failed to use item:", error);
+      });
+
+      state.loadUserInfo()
+
+      setTimeout(() => {
+        set({ isButtonEnabled: true, isCustomer: false, showScore: false });
+      }, 1500);
+      return {};
+    })
+  },
+
+
+  useShield: () => set(state => {
+    // 우선 상태를 업데이트
+    const newState = { isShieldActive: false, isShield: true };
+    
+    // postUseItem 함수를 호출하고 처리
+    postUseItem(state.userItemId[1]).then(() => {
+    }).catch(error => {
+      console.error("Failed to use item:", error);
+    });
+
+    state.loadUserInfo()
+  
+    return newState;
+  }),
+
+  useTime: () => set(state => {
+    // 우선 상태를 업데이트
+    const newState = { isTimeActive: false, time: state.time + 60 };
+    
+    // postUseItem 함수를 호출하고 처리
+    postUseItem(state.userItemId[2]).then(() => {
+    }).catch(error => {
+      console.error("Failed to use item:", error);
+    });
+
+    state.loadUserInfo()
+
+    return newState;
+  }),
+
 
   // 금융, 비금융 구분
   isFinance: true,
@@ -36,44 +113,25 @@ const useStore = create(set => ({
 
   // 손님 존재 여부
   isCustomer: false,
-  callCustomer: () => set(state => ({ isCustomer: true })),
-  endCustomer: () => set(state => ({ isCustomer: false, selectedProduct: null })),
+  callCustomer: async () => {
+    set({ isCustomer: true, dialogueNum: 0 });
+    await useStore.getState().loadGameInfo();  // 상태의 비동기 함수 호출
+  },
+
+  dialogueNum: 0,
+  setDialogue: (newDialogueNum) => set({ dialogueNum: newDialogueNum }),
+
+  isButtonEnabled: true,
+  setButtonDisabled: () => {
+    set({ isButtonEnabled: false });
+    setTimeout(() => {
+      set({ isButtonEnabled: true });
+    }, 1000);
+    set(state => ({ isCustomer: false }));
+  },
 
   // 대출 상품 목록 (지금은 샘플만 넣기)
-  products: [
-    {
-      name: '샘플 상품1',
-      option1 : '샘플 옵션1',
-      option2 : '샘플 옵션2',
-      option3 : '샘플 옵션3',
-      option4 : '샘플 옵션4',
-      bgColor : 'bg-blue-300'
-    },
-    {
-      name: '샘플 상품2',
-      option1 : '샘플 옵션1',
-      option2 : '샘플 옵션2',
-      option3 : '샘플 옵션3',
-      option4 : '샘플 옵션4',
-      bgColor : 'bg-blue-300'
-    },
-    {
-      name: '샘플 상품3',
-      option1 : '샘플 옵션1',
-      option2 : '샘플 옵션2',
-      option3 : '샘플 옵션3',
-      option4 : '샘플 옵션4',
-      bgColor : 'bg-blue-300'
-    },
-    {
-      name: '샘플 상품4',
-      option1 : '샘플 옵션1',
-      option2 : '샘플 옵션2',
-      option3 : '샘플 옵션3',
-      option4 : '샘플 옵션4',
-      bgColor : 'bg-red-300'
-    },
-  ],
+  products: [],
 
   //선택된 대출 상품
   selectedProduct: null,
@@ -82,7 +140,93 @@ const useStore = create(set => ({
       return { selectedProduct: product };
     }
     return {}
-  }), 
+  }),
+
+  // 게임 중도 퇴장 창 온오프
+  isGamePause: false,
+  setGamePause: () => set(state => ({ isGamePause: !state.isGamePause })),
+
+  gameInfo: [],
+
+  loadGameInfo: async () => {
+    try {
+      const data = await fetchCustomerRequest();
+      set({ gameInfo: data.data });
+    } catch (error) {
+      console.error('Failed to load game data:', error);
+    }
+  },
+
+  updateCustomerState: (newState) => set(newState),
+
+  userInfo: [],
+  items: [0, 0, 0],
+  userItemId: [0, 0, 0],
+
+  loadUserInfo: async () => {
+    try {
+      const data = await fetchUserRequest();
+      const userInfo = data.dataBody;
+
+      const newItems = [
+        userInfo.userItemList[0].itemCount,
+        userInfo.userItemList[1].itemCount,
+        userInfo.userItemList[2].itemCount,
+      ];
+
+      const newIds = [
+        userInfo.userItemList[0].userItemId,
+        userInfo.userItemList[1].userItemId,
+        userInfo.userItemList[2].userItemId,
+      ];
+
+      const slots = [userInfo.slot_1, userInfo.slot_2, userInfo.slot_3, userInfo.slot_4, userInfo.slot_5];
+      const newProducts = userInfo.userLoanList.filter(loan => slots.includes(loan.loanId));
+
+      set({
+        userInfo: userInfo,
+        items: newItems,
+        userItemId: newIds,
+        products: newProducts
+      });
+
+    } catch (error) {
+      console.error('Failed to load game data:', error);
+    }
+  },
+
+  resetGame: () => set(state => {
+    if (state.timerId) {
+      clearInterval(state.timerId);  // 타이머 정지
+    }
+    return {
+      showModal: false,
+      time: 180,
+      timerActive: false,
+      timerId: null,
+      score: 0,
+      credit: 0,
+      isGameEnd: false,
+      showScore: false,
+      changeScore: 0,
+      isVipActive: true,
+      isShieldActive: true,
+      isTimeActive: true,
+      isShield: false,
+      isFinance: true,
+      isCustomer: false,
+      dialogueNum: 0,
+      isButtonEnabled: true,
+      products: [],
+      selectedProduct: null,
+      isGamePause: false,
+      gameInfo: [],
+      userInfo: [],
+      items: [0, 0, 0],
+      userItemId: [0, 0, 0],
+    };
+  }),
+
 
 }));
 
