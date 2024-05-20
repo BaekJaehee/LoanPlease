@@ -8,7 +8,7 @@ const useStore = create(set => ({
   setShowModal: () => set(state => ({ showModal: !state.showModal })),
 
   // 시간 및 스코어
-  time: 60,
+  time: 180,
   timerActive: false,
 
   // 타이머 시작 함수
