@@ -48,9 +48,10 @@
 
 ## 기술스택
 
-### **프론트엔드**
 
 <div align="middle">
+
+### **프론트엔드**
 
 <img src="https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=React&logoColor=white">
 <img src="https://img.shields.io/badge/javascript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=white">
@@ -69,8 +70,10 @@
 </div>
 
 
-### **백엔드**
+
 <div align="middle">
+
+### **백엔드**
 
 <img src="https://img.shields.io/badge/java-3a75b0?style=for-the-badge&logo=java&logoColor=black"> <img src="https://img.shields.io/badge/spring-6DB33F?style=for-the-badge&logo=spring&logoColor=white">
 <img src="https://img.shields.io/badge/mysql-4479A1?style=for-the-badge&logo=mysql&logoColor=white">
@@ -93,8 +96,10 @@
 </div>
 
 
-### **AI**
+
 <div align="middle">
+
+### **AI**
 
 <img src="https://img.shields.io/badge/python-3776AB?style=for-the-badge&logo=python&logoColor=white">
 <img src="https://img.shields.io/badge/fastapi-009688?style=for-the-badge&logo=fastapi&logoColor=white">
@@ -107,8 +112,10 @@
 </div>
 
 
-### **인프라**
+
 <div align="middle">
+
+### **인프라**
 
 <img src="https://img.shields.io/badge/gitlab-F05032?style=for-the-badge&logo=gitlab&logoColor=white">
 <img src="https://img.shields.io/badge/AWS EC2-FF9900?style=for-the-badge&logo=amazonec2&logoColor=white">
@@ -131,47 +138,114 @@
 ## 기능소개
 > ### ✨ 구글 회원가입/로그인
 <br>
-<img src = "images/2차로그인.gif" width="200">
+<img src = "images/googlelogin.png" width="200">
+<img src = "images/signup.png" width="200">
+
+- 구글 로그인으로 회원가입 및 로그인 진행
 
 <br>
 <br>
 
 > ### ✨ 랭킹 확인
 <br>
-<img src = "images/페이스아이디.gif" width="200">
+<img src = "images/rank.png" width="200">
 
-- 카카오 소셜 로그인 (1차)
-- 지문과 페이스 아이디를 통한 생체 로그인 (2차)
+- 전체 랭킹 확인
+- 친구 랭킹 확인
 
 <br>
 <br>
 
 > ### ✨ 상점
 <br>
-<img src = "images/페이스아이디.gif" width="200">
+<img src = "images/store1.png" width="200">
+<img src = "images/store2.png" width="200">
+<img src = "images/store3.png" width="200">
 
-- 카카오 소셜 로그인 (1차)
-- 지문과 페이스 아이디를 통한 생체 로그인 (2차)
+- 고객에게 판매할 대출 상품 구매 가능
+- 아이템 구매 가능(슬롯 추가(2회 가능) / VIP실 티켓(정답 여부와 관계없이 최고 점수 획득) / 시간 연장(1분 추가) / 보호막(점수 감점 1회 방어))
 
 <br>
 <br>
 
 > ### ✨ 게임
 <br>
-<img src = "images/페이스아이디.gif" width="200">
+<img src = "images/game.png" width="200">
 
-- 카카오 소셜 로그인 (1차)
-- 지문과 페이스 아이디를 통한 생체 로그인 (2차)
+- 3분 동안 최대한 많은 대출 상품을 판매
+- `다음 고객 부르기`로 다음 고객 호출
+- 고객의 금융 정보, 비금융 정보를 확인하여 신용도 예측 후 적합한 상품 추천
+ (ex. 높은 신용 등급의 고객의 경우 저금리 대출 추천시 점수 획득량 증가)
+- 신용도 예측에는 미리 학습되어 있는 AI모델이 활용됨
+- 게임 중에 미리 구매한 아이템 1회 사용 가능
 
-<br>
-<br>
-
-> ### ✨ 마이페이지
-<br>
-<img src = "images/페이스아이디.gif" width="200">
-
-- 카카오 소셜 로그인 (1차)
-- 지문과 페이스 아이디를 통한 생체 로그인 (2차)
 
 <br>
 <br>
+
+## 프로젝트 산출물
+
+> **API 명세서**
+
+https://www.notion.so/d105/API-7a0060fc56354f8db6545051527fb4fc
+
+
+> **ERD**
+
+
+![image.png](./images/erd.png) 
+
+  
+
+
+> **포팅매뉴얼**
+
+
+[포팅매뉴얼](./exec/)
+
+
+
+## 컨벤션 
+
+#### 작업 단위로 브랜치 생성
+
+```jsx
+1. 시작 전 반드시 git pull (git pull origin FE/develop) (백엔드의 경우 BE/develop)
+
+2. 현재 브랜치 확인 ( git branch로 현재 브랜치 확인 가능 )
+
+3. git switch FE/develop 로 'FE/develop' 브랜치로 이동
+
+4. 'FE/develop' 브랜치로 이동 후에 하위 브랜치 생성
+
+git checkout -b 브랜치이름
+
+> 브랜치 이름은 FE/케밥케이스로 작성 (ex. FE/feat-example)
+> 브랜치 이름 설정은 전체 컨벤션 참고
+
+5. 작업 완료 후 현재 브랜치에 푸시하기
+
+git add .
+
+git commit -m "[FE][Feat] 작업내용
+
+커밋 내용"
+
+git push origin FE/feat-example
+
+6. Gitlab에서 Merge Request 작성하기
+
+파일 위치 확인 - master가 아닌 FE/develop으로 Merge하기
+
+제목은 커밋 메시지와 비슷한 형태로 작성
+
+[FE][Feat] 작업내용
+
+7. 내용에는 작업한 내용을 간략하게 설명
+8. 이슈 상황이 있을 경우 공유
+
+(추후 지라-이슈 연동하면 지라 링크 올리기)
+
+Assignee를 본인으로 하고 같은 직렬 아무에게나 Approve 받기
+Approve 받고 본인이 Merge 하기
+```
