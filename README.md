@@ -133,13 +133,15 @@
 
 
 ## 시스템 아키텍처
-![image.png](./image.png)
+![image.png](./images/infra.png)
+
 
 ## 기능소개
 > ### ✨ 구글 회원가입/로그인
 <br>
-<img src = "images/googlelogin.png" width="200">
-<img src = "images/signup.png" width="200">
+<img src = "images/googlelogin.png" width="600">
+<img src = "images/signup.png" width="600">
+<br>
 
 - 구글 로그인으로 회원가입 및 로그인 진행
 
@@ -148,7 +150,8 @@
 
 > ### ✨ 랭킹 확인
 <br>
-<img src = "images/rank.png" width="200">
+<img src = "images/rank.png" width="600">
+<br>
 
 - 전체 랭킹 확인
 - 친구 랭킹 확인
@@ -158,9 +161,10 @@
 
 > ### ✨ 상점
 <br>
-<img src = "images/store1.png" width="200">
-<img src = "images/store2.png" width="200">
-<img src = "images/store3.png" width="200">
+<img src = "images/store1.png" width="600">
+<img src = "images/store2.png" width="600">
+<img src = "images/store3.png" width="600">
+<br>
 
 - 고객에게 판매할 대출 상품 구매 가능
 - 아이템 구매 가능(슬롯 추가(2회 가능) / VIP실 티켓(정답 여부와 관계없이 최고 점수 획득) / 시간 연장(1분 추가) / 보호막(점수 감점 1회 방어))
@@ -170,10 +174,12 @@
 
 > ### ✨ 게임
 <br>
-<img src = "images/game.png" width="200">
+<img src = "images/game.png" width="600">
+<br>
 
 - 3분 동안 최대한 많은 대출 상품을 판매
 - `다음 고객 부르기`로 다음 고객 호출
+- `돌려보내기`를 누르면 추천하지 않고 보낼 수 있음(대출 준비물이 부족한 경우 점수 획득, 그렇지 않다면 감점)
 - 고객의 금융 정보, 비금융 정보를 확인하여 신용도 예측 후 적합한 상품 추천
  (ex. 높은 신용 등급의 고객의 경우 저금리 대출 추천시 점수 획득량 증가)
 - 신용도 예측에는 미리 학습되어 있는 AI모델이 활용됨
@@ -187,7 +193,7 @@
 
 > **API 명세서**
 
-https://www.notion.so/d105/API-7a0060fc56354f8db6545051527fb4fc
+[API 명세서 노션 링크](https://www.notion.so/d105/API-7a0060fc56354f8db6545051527fb4fc)
 
 
 > **ERD**
