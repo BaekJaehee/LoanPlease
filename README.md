@@ -139,8 +139,8 @@
 ## 기능소개
 > ### ✨ 구글 회원가입/로그인
 <br>
-<img src = "images/googlelogin.png" width="600">
-<img src = "images/signup.png" width="600">
+<img src = "images/googlelogin.png" width="700">
+<img src = "images/signup.png" width="700">
 <br>
 
 - 구글 로그인으로 회원가입 및 로그인 진행
@@ -150,7 +150,7 @@
 
 > ### ✨ 랭킹 확인
 <br>
-<img src = "images/rank.png" width="600">
+<img src = "images/rank.png" width="700">
 <br>
 
 - 전체 랭킹 확인
@@ -161,20 +161,22 @@
 
 > ### ✨ 상점
 <br>
-<img src = "images/store1.png" width="600">
-<img src = "images/store2.png" width="600">
-<img src = "images/store3.png" width="600">
+<img src = "images/store1.png" width="700">
+<img src = "images/store2.png" width="700">
+<img src = "images/store3.png" width="700">
+<img src = "images/store4.png" width="700">
 <br>
 
 - 고객에게 판매할 대출 상품 구매 가능
 - 아이템 구매 가능(슬롯 추가(2회 가능) / VIP실 티켓(정답 여부와 관계없이 최고 점수 획득) / 시간 연장(1분 추가) / 보호막(점수 감점 1회 방어))
+- 보유 슬롯 개수만큼 원하는 대출 상품 장착 가능(기본 3개, 최대 5개)
 
 <br>
 <br>
 
 > ### ✨ 게임
 <br>
-<img src = "images/game.png" width="600">
+<img src = "images/game.png" width="700">
 <br>
 
 - 3분 동안 최대한 많은 대출 상품을 판매
